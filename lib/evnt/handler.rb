@@ -8,7 +8,7 @@ module Evnt
     def notify(event)
       @_event = event
       _update_queries if defined?(_update_queries)
-      _manage_event if defined?(_manage_event) && event.new?
+      _manage_event if defined?(_manage_event) && !event.reloaded?
     end
 
     # This function return the event object.

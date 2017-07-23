@@ -4,10 +4,11 @@ module Evnt
   # Action.
   class Action
 
-    def initialize(params)
+    def initialize(params, action_exceptions: false)
       # initialize action
       @_params = params.freeze
       @_state = {
+        exceptions: action_exceptions,
         result: true,
         errors: []
       }
@@ -15,12 +16,6 @@ module Evnt
       _validate_params if @_state[:result] && defined?(_validate_params)
       _validate_logic if @_state[:result] && defined?(_validate_logic)
       _initialize_events if @_state[:result] && defined?(_initialize_events)
-    rescue => exception
-      # manage possible errors
-      puts exception.class
-      puts exception.message
-      puts exception.backtrace
-      throw 'There was an error'
     end
 
     # This function returns the list of paramteters of the action.
@@ -45,6 +40,8 @@ module Evnt
     def throw(error)
       @_state[:result] = false
       @_state[:errors].push(error)
+      # raise error if action needs exceptions
+      raise error if @_state[:exceptions]
     end
 
     # This class contain the list of settings for the action.

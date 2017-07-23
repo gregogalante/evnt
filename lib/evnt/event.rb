@@ -7,24 +7,21 @@ module Evnt
   class Event
 
     # Constructor.
-    def initialize(params, type = :new)
+    def initialize(params, event_reloaded: false)
       # save type
-      @_type = type
-      # manage types
-      if @_type == :new
-        validate_params(params)
-        # initialize payload
-        @_payload = get_payload(params)
-        # call functions
-        _write_event if defined?(_write_event)
-        # notify handlers
-        notify_handlers
-      elsif @_type == :old
-        # initialize payload
+      @_state = {
+        reloaded: event_reloaded
+      }
+      # manage event
+      if @_state[:reloaded]
         @_payload = params
-        # notify handlers
-        notify_handlers
+      else
+        validate_params(params)
+        @_payload = get_payload(params)
+        _write_event if defined?(_write_event)
       end
+      # notify handlers
+      notify_handlers
     end
 
     # This function returns the payload of the event.
@@ -37,19 +34,9 @@ module Evnt
       self.class._name
     end
 
-    # This function returns the type of the event.
-    def type
-      @_type
-    end
-
-    # This function tells if the event type is new.
-    def new?
-      @_type == :new
-    end
-
-    # This function tells if the event type is old.
-    def old?
-      @_type == :old
+    # This function tells if the event is reloaded or not.
+    def reloaded?
+      @_state[:reloaded]
     end
 
     private
