@@ -66,9 +66,9 @@ else
 end
 ```
 
-The method **completed?** returns a boolean value used to check if action is correct or not.
-The method **errors** returns an array of errors generated from the action with the function throw.
-The method **params** returns an hash with the action params.
+- The method **completed?** returns a boolean value used to check if action is correct or not.
+- The method **errors** returns an array of errors generated from the action with the function throw.
+- The method **params** returns an hash with the action params.
 
 It's also possible to use throw to raise an exception thanks to the parameter "action_exceptions: true". An example of usage should be:
 
