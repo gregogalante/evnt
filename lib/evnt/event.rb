@@ -14,10 +14,10 @@ module Evnt
       }
       # manage event
       if @_state[:reloaded]
-        @_payload = params
+        @_payload = params.freeze
       else
         validate_params(params)
-        @_payload = get_payload(params)
+        @_payload = get_payload(params).freeze
         _write_event if defined?(_write_event)
       end
       # notify handlers

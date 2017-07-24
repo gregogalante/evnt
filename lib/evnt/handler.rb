@@ -6,7 +6,7 @@ module Evnt
 
     # This function is called when an event notify the handler
     def notify(event)
-      @_event = event
+      @_event = event.freeze
       _update_queries if defined?(_update_queries)
       _manage_event if defined?(_manage_event) && !event.reloaded?
     end
