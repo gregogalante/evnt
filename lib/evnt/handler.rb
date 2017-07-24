@@ -13,6 +13,7 @@ module Evnt
       # call functions
       _update_queries if defined?(_update_queries)
       _manage_event if defined?(_manage_event) && !event.reloaded?
+      _manage_reloaded_event if defined?(_manage_reloaded_event) && event.reloaded?
     end
 
     # This function return the event object.
@@ -41,6 +42,11 @@ module Evnt
       # This function sets the manage event function for the handler.
       def to_manage_event(&block)
         define_method('_manage_event', &block)
+      end
+
+      # This function sets the manage reloaded event function for the handler.
+      def to_manage_reloaded_event(&block)
+        define_method('_manage_reloaded_event', &block)
       end
 
     end
