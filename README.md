@@ -99,7 +99,7 @@ Every event has also a single function used to write the event information on th
 An example of event should be:
 
 ```ruby
-class CreateSomethingEvent < Evnt::Action
+class CreateSomethingEvent < Evnt::Event
 
   name_is :create_something
 
@@ -110,6 +110,7 @@ class CreateSomethingEvent < Evnt::Action
   ]
 
   to_write_event do
+    # save event
     raise 'Error on event save' unless Event.create(
       name: name,
       payload: payload
@@ -143,7 +144,7 @@ end
 - The method **name** returns the event name.
 - The method **payload** returns an hash with the event payload (constructor parameters, the name and the timestamp).
 
-After the execution of the to_write_event code the event object should notify all its handler.
+After the execution of the to_write_event block the event object should notify all its handler.
 
 Sometimes you need to reload an old event to notify handlers for a second time. To initialize a new event object with the payload of an old event you can add the parameter "event_reloaded: true":
 
@@ -152,5 +153,62 @@ events = Event.where(name: 'create_something')
 reloaded_event = Event.new(events.sample.payload, event_reloaded: true)
 ```
 
+### Handler
+
+Handlers are used to listen one or more events and run tasks after their execution.
+
+Every handler has two steps to execute:
+
+- The queries update which updates temporary data structures used to read datas.
+- The manage event code which run other tasks like mailers, parallel executions ecc.
+
+An example of handler shuould be:
+
+```ruby
+class CreateSomethingHandler < Evnt::Handler
+
+  to_update_queries do
+    # save the thing on the Thing read model
+    Thing.create(
+      uuid: event_payload[:uuid],
+      title: event_payload[:title],
+      user_creator_uuid: event_payload[:user_creator_uuid]
+    )
+  end
+
+  to_manage_event do
+    # puts the event name
+    puts "Listening event #{event_name} with payload #{event_payload}"
+    puts "Event is reloaded? #{event.reloaded?}" # -> false
+    # send an email notification to user
+    UserMailer.notify_creation(
+      title: event_payload[:title],
+      user_uuid: event_payload[:user_creator_uuid]
+    ).deliver_later
+  end
+
+end
+```
+
+- The method **event** returns the event object.
+- The method **event_name** returns the event name.
+- The method **event_payload** returns the event payload.
+
+The execution of to_update_queries block runs after every events initialization.
+The execution of to_manage_event block runs only for not reloaded events initialization.
+
+Sometimes you need to run some code to manage only reloaded events. To run code only for reloaded events you can use the to_manage_reloaded_event block:
+
+```ruby
+class CreateSomethingHandler < Evnt::Handler
+
+  to_manage_reloaded_event do
+    # puts the event name
+    puts "Listening event #{event_name} with payload #{event_payload}"
+    puts "Event is reloaded? #{event.reloaded?}" # -> true
+  end
+
+end
+```
 
 ## Not for production projects ready!
