@@ -5,13 +5,14 @@ module Evnt
   class Action
 
     def initialize(params, action_exceptions: false)
-      # initialize action
-      @_params = params.freeze
+      # initialize state
       @_state = {
         exceptions: action_exceptions,
         result: true,
         errors: []
       }
+      # initialize params
+      @_params = params.freeze
       # call functions
       _validate_params if @_state[:result] && defined?(_validate_params)
       _validate_logic if @_state[:result] && defined?(_validate_logic)

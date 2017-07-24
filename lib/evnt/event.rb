@@ -8,11 +8,11 @@ module Evnt
 
     # Constructor.
     def initialize(params, event_reloaded: false)
-      # save type
+      # initialize state
       @_state = {
         reloaded: event_reloaded
       }
-      # manage event
+      # intiialize payload
       if @_state[:reloaded]
         @_payload = params.freeze
       else
@@ -24,14 +24,14 @@ module Evnt
       notify_handlers
     end
 
-    # This function returns the payload of the event.
-    def payload
-      @_payload
-    end
-
     # This function returns the name of the event.
     def name
       self.class._name
+    end
+
+    # This function returns the payload of the event.
+    def payload
+      @_payload
     end
 
     # This function tells if the event is reloaded or not.

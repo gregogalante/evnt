@@ -6,7 +6,11 @@ module Evnt
 
     # This function is called when an event notify the handler
     def notify(event)
+      # initialize state
+      @_state = {}
+      # initialize event
       @_event = event.freeze
+      # call functions
       _update_queries if defined?(_update_queries)
       _manage_event if defined?(_manage_event) && !event.reloaded?
     end
@@ -19,11 +23,6 @@ module Evnt
     # This function return the event name.
     def event_name
       @_event.name
-    end
-
-    # This function return the event type.
-    def event_type
-      @_event.type
     end
 
     # This function return the event payload.
