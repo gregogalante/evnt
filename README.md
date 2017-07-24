@@ -210,5 +210,3 @@ class CreateSomethingHandler < Evnt::Handler
 
 end
 ```
-
-## Not for production projects ready!
