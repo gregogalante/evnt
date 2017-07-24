@@ -51,4 +51,37 @@ class CreateSomethingAction < Evnt::Action
 end
 ```
 
+An example of action usage should be:
+
+```ruby
+action = CreateSomethingAction.new(
+  title: 'Foo',
+  user_creator_uuid: 'bar'
+)
+
+unless action.completed?
+  puts action.errors.to_sentence
+else
+  puts "Action completed with params #{action.params}"
+end
+```
+
+The method **completed?** returns a boolean value used to check if action is correct or not.
+The method **errors** returns an array of errors generated from the action with the function throw.
+The method **params** returns an hash with the action params.
+
+It's also possible to use throw to raise an exception thanks to the parameter "action_exceptions: true". An example of usage should be:
+
+```ruby
+begin
+  action = CreateSomethingAction.new(
+    title: 'Foo',
+    user_creator_uuid: 'bar',
+    action_exceptions: true
+  )
+rescue => e
+  puts e
+end
+```
+
 ## Not for production projects ready!
