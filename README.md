@@ -41,7 +41,7 @@ class CreateSomethingAction < Evnt::Action
     # generate uuid
     uuid = SecureRandom.uuid
     # initialize event
-    Cruds::CreateSomethingEvent.new(
+    CreateSomethingEvent.new(
       uuid: uuid,
       title: params[:title],
       user_creator_uuid: params[:user_creator_uuid]
@@ -83,5 +83,74 @@ rescue => e
   puts e
 end
 ```
+
+### Event
+
+Events are used to save on a persistent data structure what happends on the system.
+
+Every event has three informations:
+
+- The name is an unique identifier of the event.
+- The attributes are the list of attributes required from the event to be saved.
+- The handlers are a list of handler objects which will be notified when the event is completed.
+
+Every event has also a single function used to write the event information on the data structure.
+
+An example of event should be:
+
+```ruby
+class CreateSomethingEvent < Evnt::Action
+
+  name_is :create_something
+
+  attributes_are :uuid, :title, :user_creator_id
+
+  handlers_are [
+    CreateSomethingHandler.new
+  ]
+
+  to_write_event do
+    raise 'Error on event save' unless Event.create(
+      name: name,
+      payload: payload
+    )
+  end
+
+end
+```
+
+An example of event usage should be:
+
+```ruby
+class CreateSomethingAction < Evnt::Action
+
+  to_initialize_events do
+    # generate uuid
+    uuid = SecureRandom.uuid
+    # initialize event
+    event = CreateSomethingEvent.new(
+      uuid: uuid,
+      title: params[:title],
+      user_creator_uuid: params[:user_creator_uuid]
+    )
+    # puts event info
+    puts "Event #{event.name} completed with payload #{event.payload}"
+  end
+
+end
+```
+
+- The method **name** returns the event name.
+- The method **payload** returns an hash with the event payload (constructor parameters, the name and the timestamp).
+
+After the execution of the to_write_event code the event object should notify all its handler.
+
+Sometimes you need to reload an old event to notify handlers for a second time. To initialize a new event object with the payload of an old event you can add the parameter "event_reloaded: true":
+
+```ruby
+events = Event.where(name: 'create_something')
+reloaded_event = Event.new(events.sample.payload, event_reloaded: true)
+```
+
 
 ## Not for production projects ready!
