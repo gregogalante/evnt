@@ -1,6 +1,5 @@
-GIT
-  remote: https://github.com/ideonetwork/ruby-evnt
-  revision: 06e4e3401c4dc26606d40562cae077148813bf70
+PATH
+  remote: ..
   specs:
     evnt (1.0.1)
 
