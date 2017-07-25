@@ -2,6 +2,12 @@
 
 CQRS and Event Driven Development architecture for ruby projects.
 
+- [Structure](#structure)
+  - [Action](#action)
+  - [Event](#event)
+  - [Handler](#handler)
+- [Rails integration](#rails-integration)
+
 ## Structure
 
 Evnt is developed to be used over all kinds of projects and frameworks (like Ruby on Rails or Sinatra), so it contains only three types of entities:
