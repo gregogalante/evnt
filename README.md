@@ -7,6 +7,7 @@ CQRS and Event Driven Development architecture for ruby projects.
   - [Event](#event)
   - [Handler](#handler)
 - [Rails integration](#rails-integration)
+  - [Initialization](#initialization)
 
 ## Structure
 
@@ -220,6 +221,8 @@ end
 ## Rails integration
 
 Evnt gem contains a list of generators used to speed up the rails integration.
+
+### Initialization
 
 To initialize Evnt on a Rails application run:
 
