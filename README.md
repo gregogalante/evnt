@@ -33,7 +33,7 @@ class CreateSomethingAction < Evnt::Action
 
   to_validate_logic do
     # check no others things exists with same title
-    same_things = Things.where(title: params[:title])
+    same_things = Thing.where(title: params[:title])
     throw 'Thing already exists' unless same_things.empty?
   end
 
