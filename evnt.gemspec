@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.description   = ''
   spec.homepage      = ''
   spec.license       = 'MIT'
-  spec.require_paths = ['lib']
+  spec.require_paths = ['lib/**/*']
 
   # dev depenencies
   spec.add_development_dependency 'bundler'
