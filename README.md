@@ -70,7 +70,7 @@ end
 - The method **errors** returns an array of errors generated from the action with the function throw.
 - The method **params** returns an hash with the action params.
 
-It's also possible to use throw to raise an exception thanks to the parameter "action_exceptions: true". An example of usage should be:
+It's also possible to use throw to raise an exception with the parameter "action_exceptions: true". An example of usage should be:
 
 ```ruby
 begin
@@ -144,7 +144,7 @@ end
 - The method **name** returns the event name.
 - The method **payload** returns an hash with the event payload (constructor parameters, the name and the timestamp).
 
-After the execution of the to_write_event block the event object should notify all its handler.
+After the execution of the to_write_event block the event object should notify all its handlers.
 
 Sometimes you need to reload an old event to notify handlers for a second time. To initialize a new event object with the payload of an old event you can add the parameter "event_reloaded: true":
 
