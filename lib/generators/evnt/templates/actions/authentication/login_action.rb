@@ -6,7 +6,7 @@
 
 module Authentication
   # Action to manage users login.
-  class LoginAction < Evnt::Action
+  class LoginAction < ApplicationAction
 
     to_validate_params do
       # check params presence

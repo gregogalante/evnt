@@ -5,7 +5,7 @@
 
 module Authentication
   # Handler to manage the logout event.
-  class LogoutHandler < Evnt::Handler
+  class LogoutHandler < ApplicationHandler
 
     to_manage_event do
       # remove the login from session cache

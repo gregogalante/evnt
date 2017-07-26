@@ -5,7 +5,7 @@
 
 module Authentication
   # Hander to manage the login event.
-  class LoginHandler < Evnt::Handler
+  class LoginHandler < ApplicationHandler
 
     to_manage_event do
       # write the login on sessions cache

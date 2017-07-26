@@ -5,7 +5,7 @@
 
 module Authentication
   # Login event.
-  class LoginEvent < Evnt::Event
+  class LoginEvent < ApplicationEvent
 
     name_is :authentication_login
 

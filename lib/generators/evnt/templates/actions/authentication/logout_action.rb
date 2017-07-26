@@ -5,7 +5,7 @@
 
 module Authentication
   # Action to manage users logout.
-  class LogoutAction < Evnt::Action
+  class LogoutAction < ApplicationAction
 
     to_validate_params do
       # check params presence

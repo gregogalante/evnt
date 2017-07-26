@@ -6,7 +6,7 @@
 
 module Authentication
   # Action to manage users signup.
-  class SignupAction < Evnt::Action
+  class SignupAction < ApplicationAction
 
     to_validate_params do
       # check params presence

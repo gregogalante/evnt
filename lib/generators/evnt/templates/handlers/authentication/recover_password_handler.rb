@@ -5,7 +5,7 @@
 
 module Authentication
   # Handler to manage the request recover password event.
-  class RecoverPasswordHandler < Evnt::Handler
+  class RecoverPasswordHandler < ApplicationHandler
 
     to_update_queries do
       user = Queries::User.find_by(uuid: event_payload[:uuid])

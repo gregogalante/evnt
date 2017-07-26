@@ -5,7 +5,7 @@
 
 module Authentication
   # Handler to manage the signup event.
-  class SignupHandler < Evnt::Handler
+  class SignupHandler < ApplicationHandler
 
     to_update_queries do
       # update query user to save new user

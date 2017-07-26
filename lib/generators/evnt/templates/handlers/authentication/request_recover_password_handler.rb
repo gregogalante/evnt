@@ -5,7 +5,7 @@
 
 module Authentication
   # Handler to manage the request recover password event.
-  class RequestRecoverPasswordHandler < Evnt::Handler
+  class RequestRecoverPasswordHandler < ApplicationHandler
 
     to_manage_event do
       # send mail to user

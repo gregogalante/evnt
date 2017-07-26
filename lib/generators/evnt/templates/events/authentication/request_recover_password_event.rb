@@ -5,7 +5,7 @@
 
 module Authentication
   # RequestRecoverPassword event.
-  class RequestRecoverPasswordEvent < Evnt::Event
+  class RequestRecoverPasswordEvent < ApplicationEvent
 
     name_is :authentication_request_recover_password
 

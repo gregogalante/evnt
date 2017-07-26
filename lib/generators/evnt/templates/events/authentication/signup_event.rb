@@ -5,7 +5,7 @@
 
 module Authentication
   # Signup event.
-  class SignupEvent < Evnt::Event
+  class SignupEvent < ApplicationEvent
 
     name_is :authentication_signup
 

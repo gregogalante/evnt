@@ -3,16 +3,16 @@
 # Dependencies:
 # - Event model to save event.
 
-module Authentication
-  # Logout event.
-  class LogoutEvent < ApplicationEvent
+module Crud
+  # Signup event.
+  class UpdateEvent < ApplicationEvent
 
-    name_is :authentication_logout
+    name_is :cruds_update
 
-    attributes_are :uuid
+    attributes_are :uuid, :title
 
     handlers_are [
-      Authentication::LogoutHandler.new
+      Crud::UpdateHandler.new
     ]
 
     to_write_event do

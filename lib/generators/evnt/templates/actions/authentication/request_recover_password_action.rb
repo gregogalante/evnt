@@ -6,7 +6,7 @@
 
 module Authentication
   # Action to manage users requests to recover the password.
-  class RequestRecoverPasswordAction < Evnt::Action
+  class RequestRecoverPasswordAction < ApplicationAction
 
     to_validate_params do
       # check params presence
