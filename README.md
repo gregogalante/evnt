@@ -8,6 +8,8 @@ CQRS and Event Driven Development architecture for ruby projects.
   - [Handler](#handler)
 - [Rails integration](#rails-integration)
   - [Initialization](#initialization)
+  - [Crud](#crud)
+  - [Authentication](#authentication)
 
 ## Structure
 
@@ -236,3 +238,19 @@ This command should:
 - Create a application_action.rb file inside the app/actions path.
 - Create a application_event.rb file inside the app/events path.
 - Create a application_handler.rb file inside the app/handlers path.
+
+### Crud
+
+To generate actions, events and handlers to manage a simple crud run:
+
+```console
+rails generate evnt:crud
+```
+
+### Authentication
+
+To generate actions, events and handlers to manage a simple user authentication run:
+
+```console
+rails generate evnt:authentication
+```
