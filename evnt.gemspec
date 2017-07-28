@@ -8,8 +8,8 @@ require 'evnt/version'
 Gem::Specification.new do |spec|
   spec.name          = 'evnt'
   spec.version       = Evnt::VERSION
-  spec.authors       = ['Gregorio Galante']
-  spec.email         = ['gregogalante@gmail.com']
+  spec.authors       = ['Ideonetwork']
+  spec.email         = ['info@ideonetwork.it']
 
   spec.summary       = ''
   spec.description   = ''
