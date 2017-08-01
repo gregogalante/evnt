@@ -4,7 +4,7 @@
 # - Event model to save event.
 
 module Crud
-  # Signup event.
+  # Destroy event.
   class DestroyEvent < ApplicationEvent
 
     name_is :cruds_destroy

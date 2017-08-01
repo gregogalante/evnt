@@ -4,7 +4,7 @@
 # - Event model to save event.
 
 module Crud
-  # Signup event.
+  # Update event.
   class UpdateEvent < ApplicationEvent
 
     name_is :cruds_update

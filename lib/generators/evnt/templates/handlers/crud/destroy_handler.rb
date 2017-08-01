@@ -4,7 +4,7 @@
 # - Queries::Crud model to save the new user on the read table.
 
 module Crud
-  # Handler to manage the signup event.
+  # Handler to manage the destroy event.
   class DestroyHandler < ApplicationHandler
 
     to_update_queries do

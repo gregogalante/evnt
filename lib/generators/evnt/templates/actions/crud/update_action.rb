@@ -4,7 +4,7 @@
 # - Queries::Crud model to get the list of saved cruds.
 
 module Crud
-  # Action to manage users login.
+  # Action to manage the crud update.
   class UpdateAction < ApplicationAction
 
     to_validate_params do
