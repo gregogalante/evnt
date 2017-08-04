@@ -1,6 +1,6 @@
 # Evnt
 
-CQRS and Event Driven Development architecture for ruby projects.
+CQRS and Event Driven Development architecture for Ruby projects.
 
 - [Structure](#structure)
   - [Action](#action)
