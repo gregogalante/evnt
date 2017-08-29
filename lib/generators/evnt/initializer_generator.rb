@@ -13,7 +13,8 @@ module Evnt
       manage_actions
       manage_events
       manage_handlers
-      manage_application_updates
+      
+      update_application
     end
 
     private
@@ -36,7 +37,7 @@ module Evnt
                 'app/handlers/application_handler.rb')
     end
 
-    def manage_application_updates
+    def update_application
       # autoload actions directory
       application "config.autoload_paths += %W[\#{Rails.root}/app/actions]"
       # autoload events directory
