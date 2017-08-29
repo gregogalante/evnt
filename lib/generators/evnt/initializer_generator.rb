@@ -38,11 +38,11 @@ module Evnt
 
     def manage_application_updates
       # autoload actions directory
-      application "config.autoload_paths += %W[#{Rails.root}/app/actions]"
+      application "config.autoload_paths += %W[\#{Rails.root}/app/actions]"
       # autoload events directory
-      application "config.autoload_paths += %W[#{Rails.root}/app/events]"
+      application "config.autoload_paths += %W[\#{Rails.root}/app/events]"
       # autoload handlers directory
-      application "config.autoload_paths += %W[#{Rails.root}/app/handlers]"
+      application "config.autoload_paths += %W[\#{Rails.root}/app/handlers]"
     end
 
   end
