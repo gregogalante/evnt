@@ -161,12 +161,12 @@ event = CreateOrderEvent.new(
 
 puts event.name # -> :create_order
 puts event.attributes # -> [:order_id, :user_id, :product_id, :quantity]
-puts event.payload # -> { order_id: 1, user_id: 128, product_id: 534, quantity: 10, evnt: { timestamp, name } }
+puts event.payload # -> { order_id: 1, user_id: 128, product_id: 534, quantity: 10, evnt: { timestamp: 2017010101, name: 'create_order' } }
 ```
 
 The event payload should contain all event attributes and a reserver attributes "evnt" used to store the event timestamp and the event name.
 
-It's also possible to give datas to the event without save them on the event payload, to do this you shuld only use a key with "_" first character. An example should be:
+It's also possible to give datas to the event without save them on the event payload, to do this you shuld only use a key with "_" as first character. An example should be:
 
 ```ruby
 event = CreateOrderEvent.new(
@@ -177,7 +177,7 @@ event = CreateOrderEvent.new(
   _total_price: params[:quantity] * @product.price
 )
 
-puts event.payload # -> { order_id: 1, user_id: 128, product_id: 534, quantity: 10 }
+puts event.payload # -> { order_id: 1, user_id: 128, product_id: 534, quantity: 10, evnt: { timestamp: 2017010101, name: 'create_order' } }
 puts event.extras # -> { _total_price: 50 }
 ```
 
