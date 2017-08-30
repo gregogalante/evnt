@@ -6,8 +6,6 @@ CQRS and Event Driven Development architecture for Ruby projects.
   - [Action](#action)
   - [Event](#event)
   - [Handler](#handler)
-- [Rails integration](#rails-integration)
-  - [Initialization](#initialization)
 
 ## Structure
 
