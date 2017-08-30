@@ -98,7 +98,7 @@ else
 end
 ```
 
-It's also possible to use throw to raise an exception with the option **exception: true**. An example of usage should be:
+It's also possible to use throw method inside the command to raise an exception with the option **exception: true**. An example of usage should be:
 
 ```ruby
 begin
