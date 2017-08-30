@@ -159,7 +159,7 @@ event = CreateOrderEvent.new(
   quantity: params[:quantity]
 )
 
-puts event.name # -> create_order
+puts event.name # -> :create_order
 puts event.attributes # -> [:order_id, :user_id, :product_id, :quantity]
 puts event.payload # -> { order_id: 1, user_id: 128, product_id: 534, quantity: 10, evnt: { timestamp, name } }
 ```
