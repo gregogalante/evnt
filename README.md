@@ -3,7 +3,7 @@
 CQRS and Event Driven Development architecture for Ruby projects.
 
 - [Structure](#structure)
-  - [Action](#action)
+  - [Command](#command)
   - [Event](#event)
   - [Handler](#handler)
 
@@ -11,78 +11,95 @@ CQRS and Event Driven Development architecture for Ruby projects.
 
 Evnt is developed to be used over all kinds of projects and frameworks (like Ruby on Rails or Sinatra), so it contains only three types of entities:
 
-- Action
+- Command
 - Event
 - Handler
 
-### Action
+### Command
 
-Actions are used to run single tasks on the system. It's like a controller on an MVC architecture without the communication with the client.
+Commands are used to run single tasks on the system. It's like a controller on an MVC architecture without the communication with the client.
 
-Every action has three steps to execute:
+Every command has three steps to execute:
 
-- The params validation which validates the parameters used to run the action.
-- The logic validation which checks the action can be executed in compliance with the system rules.
-- The event intialization which initializes an event object used to save the action.
+- The params validation which validates the parameters used to run the command.
+- The logic validation which checks the command can be executed in compliance with the system rules.
+- The event intialization which initializes an event object used to save the command.
 
-An example of action should be:
+An example of command should be:
 
 ```ruby
-class CreateSomethingAction < Evnt::Action
+class CreateOrderCommand < Evnt::Command
 
   to_validate_params do
     # check params presence
-    throw 'Title should be present' if params[:title].blank?
-    throw 'User creator uuid should be present' if params[:user_creator_uuid].blank?
+    throw 'User should be present' unless params[:user_id]
+    throw 'Product should be present' unless params[:product_id]
+    throw 'Quantity should be present' unless params[:quantity]
+    # check quantity is valid
+    throw 'Quantity should be positive' if params[:quantity] < 1
   end
 
   to_validate_logic do
-    # check no others things exists with same title
-    same_things = Thing.where(title: params[:title])
-    throw 'Thing already exists' unless same_things.empty?
+    @user = User.find_by(id: params[:user_id])
+    @product = Product.find_by(id: params[:product_id])
+    # check user exist
+    throw 'The user does not exist' unless @user
+    # check product exist
+    throw 'The product does not exist' unless @product
+    # check quantity exist for the product
+    throw 'The requested quantity is not available' if @product.quantity < params[:quantity]
+    # check user has money to buy the product
+    throw 'You do not have enought money' if @user.money < @product.price * params[:quantity]
   end
 
   to_initialize_events do
-    # generate uuid
-    uuid = SecureRandom.uuid
+    # generate order id
+    order_id = SecureRandom.uuid
     # initialize event
-    CreateSomethingEvent.new(
-      uuid: uuid,
-      title: params[:title],
-      user_creator_uuid: params[:user_creator_uuid]
-    )
+    begin
+      CreateOrderEvent.new(
+        order_id: order_id,
+        user_id: @user.id,
+        product_id: @product.id,
+        quantity: params[:quantity],
+        _user: @user,
+        _product: @product
+      )
+    rescue
+      throw 'Sorry, there was an error', code: 500
+    end
   end
 
 end
 ```
 
-An example of action usage should be:
+An example of command usage should be:
 
 ```ruby
-action = CreateSomethingAction.new(
-  title: 'Foo',
-  user_creator_uuid: 'bar'
+command = CreateOrderCommand.new(
+  user_id: 128,
+  product_id: 534,
+  quantity: 10
 )
 
-unless action.completed?
-  puts action.errors.to_sentence
+unless command.completed?
+  puts command.error_messages
 else
-  puts "Action completed with params #{action.params}"
+  puts 'Order created'
 end
 ```
 
-- The method **completed?** returns a boolean value used to check if action is correct or not.
-- The method **errors** returns an array of errors generated from the action with the function throw.
-- The method **params** returns an hash with the action params.
-
-It's also possible to use throw to raise an exception with the parameter "action_exceptions: true". An example of usage should be:
+It's also possible to use throw to raise an exception with the option "exception: true". An example of usage should be:
 
 ```ruby
 begin
-  action = CreateSomethingAction.new(
-    title: 'Foo',
-    user_creator_uuid: 'bar',
-    action_exceptions: true
+  command = CreateOrderCommand.new(
+    user_id: 128,
+    product_id: 534,
+    quantity: 10,
+    options: {
+      excption: true
+    }
   )
 rescue => e
   puts e
@@ -104,19 +121,20 @@ Every event has also a single function used to write the event information on th
 An example of event should be:
 
 ```ruby
-class CreateSomethingEvent < Evnt::Event
+class CreateOrderEvent < Evnt::Event
 
-  name_is :create_something
+  name_is :create_order
 
-  attributes_are :uuid, :title, :user_creator_id
+  attributes_are :order_id, :user_id, :product_id, :quantity
 
   handlers_are [
-    CreateSomethingHandler.new
+    ProductHandler.new,
+    UserNotifierHandler.new
   ]
 
   to_write_event do
-    # save event
-    raise 'Error on event save' unless Event.create(
+    # save event on database
+    Event.create(
       name: name,
       payload: payload
     )
@@ -125,44 +143,20 @@ class CreateSomethingEvent < Evnt::Event
 end
 ```
 
-An example of event usage should be:
-
-```ruby
-class CreateSomethingAction < Evnt::Action
-
-  to_initialize_events do
-    # generate uuid
-    uuid = SecureRandom.uuid
-    # initialize event
-    event = CreateSomethingEvent.new(
-      uuid: uuid,
-      title: params[:title],
-      user_creator_uuid: params[:user_creator_uuid]
-    )
-    # puts event info
-    puts "Event #{event.name} completed with payload #{event.payload}"
-  end
-
-end
-```
-
-- The method **name** returns the event name.
-- The method **payload** returns an hash with the event payload (constructor parameters, the name and the timestamp).
-
 After the execution of the to_write_event block the event object should notify all its handlers.
 
-Sometimes you need to reload an old event to notify handlers for a second time. To initialize a new event object with the payload of an old event you can add the parameter "event_reloaded: true":
+Sometimes you need to reload an old event to notify handlers to re-build queries from events. To initialize a new event object with the payload of an old event you can pass the old event payload to the event constructor:
 
 ```ruby
-events = Event.where(name: 'create_something')
-reloaded_event = Event.new(events.sample.payload, event_reloaded: true)
+events = Event.where(name: 'create_order')
+reloaded_event = CreateOrderEvent.new(events.sample.payload)
 ```
 
 ### Handler
 
 Handlers are used to listen one or more events and run tasks after their execution.
 
-Every handler has two steps to execute:
+Every handler event management has two steps to execute:
 
 - The queries update which updates temporary data structures used to read datas.
 - The manage event code which run other tasks like mailers, parallel executions ecc.
@@ -170,34 +164,25 @@ Every handler has two steps to execute:
 An example of handler shuould be:
 
 ```ruby
-class CreateSomethingHandler < Evnt::Handler
+class ProductHandler < Evnt::Handler
 
-  to_update_queries do
-    # save the thing on the Thing read model
-    Thing.create(
-      uuid: event_payload[:uuid],
-      title: event_payload[:title],
-      user_creator_uuid: event_payload[:user_creator_uuid]
-    )
-  end
+  on :create_order do
 
-  to_manage_event do
-    # puts the event name
-    puts "Listening event #{event_name} with payload #{event_payload}"
-    puts "Event is reloaded? #{event.reloaded?}" # -> false
-    # send an email notification to user
-    UserMailer.notify_creation(
-      title: event_payload[:title],
-      user_uuid: event_payload[:user_creator_uuid]
-    ).deliver_later
+    to_update_queries do
+      # update product quantity
+      product = event.extras[:_product]
+      product.update(quantity: product.quantity - event[:quantity])
+    end
+
+    to_manage_event do
+      # notify the warehouse manager to delivery product
+      Warehouse.delivery_product(event[:product_id])
+    end
+
   end
 
 end
 ```
-
-- The method **event** returns the event object.
-- The method **event_name** returns the event name.
-- The method **event_payload** returns the event payload.
 
 The execution of to_update_queries block runs after every events initialization.
 The execution of to_manage_event block runs only for not reloaded events initialization.
@@ -205,12 +190,14 @@ The execution of to_manage_event block runs only for not reloaded events initial
 Sometimes you need to run some code to manage only reloaded events. To run code only for reloaded events you can use the to_manage_reloaded_event block:
 
 ```ruby
-class CreateSomethingHandler < Evnt::Handler
+class ProductHandler < Evnt::Handler
 
-  to_manage_reloaded_event do
-    # puts the event name
-    puts "Listening event #{event_name} with payload #{event_payload}"
-    puts "Event is reloaded? #{event.reloaded?}" # -> true
+  on :create_order do
+
+    to_manage_reloaded_event do
+      puts 'Event correctly reloaded'
+    end
+
   end
 
 end

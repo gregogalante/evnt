@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'evnt/version'
-require 'evnt/action'
+require 'evnt/command'
 require 'evnt/event'
 require 'evnt/handler'
 

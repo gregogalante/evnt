@@ -1,6 +1,6 @@
-example_id                          | status | run_time        |
------------------------------------ | ------ | --------------- |
-./spec/action/action_spec.rb[1:1]   | passed | 0.00072 seconds |
-./spec/event/event_spec.rb[1:1]     | passed | 0.00011 seconds |
-./spec/evnt_spec.rb[1:1]            | passed | 0.00008 seconds |
-./spec/handler/handler_spec.rb[1:1] | passed | 0.0001 seconds  |
+example_id                  | status | run_time        |
+--------------------------- | ------ | --------------- |
+./spec/command_spec.rb[1:1] | passed | 0.00075 seconds |
+./spec/event_spec.rb[1:1]   | passed | 0.00011 seconds |
+./spec/evnt_spec.rb[1:1]    | passed | 0.00009 seconds |
+./spec/handler_spec.rb[1:1] | passed | 0.0001 seconds  |

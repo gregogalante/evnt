@@ -9,10 +9,10 @@ Gem::Specification.new do |spec|
   spec.name          = 'evnt'
   spec.version       = Evnt::VERSION
   spec.authors       = ['Ideonetwork']
-  spec.email         = ['info@ideonetwork.it']
+  spec.email         = ['dev@ideonetwork.it']
   spec.homepage      = 'http://ideonetwork.it/'
   spec.summary       = 'CQRS and Event Driven Development architecture for Ruby'
-  spec.description   = 'CQRS and Event Driven Development architecture for Ruby projects'
+  spec.description   = 'CQRS and Event Driven Development architecture for Ruby'
   spec.license       = 'MIT'
   spec.require_paths = ['lib', 'README.md']
 
