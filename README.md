@@ -232,7 +232,6 @@ rails generate evnt:initializer
 
 This command should:
 
-- Create a evnt.rb file inside the config/initializer path.
 - Create a application_action.rb file inside the app/actions path.
 - Create a application_event.rb file inside the app/events path.
 - Create a application_handler.rb file inside the app/handlers path.
