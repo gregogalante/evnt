@@ -217,21 +217,3 @@ class CreateSomethingHandler < Evnt::Handler
 
 end
 ```
-
-## Rails integration
-
-Evnt gem contains a list of generators used to speed up the rails integration.
-
-### Initialization
-
-To initialize Evnt on a Rails application run:
-
-```console
-rails generate evnt:initializer
-```
-
-This command should:
-
-- Create a application_action.rb file inside the app/actions path.
-- Create a application_event.rb file inside the app/events path.
-- Create a application_handler.rb file inside the app/handlers path.
