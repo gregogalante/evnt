@@ -7,8 +7,8 @@ module Evnt
 
     attr_reader :params
 
-    def initialize(params, options: {})
-      init_command_data(params, options)
+    def initialize(params, _options: {})
+      init_command_data(params, _options)
       run_command_steps
     end
 

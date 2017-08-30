@@ -35,6 +35,7 @@ class CreateOrderCommand < Evnt::Command
     throw 'User should be present' unless params[:user_id]
     throw 'Product should be present' unless params[:product_id]
     throw 'Quantity should be present' unless params[:quantity]
+
     # check quantity is valid
     throw 'Quantity should be positive' if params[:quantity] < 1
   end
@@ -42,12 +43,16 @@ class CreateOrderCommand < Evnt::Command
   to_validate_logic do
     @user = User.find_by(id: params[:user_id])
     @product = Product.find_by(id: params[:product_id])
+
     # check user exist
     throw 'The user does not exist' unless @user
+
     # check product exist
     throw 'The product does not exist' unless @product
+
     # check quantity exist for the product
     throw 'The requested quantity is not available' if @product.quantity < params[:quantity]
+
     # check user has money to buy the product
     throw 'You do not have enought money' if @user.money < @product.price * params[:quantity]
   end
@@ -55,6 +60,7 @@ class CreateOrderCommand < Evnt::Command
   to_initialize_events do
     # generate order id
     order_id = SecureRandom.uuid
+
     # initialize event
     begin
       CreateOrderEvent.new(
@@ -82,14 +88,17 @@ command = CreateOrderCommand.new(
   quantity: 10
 )
 
-unless command.completed?
-  puts command.error_messages
+if command.completed?
+  puts 'Command completed'
+  puts command.params # -> { user_id: 128, product_id: 534, quantity: 10 }
 else
-  puts 'Order created'
+  puts command.errors # array of hashes with a { message, code } structure
+  puts command.error_messages # array of error messages
+  puts command.error_codes # array of error codes
 end
 ```
 
-It's also possible to use throw to raise an exception with the option "exception: true". An example of usage should be:
+It's also possible to use throw to raise an exception with the option **exception: true**. An example of usage should be:
 
 ```ruby
 begin
@@ -97,7 +106,7 @@ begin
     user_id: 128,
     product_id: 534,
     quantity: 10,
-    options: {
+    _options: {
       excption: true
     }
   )
@@ -112,9 +121,9 @@ Events are used to save on a persistent data structure what happends on the syst
 
 Every event has three informations:
 
-- The name is an unique identifier of the event.
-- The attributes are the list of attributes required from the event to be saved.
-- The handlers are a list of handler objects which will be notified when the event is completed.
+- The **name** is an unique identifier of the event.
+- The **attributes** are the list of attributes required from the event to be saved.
+- The **handlers** are a list of handler objects which will be notified when the event is completed.
 
 Every event has also a single function used to write the event information on the data structure.
 
@@ -134,22 +143,53 @@ class CreateOrderEvent < Evnt::Event
 
   to_write_event do
     # save event on database
-    Event.create(
-      name: name,
-      payload: payload
-    )
+    Event.create(name: name, payload: payload)
   end
 
 end
 ```
 
-After the execution of the to_write_event block the event object should notify all its handlers.
+An example of event usage should be:
+
+```ruby
+event = CreateOrderEvent.new(
+  order_id: order_id,
+  user_id: @user.id,
+  product_id: @product.id,
+  quantity: params[:quantity]
+)
+
+puts event.name # -> create_order
+puts event.attributes # -> [:order_id, :user_id, :product_id, :quantity]
+puts event.payload # -> { order_id: 1, user_id: 128, product_id: 534, quantity: 10, evnt: { timestamp, name } }
+```
+
+The event payload should contain all event attributes and a reserver attributes "evnt" used to store the event timestamp and the event name.
+
+It's also possible to give datas to the event without save them on the event payload, to do this you shuld only use a key with "_" first character. An example should be:
+
+```ruby
+event = CreateOrderEvent.new(
+  order_id: order_id,
+  user_id: @user.id,
+  product_id: @product.id,
+  quantity: params[:quantity],
+  _total_price: params[:quantity] * @product.price
+)
+
+puts event.payload # -> { order_id: 1, user_id: 128, product_id: 534, quantity: 10 }
+puts event.extras # -> { _total_price: 50 }
+```
+
+After the execution of the **to_write_event** block the event object should notify all its handlers.
 
 Sometimes you need to reload an old event to notify handlers to re-build queries from events. To initialize a new event object with the payload of an old event you can pass the old event payload to the event constructor:
 
 ```ruby
 events = Event.where(name: 'create_order')
 reloaded_event = CreateOrderEvent.new(events.sample.payload)
+
+puts reloaded_event.reloaded? # -> true
 ```
 
 ### Handler
@@ -175,8 +215,7 @@ class ProductHandler < Evnt::Handler
     end
 
     to_manage_event do
-      # notify the warehouse manager to delivery product
-      Warehouse.delivery_product(event[:product_id])
+      # this block is called only for not reloaded events
     end
 
   end
@@ -184,10 +223,10 @@ class ProductHandler < Evnt::Handler
 end
 ```
 
-The execution of to_update_queries block runs after every events initialization.
-The execution of to_manage_event block runs only for not reloaded events initialization.
+The execution of **to_update_queries** block runs after every events initialization.
+The execution of **to_manage_event** block runs only for not reloaded events initialization.
 
-Sometimes you need to run some code to manage only reloaded events. To run code only for reloaded events you can use the to_manage_reloaded_event block:
+Sometimes you need to run some code to manage only reloaded events. To run code only for reloaded events you can use the **to_manage_reloaded_event** block:
 
 ```ruby
 class ProductHandler < Evnt::Handler
@@ -195,7 +234,7 @@ class ProductHandler < Evnt::Handler
   on :create_order do
 
     to_manage_reloaded_event do
-      puts 'Event correctly reloaded'
+      # this block is called only for reloaded events
     end
 
   end
