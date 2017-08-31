@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.summary       = 'CQRS and Event Driven Development architecture for Ruby'
   spec.description   = 'CQRS and Event Driven Development architecture for Ruby'
   spec.license       = 'MIT'
-  spec.require_paths = ['lib', 'README.md']
+  spec.require_paths = ['lib']
 
   # dev depenencies
   spec.add_development_dependency 'bundler'
