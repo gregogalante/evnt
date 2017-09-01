@@ -8,6 +8,7 @@ module Evnt
     attr_reader :params
 
     def initialize(params, _options: {})
+      puts "--> Inizializzazione comando"
       init_command_data(params, _options)
       run_command_steps
     end
@@ -68,9 +69,9 @@ module Evnt
 
     # This function calls requested steps for the command.
     def run_command_steps
-      validate_params if @state[:result] && defined?(validate_params)
-      validate_logic if @state[:result] && defined?(validate_logic)
-      initialize_events if @state[:result] && defined?(initialize_events)
+      _validate_params if @state[:result] && defined?(_validate_params)
+      _validate_logic if @state[:result] && defined?(_validate_logic)
+      _initialize_events if @state[:result] && defined?(_initialize_events)
     end
 
     # This class contain the list of settings for the command.
@@ -78,17 +79,17 @@ module Evnt
 
       # This function sets the validate params function for the command.
       def to_validate_params(&block)
-        define_method('validate_params', &block)
+        define_method('_validate_params', &block)
       end
 
       # This function sets the validate logic function for the command.
       def to_validate_logic(&block)
-        define_method('validate_logic', &block)
+        define_method('_validate_logic', &block)
       end
 
       # This function sets the intitialize events function for the command.
       def to_initialize_events(&block)
-        define_method('initialize_events', &block)
+        define_method('_initialize_events', &block)
       end
 
     end

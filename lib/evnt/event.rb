@@ -11,6 +11,7 @@ module Evnt
 
     # Constructor.
     def initialize(params)
+      puts "--> Inizializzazione evento"
       init_event_data(params)
       run_event_steps
       notify_handlers
@@ -25,10 +26,10 @@ module Evnt
 
     # This function validates all params and check they are completed.
     def validate_params(params)
-      return unless self.class.attributes
+      return unless self.class._attributes
 
       # check all attributes are present
-      check_attr = params.keys == (self.class.attributes - :evnt)
+      check_attr = params.keys == (self.class._attributes - :evnt)
       raise 'Event parameters are not correct' unless check_attr
     end
 
@@ -45,14 +46,14 @@ module Evnt
       @payload.freeze
 
       # set other datas
-      @name = self.class.name
-      @attributes = self.class.attributes
+      @name = self.class._name
+      @attributes = self.class._attributes
       @extras = params.select { |k, _v| k[0] == '_' }
     end
 
     # This function calls requested steps for the event.
     def run_event_steps
-      write_event if defined?(write_event)
+      _write_event if defined?(_write_event)
     end
 
     # This function generates the complete event payload.
@@ -60,7 +61,7 @@ module Evnt
       # add evnt informations
       params[:evnt] = {
         timestamp: Time.now.to_i,
-        name: self.class.name
+        name: self.class._name
       }
       # return payload
       params
@@ -68,10 +69,10 @@ module Evnt
 
     # This function notify all handlers for the event.
     def notify_handlers
-      return unless self.class.handlers
+      return unless self.class._handlers
 
       # notify every handler
-      self.class.handlers.each do |handler|
+      self.class._handlers.each do |handler|
         handler.notify(self)
       end
     end
@@ -79,26 +80,29 @@ module Evnt
     # This class contain the list of settings for the event.
     class << self
 
-      attr_accessor :name, :attributes, :handlers
+      attr_accessor :_name, :_attributes, :_handlers
 
       # This function sets the name for the event.
       def name_is(event_name)
-        instance_variable_set(:@name, event_name)
+        puts "--> esecuzione name_is dell'evento #{event_name}"
+        instance_variable_set(:@_name, event_name)
       end
 
       # This function sets the list of attributes for the event.
       def attributes_are(*attributes)
-        instance_variable_set(:@attributes, attributes)
+        puts "--> esecuzione attributes_are dell'evento #{attributes}"
+        instance_variable_set(:@_attributes, attributes)
       end
 
       # This function sets the list of handlers for the event.
       def handlers_are(handlers)
-        instance_variable_set(:@handlers, handlers)
+        puts "--> esecuzione handlers_are dell'evento #{handlers}"
+        instance_variable_set(:@_handlers, handlers)
       end
 
       # This function sets the write event function for the event.
       def to_write_event(&block)
-        define_method('write_event', &block)
+        define_method('_write_event', &block)
       end
 
     end
