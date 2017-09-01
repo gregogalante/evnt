@@ -11,7 +11,6 @@ module Evnt
 
     # Constructor.
     def initialize(params)
-      puts "--> Inizializzazione evento"
       init_event_data(params)
       run_event_steps
       notify_handlers
@@ -84,19 +83,16 @@ module Evnt
 
       # This function sets the name for the event.
       def name_is(event_name)
-        puts "--> esecuzione name_is dell'evento #{event_name}"
         instance_variable_set(:@_name, event_name)
       end
 
       # This function sets the list of attributes for the event.
       def attributes_are(*attributes)
-        puts "--> esecuzione attributes_are dell'evento #{attributes}"
         instance_variable_set(:@_attributes, attributes)
       end
 
       # This function sets the list of handlers for the event.
       def handlers_are(handlers)
-        puts "--> esecuzione handlers_are dell'evento #{handlers}"
         instance_variable_set(:@_handlers, handlers)
       end
 

@@ -8,7 +8,6 @@ module Evnt
     attr_reader :params
 
     def initialize(params, _options: {})
-      puts "--> Inizializzazione comando"
       init_command_data(params, _options)
       run_command_steps
     end
