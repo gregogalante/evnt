@@ -19,12 +19,12 @@ module Evnt
 
     # This function returns the list of error messages of the command.
     def error_messages
-      @state[:errors].select { |e| e[:message] }
+      @state[:errors].map { |e| e[:message] }
     end
 
     # This function returns the list of error codes of the command.
     def error_codes
-      @state[:errors].select { |e| e[:code] }
+      @state[:errors].map { |e| e[:code] }
     end
 
     # This function tells if the command is completed or not.
