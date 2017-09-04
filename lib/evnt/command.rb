@@ -6,7 +6,6 @@ module Evnt
   class Command
 
     attr_reader :params
-    attr_reader :objects
 
     def initialize(params, _options: {})
       init_command_data(params, _options)
@@ -48,16 +47,6 @@ module Evnt
       raise error if @options[:exceptions]
     end
 
-    # This function sets a new object.
-    def set(key, value)
-      @objects[key] = value
-    end
-
-    # This function returns a object.
-    def get(key)
-      @objects[key]
-    end
-
     private
 
     # This function initializes the command required data.
@@ -72,9 +61,6 @@ module Evnt
       @options = {
         exceptions: options[:exceptions] || false
       }
-
-      # set objects
-      @objects = {}
 
       # set other data
       @params = params.freeze
