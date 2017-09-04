@@ -45,10 +45,16 @@ class CreateOrderCommand < Evnt::Command
     @product = Product.find_by(id: params[:product_id])
 
     # check user exist
-    stop 'The user does not exist' unless @user
+    unless @user
+      stop 'The user does not exist'
+      break
+    end
 
     # check product exist
-    stop 'The product does not exist' unless @product
+    unless @product
+      stop 'The product does not exist'
+      break
+    end
 
     # check quantity exist for the product
     stop 'The requested quantity is not available' if @product.quantity < params[:quantity]
