@@ -36,7 +36,7 @@ module Evnt
 
     # This function can be used to stop the command execution and
     # add a new error.
-    def stop(message, code: nil)
+    def throw(message, code: nil)
       @state[:result] = false
       @state[:errors].push(
         message: message,
