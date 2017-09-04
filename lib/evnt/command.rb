@@ -6,6 +6,7 @@ module Evnt
   class Command
 
     attr_reader :params
+    attr_reader :objects
 
     def initialize(params, _options: {})
       init_command_data(params, _options)
@@ -61,6 +62,9 @@ module Evnt
       @options = {
         exceptions: options[:exceptions] || false
       }
+
+      # set objects
+      @objects = {}
 
       # set other data
       @params = params.freeze
