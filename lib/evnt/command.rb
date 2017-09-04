@@ -45,8 +45,6 @@ module Evnt
 
       # raise error if command needs exceptions
       raise error if @options[:exceptions]
-
-      break
     end
 
     private
