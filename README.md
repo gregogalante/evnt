@@ -32,12 +32,12 @@ class CreateOrderCommand < Evnt::Command
 
   to_validate_params do
     # check params presence
-    throw 'User should be present' unless params[:user_id]
-    throw 'Product should be present' unless params[:product_id]
-    throw 'Quantity should be present' unless params[:quantity]
+    stop 'User should be present' unless params[:user_id]
+    stop 'Product should be present' unless params[:product_id]
+    stop 'Quantity should be present' unless params[:quantity]
 
     # check quantity is valid
-    throw 'Quantity should be positive' if params[:quantity] < 1
+    stop 'Quantity should be positive' if params[:quantity] < 1
   end
 
   to_validate_logic do
@@ -45,16 +45,16 @@ class CreateOrderCommand < Evnt::Command
     @product = Product.find_by(id: params[:product_id])
 
     # check user exist
-    throw 'The user does not exist' unless @user
+    stop 'The user does not exist' unless @user
 
     # check product exist
-    throw 'The product does not exist' unless @product
+    stop 'The product does not exist' unless @product
 
     # check quantity exist for the product
-    throw 'The requested quantity is not available' if @product.quantity < params[:quantity]
+    stop 'The requested quantity is not available' if @product.quantity < params[:quantity]
 
     # check user has money to buy the product
-    throw 'You do not have enought money' if @user.money < @product.price * params[:quantity]
+    stop 'You do not have enought money' if @user.money < @product.price * params[:quantity]
   end
 
   to_initialize_events do
@@ -72,7 +72,7 @@ class CreateOrderCommand < Evnt::Command
         _product: @product
       )
     rescue
-      throw 'Sorry, there was an error', code: 500
+      stop 'Sorry, there was an error', code: 500
     end
   end
 
@@ -98,7 +98,7 @@ else
 end
 ```
 
-It's also possible to use throw method inside the command to raise an exception with the option **exception: true**. An example of usage should be:
+It's also possible to use stop method inside the command to raise an exception with the option **exception: true**. An example of usage should be:
 
 ```ruby
 begin
