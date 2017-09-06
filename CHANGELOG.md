@@ -3,7 +3,6 @@
 ## Version 2.0.1
 
 - Rename "throw" function to "stop" inside commands.
-- Add to_execute_command inside commands.
 
 ## Version 2.0
 

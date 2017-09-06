@@ -23,9 +23,7 @@ Every command has three steps to execute:
 
 - The params validation which validates the parameters used to run the command.
 - The logic validation which checks the command can be executed in compliance with the system rules.
-- The command execution which write on database the command action.
-- The event intialization which initializes an event object used to log the event and
-notify handlers.
+- The event intialization which initializes an event object used to save the command.
 
 An example of command should be:
 
@@ -65,31 +63,19 @@ class CreateOrderCommand < Evnt::Command
     stop 'You do not have enought money' if @user.money < @product.price * params[:quantity]
   end
 
-  to_execute_command do
-    # save user order
-    @order = Order.new(
-      user_id: @user.id,
-      product_id: @product.id,
-      quantity: params[:quantity]
-    )
-
-    unless @order.save
-      stop 'Order can not be accepted'
-    end
-  end
-
   to_initialize_events do
+    # generate order id
+    order_id = SecureRandom.uuid
 
     # initialize event
     begin
       CreateOrderEvent.new(
-        order_id: @order.id,
+        order_id: order_id,
         user_id: @user.id,
         product_id: @product.id,
         quantity: params[:quantity],
         _user: @user,
-        _product: @product,
-        _order: @order
+        _product: @product
       )
     rescue
       stop 'Sorry, there was an error', code: 500
