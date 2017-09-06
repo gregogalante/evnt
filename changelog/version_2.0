@@ -1,5 +1,0 @@
-General:
-
-- Rename actions to commands.
-- Add possibility to share extra data not saved on event payload from command to event.
-- Update handler structure.
