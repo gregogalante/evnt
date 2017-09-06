@@ -70,6 +70,7 @@ module Evnt
     def run_command_steps
       _validate_params if @state[:result] && defined?(_validate_params)
       _validate_logic if @state[:result] && defined?(_validate_logic)
+      _execute_command if @state[:result] && defined?(_execute_command)
       _initialize_events if @state[:result] && defined?(_initialize_events)
     end
 
@@ -84,6 +85,11 @@ module Evnt
       # This function sets the validate logic function for the command.
       def to_validate_logic(&block)
         define_method('_validate_logic', &block)
+      end
+
+      # This function sets the run logic function for the command.
+      def to_execute_command(&block)
+        define_method('_execute_command', &block)
       end
 
       # This function sets the intitialize events function for the command.
