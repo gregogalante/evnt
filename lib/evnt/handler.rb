@@ -14,6 +14,9 @@ module Evnt
       _run_handler_steps
     end
 
+    # Private functions:
+    ############################################################################
+
     private
 
     # This function initializes the handler required data.
@@ -39,6 +42,9 @@ module Evnt
       # manage normal event
       _manage_event if defined?(_manage_event)
     end
+
+    # Class functions:
+    ############################################################################
 
     # This class contain the list of settings for the handler.
     class << self

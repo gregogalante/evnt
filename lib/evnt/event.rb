@@ -17,10 +17,16 @@ module Evnt
       _notify_handlers
     end
 
+    # Public functions:
+    ############################################################################
+
     # This function tells if the event is reloaded or not.
     def reloaded?
       @state[:reloaded]
     end
+
+    # Private functions:
+    ############################################################################
 
     private
 
@@ -76,6 +82,9 @@ module Evnt
         handler.notify(self)
       end
     end
+
+    # Class functions:
+    ############################################################################
 
     # This class contain the list of settings for the event.
     class << self
