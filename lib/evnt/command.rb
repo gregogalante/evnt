@@ -48,8 +48,7 @@ module Evnt
     end
 
     # This function validates the presence of a list of parameters
-    def validate_presence(parameters) # TODO
-    end
+    def validate_presence(parameters); end # TODO: Complete function
 
     private
 
