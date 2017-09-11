@@ -3,6 +3,7 @@
 ## Version 2.0.1
 
 - Rename "throw" function to "stop" inside commands.
+- Fix payload validation inside event.
 
 ## Version 2.0
 

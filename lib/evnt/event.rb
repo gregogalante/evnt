@@ -21,6 +21,8 @@ module Evnt
     ############################################################################
 
     # This function tells if the event is reloaded or not.
+    # It should return a boolean value corresponding to the
+    # presence of 'evnt' value inside the event params.
     def reloaded?
       @state[:reloaded]
     end
@@ -29,15 +31,6 @@ module Evnt
     ############################################################################
 
     private
-
-    # This function validates all payload and check they are completed.
-    def _validate_payload
-      return unless self.class._attributes
-
-      # check all attributes are present
-      check_attr = @payload.keys == (self.class._attributes - :evnt)
-      raise 'Event parameters are not correct' unless check_attr
-    end
 
     # This function initializes the event required data.
     def _init_event_data(params)
@@ -71,6 +64,15 @@ module Evnt
       }
       # return payload
       params
+    end
+
+    # This function validates all payload and check they are completed.
+    def _validate_payload
+      return unless self.class._attributes
+
+      # check all attributes are present
+      check_attr = @payload.keys == (self.class._attributes - :evnt)
+      raise 'Event parameters are not correct' unless check_attr
     end
 
     # This function notify all handlers for the event.
