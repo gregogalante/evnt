@@ -9,25 +9,25 @@ module Evnt
 
     # This function is called when an event notify the handler
     def notify(event)
-      init_handler_data(event)
-      init_handler_steps(event)
-      run_handler_steps
+      _init_handler_data(event)
+      _init_handler_steps
+      _run_handler_steps
     end
 
     private
 
     # This function initializes the handler required data.
-    def init_handler_data(event)
+    def _init_handler_data(event)
       @event = event
     end
 
     # This function init the handler steps.
-    def init_handler_steps(event)
-      self.class._events[event.name].call
+    def _init_handler_steps
+      self.class._events[@event.name].call
     end
 
     # This function calls requested steps for the handler.
-    def run_handler_steps
+    def _run_handler_steps
       _update_queries if defined?(_update_queries)
 
       # manage event reloaded

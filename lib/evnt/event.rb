@@ -11,9 +11,10 @@ module Evnt
 
     # Constructor.
     def initialize(params)
-      init_event_data(params)
-      run_event_steps
-      notify_handlers
+      _init_event_data(params)
+      _validate_payload
+      _run_event_steps
+      _notify_handlers
     end
 
     # This function tells if the event is reloaded or not.
@@ -23,17 +24,17 @@ module Evnt
 
     private
 
-    # This function validates all params and check they are completed.
-    def validate_params(params)
+    # This function validates all payload and check they are completed.
+    def _validate_payload
       return unless self.class._attributes
 
       # check all attributes are present
-      check_attr = params.keys == (self.class._attributes - :evnt)
+      check_attr = @payload.keys == (self.class._attributes - :evnt)
       raise 'Event parameters are not correct' unless check_attr
     end
 
     # This function initializes the event required data.
-    def init_event_data(params)
+    def _init_event_data(params)
       # set state
       @state = {
         reloaded: !params[:evnt].nil?
@@ -41,7 +42,7 @@ module Evnt
 
       # set payload
       payload = params.reject { |k, _v| k[0] == '_' }
-      @payload = @state[:reloaded] ? payload : generate_payload(payload)
+      @payload = @state[:reloaded] ? payload : _generate_payload(payload)
       @payload.freeze
 
       # set other datas
@@ -51,12 +52,12 @@ module Evnt
     end
 
     # This function calls requested steps for the event.
-    def run_event_steps
+    def _run_event_steps
       _write_event if defined?(_write_event)
     end
 
     # This function generates the complete event payload.
-    def generate_payload(params)
+    def _generate_payload(params)
       # add evnt informations
       params[:evnt] = {
         timestamp: Time.now.to_i,
@@ -67,7 +68,7 @@ module Evnt
     end
 
     # This function notify all handlers for the event.
-    def notify_handlers
+    def _notify_handlers
       return unless self.class._handlers
 
       # notify every handler

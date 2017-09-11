@@ -8,8 +8,8 @@ module Evnt
     attr_reader :params
 
     def initialize(params, _options: {})
-      init_command_data(params, _options)
-      run_command_steps
+      _init_command_data(params, _options)
+      _run_command_steps
     end
 
     # This function returns the list of errors of the command.
@@ -47,10 +47,14 @@ module Evnt
       raise error if @options[:exceptions]
     end
 
+    # This function validates the presence of a list of parameters
+    def validate_presence(parameters) # TODO
+    end
+
     private
 
     # This function initializes the command required data.
-    def init_command_data(params, options)
+    def _init_command_data(params, options)
       # set state
       @state = {
         result: true,
@@ -67,7 +71,7 @@ module Evnt
     end
 
     # This function calls requested steps for the command.
-    def run_command_steps
+    def _run_command_steps
       _validate_params if @state[:result] && defined?(_validate_params)
       _validate_logic if @state[:result] && defined?(_validate_logic)
       _initialize_events if @state[:result] && defined?(_initialize_events)
