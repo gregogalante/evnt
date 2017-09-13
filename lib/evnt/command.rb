@@ -101,14 +101,20 @@ module Evnt
 
     ##
     # This function validates the presence of a list of parameters.
-    # The presence validation should check that every parameter exist,
-    # is not nil and is not blank.
+    # The presence validation should check that every parameter exist
+    # and is not nil.
     # The returned object should be a boolean value.
     #
     # ==== Attributes
-    # * +parameters+ - The array of parameters keys that should be validated.
+    # * +attributes+ - The array of attributes keys that should be validated.
     ##
-    def attributes_presents?(parameters); end # TODO
+    def params_presents?(attributes)
+      attributes.each do |attribute|
+        return false if @params[attribute].nil?
+      end
+
+      true
+    end
 
     # Private functions:
     ############################################################################
