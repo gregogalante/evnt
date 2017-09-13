@@ -4,12 +4,42 @@ require 'time'
 
 module Evnt
 
-  # Event.
+  ##
+  # Events are used to save on a persistent data structure what
+  # happends on the system.
+  ##
   class Event
 
-    attr_reader :name, :attributes, :payload, :extras
+    ##
+    # Attribute containings the name of the event.
+    ##
+    attr_reader :name
 
-    # Constructor.
+    ##
+    # Attribute containings the list of attributes of the event.
+    ##
+    attr_reader :attributes
+
+    ##
+    # Attribute containings the payload of the event.
+    ##
+    attr_reader :payload
+
+    ##
+    # Attribute containings the extra parameters of the event.
+    ##
+    attr_reader :extras
+
+    ##
+    # The constructor is used to initialize a new event.
+    # The parameters are validated and added to the payload
+    # of the event. The parameters with the _ in their name
+    # are not saved on the payload.
+    #
+    # ==== Attributes
+    #
+    # * +params+ - The list of parameters for the command.
+    ##
     def initialize(params)
       _init_event_data(params)
       _validate_payload
@@ -20,9 +50,11 @@ module Evnt
     # Public functions:
     ############################################################################
 
+    ##
     # This function tells if the event is reloaded or not.
-    # It should return a boolean value corresponding to the
-    # presence of 'evnt' value inside the event params.
+    # The returned object should be a boolean value corresponding to the
+    # presence of evnt value inside the event params.
+    ##
     def reloaded?
       @state[:reloaded]
     end

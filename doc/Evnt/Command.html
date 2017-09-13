@@ -73,6 +73,8 @@
     
     <li ><a href="#method-c-new">::new</a>
     
+    <li ><a href="#method-i-attributes_presents-3F">#attributes_presents?</a>
+    
     <li ><a href="#method-i-completed-3F">#completed?</a>
     
     <li ><a href="#method-i-error_codes">#error_codes</a>
@@ -82,8 +84,6 @@
     <li ><a href="#method-i-errors">#errors</a>
     
     <li ><a href="#method-i-stop">#stop</a>
-    
-    <li ><a href="#method-i-validate_presence">#validate_presence</a>
     
   </ul>
 </div>
@@ -161,7 +161,7 @@ client.</p>
 
 <h4 id="method-c-new-label-Attributes">Attributes<span><a href="#method-c-new-label-Attributes">&para;</a> <a href="#top">&uarr;</a></span></h4>
 <ul><li>
-<p><code>params</code> - The list of parameters of for the command.</p>
+<p><code>params</code> - The list of parameters for the command.</p>
 </li><li>
 <p><code>_options</code> - The list of options for the command.</p>
 </li></ul>
@@ -169,16 +169,14 @@ client.</p>
 <h4 id="method-c-new-label-Options">Options<span><a href="#method-c-new-label-Options">&para;</a> <a href="#top">&uarr;</a></span></h4>
 <ul><li>
 <p><code>exceptions</code> - Boolean value used to activate the throw of
-excetions</p>
+excetions.</p>
 </li></ul>
-
-<p>using the stop function.</p>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 29</span>
+            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 28</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">_options</span><span class="ruby-operator">:</span> {})
   <span class="ruby-identifier">_init_command_data</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">_options</span>)
   <span class="ruby-identifier">_run_command_steps</span>
@@ -214,14 +212,14 @@ excetions</p>
 
         <div class="method-description">
           
-          <p>This function tells if the command is completed or not. The response should
-be a boolean value.</p>
+          <p>This function tells if the command is completed or not. The returned object
+should be a boolean value.</p>
           
           
 
           
           <div class="method-source-code" id="completed-3F-source">
-            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 60</span>
+            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 67</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">completed?</span>
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:result</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -248,14 +246,14 @@ be a boolean value.</p>
 
         <div class="method-description">
           
-          <p>This function returns the list of error codes of the command. The response
-should be an array of integers.</p>
+          <p>This function returns the list of error codes of the command. The returned
+object should be an array of integers.</p>
           
           
 
           
           <div class="method-source-code" id="error_codes-source">
-            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 54</span>
+            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 59</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">error_codes</span>
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:errors</span>].<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>[<span class="ruby-value">:code</span>] }
 <span class="ruby-keyword">end</span></pre>
@@ -283,13 +281,13 @@ should be an array of integers.</p>
         <div class="method-description">
           
           <p>This function returns the list of error messages of the command. The
-response should be an array of strings.</p>
+returned object should be an array of strings.</p>
           
           
 
           
           <div class="method-source-code" id="error_messages-source">
-            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 48</span>
+            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 51</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">error_messages</span>
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:errors</span>].<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>[<span class="ruby-value">:message</span>] }
 <span class="ruby-keyword">end</span></pre>
@@ -316,16 +314,16 @@ response should be an array of strings.</p>
 
         <div class="method-description">
           
-          <p>This function returns the list of errors of the command. The response
-should be an array of hash with the format: { message: string, code:
-integer } The &#39;code&#39; value should be nil if code is not defined
-with the stop(message) function.</p>
+          <p>This function returns the list of errors of the command. The returned
+object should be an array of hashes with a message and a code value. The
+code value of hashes should be nil if code is not defined using the stop()
+function.</p>
           
           
 
           
           <div class="method-source-code" id="errors-source">
-            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 42</span>
+            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 43</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">errors</span>
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:errors</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -347,6 +345,45 @@ with the stop(message) function.</p>
        </header>
 
     
+      <div id="method-i-attributes_presents-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">attributes_presents?</span><span
+            class="method-args">(parameters)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This function validates the presence of a list of parameters. The presence
+validation should check that every parameter exist, is not nil and is not
+blank. The returned object should be a boolean value.</p>
+
+<h4 id="method-i-attributes_presents-3F-label-Attributes">Attributes<span><a href="#method-i-attributes_presents-3F-label-Attributes">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<ul><li>
+<p><code>parameters</code> - The array of parameters keys that should be
+validated.</p>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="attributes_presents-3F-source">
+            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 110</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">attributes_presents?</span>(<span class="ruby-identifier">parameters</span>); <span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-stop" class="method-detail ">
         
         <div class="method-heading">
@@ -361,16 +398,23 @@ with the stop(message) function.</p>
         <div class="method-description">
           
           <p>This function can be used to stop the command execution and add a new
-error. Using stop inside a callback should not stop the callback but should
-avoid the call of the next callback. Every time you call this function, a
-new error should be added to the errors list. If the &#39;exceptions&#39;
-option is active, it should raise a new  error.</p>
+error. Using stop inside a callback should not stop the execution but
+should avoid the call of the next callback. Every time you call this
+function, a new error should be added to the errors list. If the exceptions
+option is active, it should raise a new error.</p>
+
+<h4 id="method-i-stop-label-Attributes">Attributes<span><a href="#method-i-stop-label-Attributes">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<ul><li>
+<p><code>message</code> - The message string of the error.</p>
+</li><li>
+<p><code>code</code> - The error code.</p>
+</li></ul>
           
           
 
           
           <div class="method-source-code" id="stop-source">
-            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 77</span>
+            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 90</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">stop</span>(<span class="ruby-identifier">message</span>, <span class="ruby-identifier">code</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>)
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:result</span>] = <span class="ruby-keyword">false</span>
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:errors</span>].<span class="ruby-identifier">push</span>(
@@ -381,37 +425,6 @@ option is active, it should raise a new  error.</p>
   <span class="ruby-comment"># raise error if command needs exceptions</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-identifier">error</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@options</span>[<span class="ruby-value">:exceptions</span>]
 <span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-validate_presence" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">validate_presence</span><span
-            class="method-args">(parameters)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>This function validates the presence of a list of parameters.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="validate_presence-source">
-            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 89</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_presence</span>(<span class="ruby-identifier">parameters</span>); <span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>

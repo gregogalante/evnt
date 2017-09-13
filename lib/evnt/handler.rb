@@ -2,12 +2,23 @@
 
 module Evnt
 
-  # Handler.
+  ##
+  # Handlers are used to listen one or more events and run tasks after their execution.
+  ##
   class Handler
 
+    ##
+    # Attribute containings the event that notify the handler.
+    ##
     attr_reader :event
 
-    # This function is called when an event notify the handler
+    ##
+    # This function is called from an event to notify an handler.
+    #
+    # ==== Attributes
+    #
+    # * +event+ - The event object that call the function.
+    ##
     def notify(event)
       _init_handler_data(event)
       _init_handler_steps

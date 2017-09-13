@@ -86,7 +86,8 @@
 
   <section class="description">
     
-<p><a href="Handler.html">Handler</a>.</p>
+<p>Handlers are used to listen one or more events and run tasks after their
+execution.</p>
 
   </section>
 
@@ -115,7 +116,7 @@
 
         <div class="method-description">
         
-        
+        <p>Attribute containings the event that notify the handler.</p>
         
         </div>
       </div>
@@ -143,13 +144,18 @@
 
         <div class="method-description">
           
-          <p>This function is called when an event notify the handler</p>
+          <p>This function is called from an event to notify an handler.</p>
+
+<h4 id="method-i-notify-label-Attributes">Attributes<span><a href="#method-i-notify-label-Attributes">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<ul><li>
+<p><code>event</code> - The event object that call the function.</p>
+</li></ul>
           
           
 
           
           <div class="method-source-code" id="notify-source">
-            <pre><span class="ruby-comment"># File lib/evnt/handler.rb, line 10</span>
+            <pre><span class="ruby-comment"># File lib/evnt/handler.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">notify</span>(<span class="ruby-identifier">event</span>)
   <span class="ruby-identifier">_init_handler_data</span>(<span class="ruby-identifier">event</span>)
   <span class="ruby-identifier">_init_handler_steps</span>

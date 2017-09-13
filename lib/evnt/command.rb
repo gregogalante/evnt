@@ -19,13 +19,12 @@ module Evnt
     #
     # ==== Attributes
     #
-    # * +params+ - The list of parameters of for the command.
+    # * +params+ - The list of parameters for the command.
     # * +_options+ - The list of options for the command.
     #
     # ==== Options
     #
-    # * +exceptions+ - Boolean value used to activate the throw of excetions
-    # using the stop function.
+    # * +exceptions+ - Boolean value used to activate the throw of excetions.
     ##
     def initialize(params, _options: {})
       _init_command_data(params, _options)
@@ -35,29 +34,37 @@ module Evnt
     # Public functions:
     ############################################################################
 
+    ##
     # This function returns the list of errors of the command.
-    # The response should be an array of hash with the format:
-    # { message: string, code: integer }
-    # The 'code' value should be nil if code is not defined with
-    # the stop(message) function.
+    # The returned object should be an array of hashes with a message and
+    # a code value.
+    # The code value of hashes should be nil if code is not defined using
+    # the stop() function.
+    ##
     def errors
       @state[:errors]
     end
 
+    ##
     # This function returns the list of error messages of the command.
-    # The response should be an array of strings.
+    # The returned object should be an array of strings.
+    ##
     def error_messages
       @state[:errors].map { |e| e[:message] }
     end
 
+    ##
     # This function returns the list of error codes of the command.
-    # The response should be an array of integers.
+    # The returned object should be an array of integers.
+    ##
     def error_codes
       @state[:errors].map { |e| e[:code] }
     end
 
+    ##
     # This function tells if the command is completed or not.
-    # The response should be a boolean value.
+    # The returned object should be a boolean value.
+    ##
     def completed?
       @state[:result]
     end
@@ -67,14 +74,20 @@ module Evnt
 
     protected
 
+    ##
     # This function can be used to stop the command execution and
     # add a new error.
-    # Using stop inside a callback should not stop the callback but
+    # Using stop inside a callback should not stop the execution but
     # should avoid the call of the next callback.
     # Every time you call this function, a new error should be added
     # to the errors list.
-    # If the 'exceptions' option is active, it should raise a new 
-    # error.
+    # If the exceptions option is active, it should raise a new error.
+    #
+    # ==== Attributes
+    #
+    # * +message+ - The message string of the error.
+    # * +code+ - The error code.
+    ##
     def stop(message, code: nil)
       @state[:result] = false
       @state[:errors].push(
@@ -86,8 +99,16 @@ module Evnt
       raise error if @options[:exceptions]
     end
 
+    ##
     # This function validates the presence of a list of parameters.
-    def validate_presence(parameters); end # TODO: Complete function
+    # The presence validation should check that every parameter exist,
+    # is not nil and is not blank.
+    # The returned object should be a boolean value.
+    #
+    # ==== Attributes
+    # * +parameters+ - The array of parameters keys that should be validated.
+    ##
+    def attributes_presents?(parameters); end # TODO
 
     # Private functions:
     ############################################################################

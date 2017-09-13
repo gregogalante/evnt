@@ -88,7 +88,8 @@
 
   <section class="description">
     
-<p><a href="Event.html">Event</a>.</p>
+<p>Events are used to save on a persistent data structure what happends on the
+system.</p>
 
   </section>
 
@@ -117,7 +118,7 @@
 
         <div class="method-description">
         
-        
+        <p>Attribute containings the list of attributes of the event.</p>
         
         </div>
       </div>
@@ -130,7 +131,7 @@
 
         <div class="method-description">
         
-        
+        <p>Attribute containings the extra parameters of the event.</p>
         
         </div>
       </div>
@@ -143,7 +144,7 @@
 
         <div class="method-description">
         
-        
+        <p>Attribute containings the name of the event.</p>
         
         </div>
       </div>
@@ -156,7 +157,7 @@
 
         <div class="method-description">
         
-        
+        <p>Attribute containings the payload of the event.</p>
         
         </div>
       </div>
@@ -184,13 +185,20 @@
 
         <div class="method-description">
           
-          <p>Constructor.</p>
+          <p>The constructor is used to initialize a new event. The parameters are
+validated and added to the payload of the event. The parameters with the _
+in their name are not saved on the payload.</p>
+
+<h4 id="method-c-new-label-Attributes">Attributes<span><a href="#method-c-new-label-Attributes">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<ul><li>
+<p><code>params</code> - The list of parameters for the command.</p>
+</li></ul>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 12</span>
+            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 42</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">params</span>)
   <span class="ruby-identifier">_init_event_data</span>(<span class="ruby-identifier">params</span>)
   <span class="ruby-identifier">_validate_payload</span>
@@ -228,15 +236,15 @@
 
         <div class="method-description">
           
-          <p>This function tells if the event is reloaded or not. It should return a
-boolean value corresponding to the presence of &#39;evnt&#39; value inside
-the event params.</p>
+          <p>This function tells if the event is reloaded or not. The returned object
+should be a boolean value corresponding to the presence of evnt value
+inside the event params.</p>
           
           
 
           
           <div class="method-source-code" id="reloaded-3F-source">
-            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 25</span>
+            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 57</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">reloaded?</span>
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:reloaded</span>]
 <span class="ruby-keyword">end</span></pre>
