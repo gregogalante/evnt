@@ -247,3 +247,7 @@ class ProductHandler < Evnt::Handler
 
 end
 ```
+
+## Development
+
+To update the documentation run: **rdoc lib**

@@ -2,11 +2,31 @@
 
 module Evnt
 
-  # Command.
+  ##
+  # Commands are used to run single tasks on the system.
+  # It's like a controller on an MVC architecture without the
+  # communication with the client.
+  ##
   class Command
 
+    ##
+    # Attribute containings the list of command parameters.
+    ##
     attr_reader :params
 
+    ##
+    # The constructor is used to run a new command.
+    #
+    # ==== Attributes
+    #
+    # * +params+ - The list of parameters of for the command.
+    # * +_options+ - The list of options for the command.
+    #
+    # ==== Options
+    #
+    # * +exceptions+ - Boolean value used to activate the throw of excetions
+    # using the stop function.
+    ##
     def initialize(params, _options: {})
       _init_command_data(params, _options)
       _run_command_steps
