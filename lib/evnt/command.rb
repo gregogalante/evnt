@@ -110,7 +110,7 @@ module Evnt
     ##
     def params_presence?(attributes)
       attributes.each do |attribute|
-        return false if @params[attribute].nil?
+        return false if !@params[attribute] || @params[attribute].empty?
       end
 
       true
