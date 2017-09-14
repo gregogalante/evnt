@@ -99,23 +99,6 @@ module Evnt
       raise error if @options[:exceptions]
     end
 
-    ##
-    # This function validates the presence of a list of parameters.
-    # The presence validation should check that every parameter exist
-    # and is not nil.
-    # The returned object should be a boolean value.
-    #
-    # ==== Attributes
-    # * +attributes+ - The array of attributes keys that should be validated.
-    ##
-    def params_presence?(*attributes)
-      attributes.each do |attribute|
-        return false if !@params[attribute] || @params[attribute].empty?
-      end
-
-      true
-    end
-
     # Private functions:
     ############################################################################
 
