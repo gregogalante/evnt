@@ -108,7 +108,7 @@ module Evnt
     # ==== Attributes
     # * +attributes+ - The array of attributes keys that should be validated.
     ##
-    def params_presence?(attributes)
+    def params_presence?(*attributes)
       attributes.each do |attribute|
         return false if !@params[attribute] || @params[attribute].empty?
       end

@@ -32,9 +32,7 @@ class CreateOrderCommand < Evnt::Command
 
   to_validate_params do
     # check params presence
-    stop 'User should be present' unless params[:user_id]
-    stop 'Product should be present' unless params[:product_id]
-    stop 'Quantity should be present' unless params[:quantity]
+    stop 'Required attributes not present' unless params_presence?(:user_id, :product_id, :quantity)
 
     # check quantity is valid
     stop 'Quantity should be positive' if params[:quantity] < 1
