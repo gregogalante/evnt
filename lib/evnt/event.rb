@@ -97,7 +97,7 @@ module Evnt
       return unless self.class._attributes
 
       # check all attributes are present
-      check_attr = @payload.keys == (self.class._attributes - :evnt)
+      check_attr = (@payload.keys - [:evnt]) == self.class._attributes
       raise 'Event parameters are not correct' unless check_attr
     end
 
