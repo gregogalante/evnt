@@ -74,17 +74,11 @@ module Evnt
       # set payload
       payload = params.reject { |k, _v| k[0] == '_' }
       @payload = @state[:reloaded] ? payload : _generate_payload(payload)
-      @payload.freeze
 
       # set other datas
       @name = self.class._name
       @attributes = self.class._attributes
       @extras = params.select { |k, _v| k[0] == '_' }
-    end
-
-    # This function calls requested steps for the event.
-    def _run_event_steps
-      _write_event if defined?(_write_event)
     end
 
     # This function generates the complete event payload.
@@ -105,6 +99,11 @@ module Evnt
       # check all attributes are present
       check_attr = @payload.keys == (self.class._attributes - :evnt)
       raise 'Event parameters are not correct' unless check_attr
+    end
+
+    # This function calls requested steps for the event.
+    def _run_event_steps
+      _write_event if defined?(_write_event)
     end
 
     # This function notify all handlers for the event.
