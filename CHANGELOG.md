@@ -1,5 +1,7 @@
 # Evnt changelog
 
+## Version 2.0.2
+
 ## Version 2.0.1
 
 - Rename "throw" function to "stop" inside commands.
