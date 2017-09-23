@@ -250,4 +250,10 @@ end
 
 ## Development
 
-To update the documentation run: **rdoc lib**
+To update the documentation run:
+
+```console
+
+rdoc --op docs
+
+```

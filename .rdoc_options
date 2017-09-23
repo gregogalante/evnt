@@ -1,0 +1,11 @@
+--- !ruby/object:RDoc::Options
+title: "Evnt Gem"
+encoding: UTF-8
+charset: UTF-8
+static_path: []
+rdoc_include:
+- "./lib"
+exclude:
+- "./Gemfile"
+- "./Gemfile.lock"
+- "./evnt.gemspec"

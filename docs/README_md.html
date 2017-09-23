@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>README - Evnt Gem</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+  var index_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+<div class="nav-section">
+  <h3>Table of Contents</h3>
+
+  <ul class="link-list" role="directory">
+    <li><a href="#label-Evnt">Evnt</a>
+    <li><a href="#label-Structure">Structure</a>
+    <li><a href="#label-Command">Command</a>
+    <li><a href="#label-Event">Event</a>
+    <li><a href="#label-Handler">Handler</a>
+    <li><a href="#label-Development">Development</a>
+  </ul>
+</div>
+
+
+  <div id="project-metadata">
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./CHANGELOG_md.html">CHANGELOG</a>
+  
+    <li><a href="./README_md.html">README</a>
+  
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page README.md">
+
+<h1 id="label-Evnt"><a href="Evnt.html">Evnt</a><span><a href="#label-Evnt">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<p>CQRS and Event Driven Development architecture for Ruby projects.</p>
+<ul><li>
+<p><a href="#structure">Structure</a></p>
+</li><li>
+<p><a href="#command">Command</a></p>
+</li><li>
+<p><a href="#event">Event</a></p>
+</li><li>
+<p><a href="#handler">Handler</a></p>
+</li></ul>
+
+<h2 id="label-Structure">Structure<span><a href="#label-Structure">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p><a href="Evnt.html">Evnt</a> is developed to be used over all kinds of
+projects and frameworks (like Ruby on Rails or Sinatra), so it contains
+only three types of entities:</p>
+<ul><li>
+<p>Command</p>
+</li><li>
+<p>Event</p>
+</li><li>
+<p>Handler</p>
+</li></ul>
+
+<h3 id="label-Command">Command<span><a href="#label-Command">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>Commands are used to run single tasks on the system. It&#39;s like a
+controller on an MVC architecture without the communication with the
+client.</p>
+
+<p>Every command has three steps to execute:</p>
+<ul><li>
+<p>The params validation which validates the parameters used to run the
+command.</p>
+</li><li>
+<p>The logic validation which checks the command can be executed in compliance
+with the system rules.</p>
+</li><li>
+<p>The event intialization which initializes an event object used to save the
+command.</p>
+</li></ul>
+
+<p>An example of command should be:</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">CreateOrderCommand</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Command</span>
+
+  <span class="ruby-identifier">to_validate_params</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-comment"># check params presence</span>
+    <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;User should be present&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">user_id</span>].<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;Product should be present&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">product_id</span>].<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;Quantity should be present&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>].<span class="ruby-identifier">blank?</span>
+
+    <span class="ruby-comment"># check quantity is valid</span>
+    <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;Quantity should be positive&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>] <span class="ruby-operator">&lt;</span> <span class="ruby-value">1</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">to_validate_logic</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by</span>(<span class="ruby-identifier">id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">user_id</span>])
+    <span class="ruby-ivar">@product</span> = <span class="ruby-constant">Product</span>.<span class="ruby-identifier">find_by</span>(<span class="ruby-identifier">id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">product_id</span>])
+
+    <span class="ruby-comment"># check user exist</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@user</span>
+      <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;The user does not exist&#39;</span>
+      <span class="ruby-keyword">break</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># check product exist</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@product</span>
+      <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;The product does not exist&#39;</span>
+      <span class="ruby-keyword">break</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># check quantity exist for the product</span>
+    <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;The requested quantity is not available&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">quantity</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>]
+
+    <span class="ruby-comment"># check user has money to buy the product</span>
+    <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;You do not have enought money&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">money</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">price</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>]
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">to_initialize_events</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-comment"># generate order id</span>
+    <span class="ruby-identifier">order_id</span> = <span class="ruby-constant">SecureRandom</span>.<span class="ruby-identifier">uuid</span>
+
+    <span class="ruby-comment"># initialize event</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-constant">CreateOrderEvent</span>.<span class="ruby-identifier">new</span>(
+        <span class="ruby-identifier">order_id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">order_id</span>,
+        <span class="ruby-identifier">user_id</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">id</span>,
+        <span class="ruby-identifier">product_id</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">id</span>,
+        <span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>],
+        <span class="ruby-identifier">_user</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@user</span>,
+        <span class="ruby-identifier">_product</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@product</span>
+      )
+    <span class="ruby-keyword">rescue</span>
+      <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;Sorry, there was an error&#39;</span>, <span class="ruby-identifier">code</span><span class="ruby-operator">:</span> <span class="ruby-value">500</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>An example of command usage should be:</p>
+
+<pre class="ruby"><span class="ruby-identifier">command</span> = <span class="ruby-constant">CreateOrderCommand</span>.<span class="ruby-identifier">new</span>(
+  <span class="ruby-identifier">user_id</span><span class="ruby-operator">:</span> <span class="ruby-value">128</span>,
+  <span class="ruby-identifier">product_id</span><span class="ruby-operator">:</span> <span class="ruby-value">534</span>,
+  <span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-value">10</span>
+)
+
+<span class="ruby-keyword">if</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">completed?</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;Command completed&#39;</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">params</span> <span class="ruby-comment"># -&gt; { user_id: 128, product_id: 534, quantity: 10 }</span>
+<span class="ruby-keyword">else</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">errors</span> <span class="ruby-comment"># array of hashes with a { message, code } structure</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">error_messages</span> <span class="ruby-comment"># array of error messages</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">error_codes</span> <span class="ruby-comment"># array of error codes</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>It&#39;s also possible to use stop method inside the command to raise an
+exception with the option <strong>exception: true</strong>. An example of
+usage should be:</p>
+
+<pre class="ruby"><span class="ruby-keyword">begin</span>
+  <span class="ruby-identifier">command</span> = <span class="ruby-constant">CreateOrderCommand</span>.<span class="ruby-identifier">new</span>(
+    <span class="ruby-identifier">user_id</span><span class="ruby-operator">:</span> <span class="ruby-value">128</span>,
+    <span class="ruby-identifier">product_id</span><span class="ruby-operator">:</span> <span class="ruby-value">534</span>,
+    <span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-value">10</span>,
+    <span class="ruby-identifier">_options</span><span class="ruby-operator">:</span> {
+      <span class="ruby-identifier">excption</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>
+    }
+  )
+<span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">e</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<h3 id="label-Event">Event<span><a href="#label-Event">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>Events are used to save on a persistent data structure what happends on the
+system.</p>
+
+<p>Every event has three informations:</p>
+<ul><li>
+<p>The <strong>name</strong> is an unique identifier of the event.</p>
+</li><li>
+<p>The <strong>attributes</strong> are the list of attributes required from
+the event to be saved.</p>
+</li><li>
+<p>The <strong>handlers</strong> are a list of handler objects which will be
+notified when the event is completed.</p>
+</li></ul>
+
+<p>Every event has also a single function used to write the event information
+on the data structure.</p>
+
+<p>An example of event should be:</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">CreateOrderEvent</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Event</span>
+
+  <span class="ruby-identifier">name_is</span> :<span class="ruby-identifier">create_order</span>
+
+  <span class="ruby-identifier">attributes_are</span> :<span class="ruby-identifier">order_id</span>, :<span class="ruby-identifier">user_id</span>, :<span class="ruby-identifier">product_id</span>, :<span class="ruby-identifier">quantity</span>
+
+  <span class="ruby-identifier">handlers_are</span> [
+    <span class="ruby-constant">ProductHandler</span>.<span class="ruby-identifier">new</span>,
+    <span class="ruby-constant">UserNotifierHandler</span>.<span class="ruby-identifier">new</span>
+  ]
+
+  <span class="ruby-identifier">to_write_event</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-comment"># save event on database</span>
+    <span class="ruby-constant">Event</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">payload</span><span class="ruby-operator">:</span> <span class="ruby-identifier">payload</span>)
+  <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>An example of event usage should be:</p>
+
+<pre class="ruby"><span class="ruby-identifier">event</span> = <span class="ruby-constant">CreateOrderEvent</span>.<span class="ruby-identifier">new</span>(
+  <span class="ruby-identifier">order_id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">order_id</span>,
+  <span class="ruby-identifier">user_id</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">id</span>,
+  <span class="ruby-identifier">product_id</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">id</span>,
+  <span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>]
+)
+
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">name</span> <span class="ruby-comment"># -&gt; :create_order</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">attributes</span> <span class="ruby-comment"># -&gt; [:order_id, :user_id, :product_id, :quantity]</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">payload</span> <span class="ruby-comment"># -&gt; { order_id: 1, user_id: 128, product_id: 534, quantity: 10, evnt: { timestamp: 2017010101, name: &#39;create_order&#39; } }</span>
+</pre>
+
+<p>The event payload should contain all event attributes and a reserver
+attributes “evnt” used to store the event timestamp and the event name.</p>
+
+<p>It&#39;s also possible to give datas to the event without save them on the
+event payload, to do this you shuld only use a key with “_” as first
+character. An example should be:</p>
+
+<pre class="ruby"><span class="ruby-identifier">event</span> = <span class="ruby-constant">CreateOrderEvent</span>.<span class="ruby-identifier">new</span>(
+  <span class="ruby-identifier">order_id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">order_id</span>,
+  <span class="ruby-identifier">user_id</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">id</span>,
+  <span class="ruby-identifier">product_id</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">id</span>,
+  <span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>],
+  <span class="ruby-identifier">_total_price</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>] <span class="ruby-operator">*</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">price</span>
+)
+
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">payload</span> <span class="ruby-comment"># -&gt; { order_id: 1, user_id: 128, product_id: 534, quantity: 10, evnt: { timestamp: 2017010101, name: &#39;create_order&#39; } }</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">extras</span> <span class="ruby-comment"># -&gt; { _total_price: 50 }</span>
+</pre>
+
+<p>After the execution of the <strong>to_write_event</strong> block the event
+object should notify all its handlers.</p>
+
+<p>Sometimes you need to reload an old event to notify handlers to re-build
+queries from events. To initialize a new event object with the payload of
+an old event you can pass the old event payload to the event constructor:</p>
+
+<pre class="ruby"><span class="ruby-identifier">events</span> = <span class="ruby-constant">Event</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;create_order&#39;</span>)
+<span class="ruby-identifier">reloaded_event</span> = <span class="ruby-constant">CreateOrderEvent</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">events</span>.<span class="ruby-identifier">sample</span>.<span class="ruby-identifier">payload</span>)
+
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">reloaded_event</span>.<span class="ruby-identifier">reloaded?</span> <span class="ruby-comment"># -&gt; true</span>
+</pre>
+
+<h3 id="label-Handler">Handler<span><a href="#label-Handler">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>Handlers are used to listen one or more events and run tasks after their
+execution.</p>
+
+<p>Every handler event management has two steps to execute:</p>
+<ul><li>
+<p>The queries update which updates temporary data structures used to read
+datas.</p>
+</li><li>
+<p>The manage event code which run other tasks like mailers, parallel
+executions ecc.</p>
+</li></ul>
+
+<p>An example of handler shuould be:</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">ProductHandler</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Handler</span>
+
+  <span class="ruby-identifier">on</span> :<span class="ruby-identifier">create_order</span> <span class="ruby-keyword">do</span>
+
+    <span class="ruby-identifier">to_update_queries</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-comment"># update product quantity</span>
+      <span class="ruby-identifier">product</span> = <span class="ruby-identifier">event</span>.<span class="ruby-identifier">extras</span>[:<span class="ruby-identifier">_product</span>]
+      <span class="ruby-identifier">product</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-identifier">product</span>.<span class="ruby-identifier">quantity</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">event</span>[:<span class="ruby-identifier">quantity</span>])
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">to_manage_event</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-comment"># this block is called only for not reloaded events</span>
+    <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>The execution of <strong>to_update_queries</strong> block runs after every
+events initialization. The execution of <strong>to_manage_event</strong>
+block runs only for not reloaded events initialization.</p>
+
+<p>Sometimes you need to run some code to manage only reloaded events. To run
+code only for reloaded events you can use the
+<strong>to_manage_reloaded_event</strong> block:</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">ProductHandler</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Handler</span>
+
+  <span class="ruby-identifier">on</span> :<span class="ruby-identifier">create_order</span> <span class="ruby-keyword">do</span>
+
+    <span class="ruby-identifier">to_manage_reloaded_event</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-comment"># this block is called only for reloaded events</span>
+    <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span>
+</pre>
+
+<h2 id="label-Development">Development<span><a href="#label-Development">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>To update the documentation run:</p>
+
+<pre class="ruby">
+<span class="ruby-identifier">rdoc</span> <span class="ruby-identifier">lib</span>
+</pre>
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://rdoc.github.io/rdoc">RDoc</a> 5.1.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
