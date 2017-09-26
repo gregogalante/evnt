@@ -259,3 +259,13 @@ To update the documentation run:
 rdoc --op docs
 
 ```
+
+To exec an example run:
+
+```console
+
+cd example
+bundle install
+bundle exec ruby file.rb
+
+```
