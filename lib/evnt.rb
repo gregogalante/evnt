@@ -4,6 +4,7 @@ require 'evnt/version'
 require 'evnt/command'
 require 'evnt/event'
 require 'evnt/handler'
+require 'evnt/validator'
 
 ##
 # Evnt is a gem developed to integrate a test driven development
