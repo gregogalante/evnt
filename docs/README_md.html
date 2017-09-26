@@ -97,6 +97,9 @@
 <p><a href="#handler">Handler</a></p>
 </li></ul>
 
+<p>Full documentation here: <a
+href="https://ideonetwork.github.io/ruby-evnt">ideonetwork.github.io/ruby-evnt</a>/</p>
+
 <h2 id="label-Structure">Structure<span><a href="#label-Structure">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
 <p><a href="Evnt.html">Evnt</a> is developed to be used over all kinds of
@@ -134,12 +137,9 @@ command.</p>
 
   <span class="ruby-identifier">to_validate_params</span> <span class="ruby-keyword">do</span>
     <span class="ruby-comment"># check params presence</span>
-    <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;User should be present&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">user_id</span>].<span class="ruby-identifier">blank?</span>
-    <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;Product should be present&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">product_id</span>].<span class="ruby-identifier">blank?</span>
-    <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;Quantity should be present&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>].<span class="ruby-identifier">blank?</span>
-
-    <span class="ruby-comment"># check quantity is valid</span>
-    <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;Quantity should be positive&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>] <span class="ruby-operator">&lt;</span> <span class="ruby-value">1</span>
+    <span class="ruby-identifier">err</span> <span class="ruby-string">&#39;User should be present&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">user_id</span>].<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">err</span> <span class="ruby-string">&#39;Product should be present&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">product_id</span>].<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">err</span> <span class="ruby-string">&#39;Quantity should be present&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>].<span class="ruby-identifier">blank?</span>
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-identifier">to_validate_logic</span> <span class="ruby-keyword">do</span>
@@ -148,21 +148,21 @@ command.</p>
 
     <span class="ruby-comment"># check user exist</span>
     <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@user</span>
-      <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;The user does not exist&#39;</span>
+      <span class="ruby-identifier">err</span> <span class="ruby-string">&#39;The user does not exist&#39;</span>
       <span class="ruby-keyword">break</span>
     <span class="ruby-keyword">end</span>
 
     <span class="ruby-comment"># check product exist</span>
     <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@product</span>
-      <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;The product does not exist&#39;</span>
+      <span class="ruby-identifier">err</span> <span class="ruby-string">&#39;The product does not exist&#39;</span>
       <span class="ruby-keyword">break</span>
     <span class="ruby-keyword">end</span>
 
     <span class="ruby-comment"># check quantity exist for the product</span>
-    <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;The requested quantity is not available&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">quantity</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>]
+    <span class="ruby-identifier">err</span> <span class="ruby-string">&#39;The requested quantity is not available&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">quantity</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>]
 
     <span class="ruby-comment"># check user has money to buy the product</span>
-    <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;You do not have enought money&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">money</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">price</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>]
+    <span class="ruby-identifier">err</span> <span class="ruby-string">&#39;You do not have enought money&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">money</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">price</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>]
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-identifier">to_initialize_events</span> <span class="ruby-keyword">do</span>
@@ -180,7 +180,7 @@ command.</p>
         <span class="ruby-identifier">_product</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@product</span>
       )
     <span class="ruby-keyword">rescue</span>
-      <span class="ruby-identifier">stop</span> <span class="ruby-string">&#39;Sorry, there was an error&#39;</span>, <span class="ruby-identifier">code</span><span class="ruby-operator">:</span> <span class="ruby-value">500</span>
+      <span class="ruby-identifier">err</span> <span class="ruby-string">&#39;Sorry, there was an error&#39;</span>, <span class="ruby-identifier">code</span><span class="ruby-operator">:</span> <span class="ruby-value">500</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 
@@ -369,8 +369,15 @@ code only for reloaded events you can use the
 
 <p>To update the documentation run:</p>
 
+<pre>
+rdoc --op docs</pre>
+
+<p>To exec an example run:</p>
+
 <pre class="ruby">
-<span class="ruby-identifier">rdoc</span> <span class="ruby-identifier">lib</span>
+<span class="ruby-identifier">cd</span> <span class="ruby-identifier">example</span>
+<span class="ruby-identifier">bundle</span> <span class="ruby-identifier">install</span>
+<span class="ruby-identifier">bundle</span> <span class="ruby-identifier">exec</span> <span class="ruby-identifier">ruby</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">rb</span>
 </pre>
 </main>
 

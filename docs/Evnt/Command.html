@@ -75,13 +75,13 @@
     
     <li ><a href="#method-i-completed-3F">#completed?</a>
     
+    <li ><a href="#method-i-err">#err</a>
+    
     <li ><a href="#method-i-error_codes">#error_codes</a>
     
     <li ><a href="#method-i-error_messages">#error_messages</a>
     
     <li ><a href="#method-i-errors">#errors</a>
-    
-    <li ><a href="#method-i-stop">#stop</a>
     
   </ul>
 </div>
@@ -343,10 +343,10 @@ function.</p>
        </header>
 
     
-      <div id="method-i-stop" class="method-detail ">
+      <div id="method-i-err" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">stop</span><span
+          <span class="method-name">err</span><span
             class="method-args">(message, code: nil)</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -357,12 +357,12 @@ function.</p>
         <div class="method-description">
           
           <p>This function can be used to stop the command execution and add a new
-error. Using stop inside a callback should not stop the execution but
-should avoid the call of the next callback. Every time you call this
-function, a new error should be added to the errors list. If the exceptions
-option is active, it should raise a new error.</p>
+error. Using err inside a callback should not stop the execution but should
+avoid the call of the next callback. Every time you call this function, a
+new error should be added to the errors list. If the exceptions option is
+active, it should raise a new error.</p>
 
-<h4 id="method-i-stop-label-Attributes">Attributes<span><a href="#method-i-stop-label-Attributes">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<h4 id="method-i-err-label-Attributes">Attributes<span><a href="#method-i-err-label-Attributes">&para;</a> <a href="#top">&uarr;</a></span></h4>
 <ul><li>
 <p><code>message</code> - The message string of the error.</p>
 </li><li>
@@ -372,9 +372,9 @@ option is active, it should raise a new error.</p>
           
 
           
-          <div class="method-source-code" id="stop-source">
+          <div class="method-source-code" id="err-source">
             <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 90</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">stop</span>(<span class="ruby-identifier">message</span>, <span class="ruby-identifier">code</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>)
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">err</span>(<span class="ruby-identifier">message</span>, <span class="ruby-identifier">code</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>)
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:result</span>] = <span class="ruby-keyword">false</span>
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:errors</span>].<span class="ruby-identifier">push</span>(
     <span class="ruby-identifier">message</span><span class="ruby-operator">:</span> <span class="ruby-identifier">message</span>,
