@@ -216,7 +216,7 @@ class ProductHandler < Evnt::Handler
     to_update_queries do
       # update product quantity
       product = event.extras[:_product]
-      product.update(quantity: product.quantity - event[:quantity])
+      product.update(quantity: product.quantity - event.payload[:quantity])
     end
 
     to_manage_event do
