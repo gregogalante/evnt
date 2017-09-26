@@ -77,7 +77,7 @@ module Evnt
     ##
     # This function can be used to stop the command execution and
     # add a new error.
-    # Using stop inside a callback should not stop the execution but
+    # Using err inside a callback should not stop the execution but
     # should avoid the call of the next callback.
     # Every time you call this function, a new error should be added
     # to the errors list.
@@ -88,7 +88,7 @@ module Evnt
     # * +message+ - The message string of the error.
     # * +code+ - The error code.
     ##
-    def stop(message, code: nil)
+    def err(message, code: nil)
       @state[:result] = false
       @state[:errors].push(
         message: message,

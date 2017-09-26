@@ -3,6 +3,7 @@
 ## Version 2.0.2
 
 - Initialize code examples on repository.
+- Rename the "stop" function inside commands to "err".
 
 ## Version 2.0.1
 

@@ -34,12 +34,9 @@ class CreateOrderCommand < Evnt::Command
 
   to_validate_params do
     # check params presence
-    stop 'User should be present' if params[:user_id].blank?
-    stop 'Product should be present' if params[:product_id].blank?
-    stop 'Quantity should be present' if params[:quantity].blank?
-
-    # check quantity is valid
-    stop 'Quantity should be positive' if params[:quantity] < 1
+    err 'User should be present' if params[:user_id].blank?
+    err 'Product should be present' if params[:product_id].blank?
+    err 'Quantity should be present' if params[:quantity].blank?
   end
 
   to_validate_logic do
@@ -48,21 +45,21 @@ class CreateOrderCommand < Evnt::Command
 
     # check user exist
     unless @user
-      stop 'The user does not exist'
+      err 'The user does not exist'
       break
     end
 
     # check product exist
     unless @product
-      stop 'The product does not exist'
+      err 'The product does not exist'
       break
     end
 
     # check quantity exist for the product
-    stop 'The requested quantity is not available' if @product.quantity < params[:quantity]
+    err 'The requested quantity is not available' if @product.quantity < params[:quantity]
 
     # check user has money to buy the product
-    stop 'You do not have enought money' if @user.money < @product.price * params[:quantity]
+    err 'You do not have enought money' if @user.money < @product.price * params[:quantity]
   end
 
   to_initialize_events do
@@ -80,7 +77,7 @@ class CreateOrderCommand < Evnt::Command
         _product: @product
       )
     rescue
-      stop 'Sorry, there was an error', code: 500
+      err 'Sorry, there was an error', code: 500
     end
   end
 
