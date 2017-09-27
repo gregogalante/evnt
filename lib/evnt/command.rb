@@ -123,9 +123,22 @@ module Evnt
 
     # This function calls requested steps (callback) for the command.
     def _run_command_steps
+      _validate_single_params if @state[:result]
       _validate_params if @state[:result] && defined?(_validate_params)
       _validate_logic if @state[:result] && defined?(_validate_logic)
       _initialize_events if @state[:result] && defined?(_initialize_events)
+    end
+
+    # This function validates the single parameters sets with the "validates" method.
+    def _validate_single_params
+      return if self.class._validations.empty?
+      self.class._validations.each do |val|
+        result = Evnt::Validator.validates(params[val[:param]], val[:options])
+        unless result
+          err 'Validation error'
+          break
+        end
+      end
     end
 
     # Class functions:
@@ -133,6 +146,15 @@ module Evnt
 
     # This class contain the list of settings for the command.
     class << self
+
+      attr_accessor :_validations
+
+      # This function sets the single validation request for a command parameter.
+      def validates(param, options)
+        validations = instance_variable_get(:@_validations) || []
+        validations.push(param: param, options: options)
+        instance_variable_set(:@_validations, validations)
+      end
 
       # This function sets the validate params function for the command.
       def to_validate_params(&block)

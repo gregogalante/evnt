@@ -7,7 +7,13 @@ module Evnt
   ##
   class Validator
 
-    # TODO: Work in progress...
+    class << self
+
+      def validates(_value, _options)
+        true
+      end
+
+    end
 
   end
 

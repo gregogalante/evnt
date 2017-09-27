@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
-# VERSION 2.0.2
+##
+# This example show a basic usage of the Evnt gem.
+# Version: 2.0.2
+##
 
 require_relative './commands/basic_command'
 
