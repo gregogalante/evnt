@@ -123,7 +123,7 @@ module Evnt
 
     # This function calls requested steps (callback) for the command.
     def _run_command_steps
-      _validate_single_params if @state[:result]
+      _validate_single_params
       _validate_params if @state[:result] && defined?(_validate_params)
       _validate_logic if @state[:result] && defined?(_validate_logic)
       _initialize_events if @state[:result] && defined?(_initialize_events)
