@@ -7,10 +7,14 @@
 
 require_relative './commands/validates_command'
 
-command = ValidatesCommand.new(name: 'foo', surname: 'bar')
+command = ValidatesCommand.new(
+  string: 'foobar',
+  boolean_false: false,
+  boolean_true: true
+)
 
 if command.completed?
   puts 'command completed'
 else
-  puts 'command has errors'
+  puts command.error_messages
 end

@@ -135,7 +135,7 @@ module Evnt
       self.class._validations.each do |val|
         result = Evnt::Validator.validates(params[val[:param]], val[:options])
         unless result
-          err 'Validation error'
+          err "Validation error for #{val[:param]}"
           break
         end
       end
