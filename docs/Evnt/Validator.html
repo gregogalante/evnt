@@ -65,7 +65,17 @@
 
     
     
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
     
+    <li ><a href="#method-c-validates">::validates</a>
+    
+  </ul>
+</div>
+
   </div>
 </nav>
 
@@ -94,6 +104,67 @@ and attributes automatically.</p>
     
 
     
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-validates" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">validates</span><span
+            class="method-args">(param, options)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This function is used to validates a parameter with some validation
+options.</p>
+
+<h4 id="method-c-validates-label-Attributes">Attributes<span><a href="#method-c-validates-label-Attributes">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<ul><li>
+<p><code>param</code> - The parameter to be validated.</p>
+</li><li>
+<p><code>options</code> - The list of options for the validations.</p>
+</li></ul>
+
+<h4 id="method-c-validates-label-Options">Options<span><a href="#method-c-validates-label-Options">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<ul><li>
+<p><code>type</code> - Symbol value used to tells the correct parameter type.</p>
+</li><li>
+<p><code>presence</code> - Boolean value used to tells if the presence is
+required.</p>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="validates-source">
+            <pre><span class="ruby-comment"># File lib/evnt/validator.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">validates</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">options</span>)
+  <span class="ruby-identifier">options</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">validate_option</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
   </section>
 </main>
 
