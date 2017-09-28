@@ -37,11 +37,11 @@ module Evnt
       def validate_option(param, key, value)
         case key
         when :type
-          validate_type(param, value) 
+          validate_type(param, value)
         when :presence
           validate_presence(param, value)
         else
-          true
+          raise 'Validator option not accepted'
         end
       end
 
@@ -52,30 +52,62 @@ module Evnt
 
         # check param is not nil
         return false if param.nil?
-        # check param not empty
-        return false if !validate_type_boolean(param) && param.empty?
 
         true
       end
 
       # This function validates the type of the parameter.
       def validate_type(param, value)
+        if value.instance_of?(Symbol)
+          validate_type_general(param, value)
+        elsif value.instance_of?(String)
+          validate_type_custom(param, value)
+        else
+          raise 'Validator type option not accepted'
+        end
+      end
+
+      def validate_type_general(param, value)
         case value
         when :boolean
           validate_type_boolean(param)
         when :string
           validate_type_string(param)
+        when :integer
+          validate_type_integer(param)
         else
-          true
+          raise 'Validator type option not accepted'
         end
+      end
+
+      def validate_type_custom(param, value)
+        param.instance_of?(Object.const_get(value))
+      rescue StandardError
+        false
       end
 
       def validate_type_boolean(param)
         param.instance_of?(TrueClass) || param.instance_of?(FalseClass)
+      rescue StandardError
+        false
       end
 
       def validate_type_string(param)
         param.instance_of?(String)
+      rescue StandardError
+        false
+      end
+
+      def validate_type_integer(param)
+        param.instance_of?(Integer)
+      rescue StandardError
+        false
+      end
+
+      def validate_type_simbol(param)
+        param.instance_of?(Symbol)
+      rescue StandardError
+        false
       end
 
     end

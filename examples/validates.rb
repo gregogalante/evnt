@@ -7,10 +7,18 @@
 
 require_relative './commands/validates_command'
 
+class Custom
+
+  def initialize; end
+
+end
+
 command = ValidatesCommand.new(
   string: 'foobar',
   boolean_false: false,
-  boolean_true: true
+  boolean_true: true,
+  integer: 12,
+  custom: Custom.new
 )
 
 if command.completed?
