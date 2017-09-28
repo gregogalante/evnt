@@ -18,6 +18,7 @@ command = ValidatesCommand.new(
   boolean_false: false,
   boolean_true: true,
   integer: 12,
+  symbol: :example,
   custom: Custom.new
 )
 

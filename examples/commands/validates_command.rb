@@ -10,6 +10,7 @@ class ValidatesCommand < Evnt::Command
   validates :boolean_false, type: :boolean, presence: true
   validates :boolean_true, type: :boolean, presence: true
   validates :integer, type: :integer, presence: true
+  validates :symbol, type: :symbol, presence: true
   validates :custom, type: 'Custom', presence: true
 
   to_validate_params {}

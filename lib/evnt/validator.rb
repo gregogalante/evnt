@@ -75,6 +75,8 @@ module Evnt
           validate_type_string(param)
         when :integer
           validate_type_integer(param)
+        when :symbol
+          validate_type_symbol(param)
         else
           raise 'Validator type option not accepted'
         end
@@ -104,7 +106,7 @@ module Evnt
         false
       end
 
-      def validate_type_simbol(param)
+      def validate_type_symbol(param)
         param.instance_of?(Symbol)
       rescue StandardError
         false
