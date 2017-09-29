@@ -102,7 +102,7 @@ module Evnt
       # * +param+ - The parameter to be validated.
       # * +value+ - The value of the presence option that should be used.
       ##
-      def validates_blank(param, value)
+      def validate_blank(param, value)
         blank = (!param || param.empty?)
         value ? blank : !blank
       end
