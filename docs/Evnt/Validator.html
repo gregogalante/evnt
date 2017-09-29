@@ -144,7 +144,7 @@ and attributes automatically.</p>
 
           
           <div class="method-source-code" id="validate_option-source">
-            <pre><span class="ruby-comment"># File lib/evnt/validator.rb, line 42</span>
+            <pre><span class="ruby-comment"># File lib/evnt/validator.rb, line 45</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_option</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">option_key</span>, <span class="ruby-identifier">option_value</span>)
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">option_key</span>
   <span class="ruby-keyword">when</span> <span class="ruby-value">:type</span>
@@ -178,7 +178,8 @@ and attributes automatically.</p>
 
         <div class="method-description">
           
-          <p>This function validates the presence of the prameter.</p>
+          <p>This function validates the presence of the prameter. A parameter is
+present when its value is not nil.</p>
 
 <h4 id="method-c-validate_presence-label-Attributes">Attributes<span><a href="#method-c-validate_presence-label-Attributes">&para;</a> <a href="#top">&uarr;</a></span></h4>
 <ul><li>
@@ -191,7 +192,7 @@ and attributes automatically.</p>
 
           
           <div class="method-source-code" id="validate_presence-source">
-            <pre><span class="ruby-comment"># File lib/evnt/validator.rb, line 61</span>
+            <pre><span class="ruby-comment"># File lib/evnt/validator.rb, line 83</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_presence</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">value</span>)
   <span class="ruby-comment"># avoid presence check if value is not true</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">value</span>
@@ -237,7 +238,7 @@ and attributes automatically.</p>
 
           
           <div class="method-source-code" id="validate_type-source">
-            <pre><span class="ruby-comment"># File lib/evnt/validator.rb, line 79</span>
+            <pre><span class="ruby-comment"># File lib/evnt/validator.rb, line 64</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_type</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">value</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">Symbol</span>)
     <span class="ruby-identifier">validate_type_general</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">value</span>)
@@ -292,7 +293,7 @@ required.</p>
 
           
           <div class="method-source-code" id="validates-source">
-            <pre><span class="ruby-comment"># File lib/evnt/validator.rb, line 25</span>
+            <pre><span class="ruby-comment"># File lib/evnt/validator.rb, line 28</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">validates</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">options</span>)
   <span class="ruby-identifier">options</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">validate_option</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
