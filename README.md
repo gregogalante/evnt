@@ -120,6 +120,22 @@ rescue => e
 end
 ```
 
+Some validations are similar for every command (like presence or paramter type), so you can also use general validations instead of **to_validate_params** block. An example of general validations should be:
+
+```ruby
+
+class CreateOrderCommand < Evnt::Command
+
+  validates :user_id, type: :integer, presence: true
+  validates :product_id, type: :integer, presence: true
+  validates :quantity, type: :integer, presence: true
+
+  # ...
+
+end
+
+```
+
 ### Event
 
 Events are used to save on a persistent data structure what happends on the system.
