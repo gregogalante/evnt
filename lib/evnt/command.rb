@@ -131,7 +131,7 @@ module Evnt
 
     # This function validates the single parameters sets with the "validates" method.
     def _validate_single_params
-      return if self.class._validations.empty?
+      return if self.class._validations.nil? || self.class._validations.empty?
       self.class._validations.each do |val|
         result = Evnt::Validator.validates(params[val[:param]], val[:options])
         unless result
