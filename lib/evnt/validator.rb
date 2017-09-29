@@ -7,6 +7,9 @@ module Evnt
   ##
   class Validator
 
+    # Class functions:
+    ############################################################################
+
     class << self
 
       ##
@@ -52,24 +55,6 @@ module Evnt
       end
 
       ##
-      # This function validates the presence of the prameter.
-      #
-      # ==== Attributes
-      #
-      # * +param+ - The parameter to be validated.
-      # * +value+ - The value of the presence option that should be used.
-      ##
-      def validate_presence(param, value)
-        # avoid presence check if value is not true
-        return true unless value
-
-        # check param is not nil
-        return false if param.nil?
-
-        true
-      end
-
-      ##
       # This function validates the type of the parameter.
       #
       # ==== Attributes
@@ -87,8 +72,34 @@ module Evnt
         end
       end
 
+      ##
+      # This function validates the presence of the prameter.
+      # A parameter is present when its value is not nil.
+      #
+      # ==== Attributes
+      #
+      # * +param+ - The parameter to be validated.
+      # * +value+ - The value of the presence option that should be used.
+      ##
+      def validate_presence(param, value)
+        # avoid presence check if value is not true
+        return true unless value
+
+        # check param is not nil
+        return false if param.nil?
+
+        true
+      end
+
+      # Private functions:
+      ##########################################################################
+
       private
 
+      # Types validations:
+      ##########################################################################
+
+      # This function validates a param type for general types.
       def validate_type_general(param, value)
         case value
         when :boolean
@@ -99,11 +110,20 @@ module Evnt
           validate_type_integer(param)
         when :symbol
           validate_type_symbol(param)
+        when :numeric
+          validates_type_numeric(param)
+        when :float
+          validates_type_float(param)
+        when :hash
+          validates_type_hash(param)
+        when :array
+          validates_type_array(param)
         else
           raise 'Validator type option not accepted'
         end
       end
 
+      # This function validates a param type for custom types.
       def validate_type_custom(param, value)
         param.instance_of?(Object.const_get(value))
       rescue StandardError
@@ -130,6 +150,30 @@ module Evnt
 
       def validate_type_symbol(param)
         param.instance_of?(Symbol)
+      rescue StandardError
+        false
+      end
+
+      def validates_type_numeric(param)
+        param.instance_of?(Numeric)
+      rescue StandardError
+        false
+      end
+
+      def validates_type_float(param)
+        param.instance_of?(Float)
+      rescue StandardError
+        false
+      end
+
+      def validates_type_hash(param)
+        param.instance_of?(Hash)
+      rescue StandardError
+        false
+      end
+
+      def validates_type_array(param)
+        param.instance_of?(Array)
       rescue StandardError
         false
       end
