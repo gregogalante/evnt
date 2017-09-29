@@ -6,7 +6,7 @@ require_relative '../events/basic_event'
 # ValidatesCommand.
 class ValidatesCommand < Evnt::Command
 
-  validates :string, type: :string, presence: true
+  validates :string, type: :string, presence: true, not_blank: true
   validates :boolean_false, type: :boolean, presence: true
   validates :boolean_true, type: :boolean, presence: true
   validates :integer, type: :integer, presence: true
