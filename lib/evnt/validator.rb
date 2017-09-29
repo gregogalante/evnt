@@ -49,8 +49,8 @@ module Evnt
           validate_type(param, option_value)
         when :presence
           validate_presence(param, option_value)
-        when :not_blank
-          validate_not_blank(param, option_value)
+        when :blank
+          validate_blank(param, option_value)
         else
           raise 'Validator option not accepted'
         end
@@ -97,9 +97,9 @@ module Evnt
       # * +param+ - The parameter to be validated.
       # * +value+ - The value of the presence option that should be used.
       ##
-      def validate_not_blank(param, value)
+      def validate_blank(param, value)
         blank = (!param || param.empty?)
-        value ? !blank : blank
+        value ? blank : !blank
       end
 
       # Private functions:
