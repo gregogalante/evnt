@@ -31,21 +31,34 @@ module Evnt
         true
       end
 
-      private
-
+      ##
       # This function calls the correct validate function for a specific option.
-      def validate_option(param, key, value)
-        case key
+      #
+      # ==== Attributes
+      #
+      # * +param+ - The parameter to be validated.
+      # * +option_key+ - The key of the option that should be used.
+      # * +option_value+ - The value of the option that should be used.
+      ##
+      def validate_option(param, option_key, option_value)
+        case option_key
         when :type
-          validate_type(param, value)
+          validate_type(param, option_value)
         when :presence
-          validate_presence(param, value)
+          validate_presence(param, option_value)
         else
           raise 'Validator option not accepted'
         end
       end
 
+      ##
       # This function validates the presence of the prameter.
+      #
+      # ==== Attributes
+      #
+      # * +param+ - The parameter to be validated.
+      # * +value+ - The value of the presence option that should be used.
+      ##
       def validate_presence(param, value)
         # avoid presence check if value is not true
         return true unless value
@@ -56,7 +69,14 @@ module Evnt
         true
       end
 
+      ##
       # This function validates the type of the parameter.
+      #
+      # ==== Attributes
+      #
+      # * +param+ - The parameter to be validated.
+      # * +value+ - The value of the type option that should be used.
+      ##
       def validate_type(param, value)
         if value.instance_of?(Symbol)
           validate_type_general(param, value)
@@ -66,6 +86,8 @@ module Evnt
           raise 'Validator type option not accepted'
         end
       end
+
+      private
 
       def validate_type_general(param, value)
         case value

@@ -71,6 +71,12 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-c-validate_option">::validate_option</a>
+    
+    <li ><a href="#method-c-validate_presence">::validate_presence</a>
+    
+    <li ><a href="#method-c-validate_type">::validate_type</a>
+    
     <li ><a href="#method-c-validates">::validates</a>
     
   </ul>
@@ -108,6 +114,147 @@ and attributes automatically.</p>
        <header>
          <h3>Public Class Methods</h3>
        </header>
+
+    
+      <div id="method-c-validate_option" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">validate_option</span><span
+            class="method-args">(param, option_key, option_value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This function calls the correct validate function for a specific option.</p>
+
+<h4 id="method-c-validate_option-label-Attributes">Attributes<span><a href="#method-c-validate_option-label-Attributes">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<ul><li>
+<p><code>param</code> - The parameter to be validated.</p>
+</li><li>
+<p><code>option_key</code> - The key of the option that should be used.</p>
+</li><li>
+<p><code>option_value</code> - The value of the option that should be used.</p>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="validate_option-source">
+            <pre><span class="ruby-comment"># File lib/evnt/validator.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_option</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">option_key</span>, <span class="ruby-identifier">option_value</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">option_key</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:type</span>
+    <span class="ruby-identifier">validate_type</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">option_value</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:presence</span>
+    <span class="ruby-identifier">validate_presence</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">option_value</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Validator option not accepted&#39;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-validate_presence" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">validate_presence</span><span
+            class="method-args">(param, value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This function validates the presence of the prameter.</p>
+
+<h4 id="method-c-validate_presence-label-Attributes">Attributes<span><a href="#method-c-validate_presence-label-Attributes">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<ul><li>
+<p><code>param</code> - The parameter to be validated.</p>
+</li><li>
+<p><code>value</code> - The value of the presence option that should be used.</p>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="validate_presence-source">
+            <pre><span class="ruby-comment"># File lib/evnt/validator.rb, line 61</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_presence</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-comment"># avoid presence check if value is not true</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">value</span>
+
+  <span class="ruby-comment"># check param is not nil</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">param</span>.<span class="ruby-identifier">nil?</span>
+
+  <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-validate_type" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">validate_type</span><span
+            class="method-args">(param, value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This function validates the type of the parameter.</p>
+
+<h4 id="method-c-validate_type-label-Attributes">Attributes<span><a href="#method-c-validate_type-label-Attributes">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<ul><li>
+<p><code>param</code> - The parameter to be validated.</p>
+</li><li>
+<p><code>value</code> - The value of the type option that should be used.</p>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="validate_type-source">
+            <pre><span class="ruby-comment"># File lib/evnt/validator.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_type</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">Symbol</span>)
+    <span class="ruby-identifier">validate_type_general</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">String</span>)
+    <span class="ruby-identifier">validate_type_custom</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Validator type option not accepted&#39;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-c-validates" class="method-detail ">
