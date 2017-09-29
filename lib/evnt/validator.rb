@@ -84,13 +84,8 @@ module Evnt
       # * +value+ - The value of the presence option that should be used.
       ##
       def validate_presence(param, value)
-        # avoid presence check if value is not true
-        return true unless value
-
-        # check param is not nil
-        return false if param.nil?
-
-        true
+        is_nil = param.nil?
+        value ? !is_nil : is_nil
       end
 
       ##
