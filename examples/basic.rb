@@ -7,10 +7,12 @@
 
 require_relative './commands/basic_command'
 
+# initialize command.
 command = BasicCommand.new(name: 'foobar')
 
+# check command completed.
 if command.completed?
   puts 'command completed'
 else
-  puts 'command has errors'
+  puts command.error_messages
 end

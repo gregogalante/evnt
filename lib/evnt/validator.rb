@@ -110,8 +110,6 @@ module Evnt
           validate_type_integer(param)
         when :symbol
           validate_type_symbol(param)
-        when :numeric
-          validates_type_numeric(param)
         when :float
           validates_type_float(param)
         when :hash
@@ -150,12 +148,6 @@ module Evnt
 
       def validate_type_symbol(param)
         param.instance_of?(Symbol)
-      rescue StandardError
-        false
-      end
-
-      def validates_type_numeric(param)
-        param.instance_of?(Numeric)
       rescue StandardError
         false
       end
