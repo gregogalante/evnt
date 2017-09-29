@@ -103,7 +103,7 @@ else
 end
 ```
 
-It's also possible to use stop method inside the command to raise an exception with the option **exception: true**. An example of usage should be:
+It's also possible to use err method inside the command to raise an exception with the option **exception: true**. An example of usage should be:
 
 ```ruby
 begin
