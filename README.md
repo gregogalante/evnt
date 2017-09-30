@@ -6,6 +6,8 @@ CQRS and Event Driven Development architecture for Ruby projects.
   - [Command](#command)
   - [Event](#event)
   - [Handler](#handler)
+- [Rails integration](#rails-integration)
+- [Development](#development)
 
 Full documentation here: https://ideonetwork.github.io/ruby-evnt/
 
@@ -261,6 +263,40 @@ class ProductHandler < Evnt::Handler
   end
 
 end
+```
+
+## Rails integration
+
+Evnt can be used with Ruby on Rails to extends the MVC pattern.
+
+To use the gem with Rails you need to create three folders inside the ./app project's path:
+
+- **./app/commands**
+- **./app/events**
+- **./app/handlers**
+
+You also need to require all files from these folders. To do this you need to edit the ./config/application.rb file like this example:
+
+```ruby
+
+require_relative 'boot'
+
+require 'rails/all'
+
+# Require the gems listed in Gemfile, including any gems
+# you've limited to :test, :development, or :production.
+Bundler.require(*Rails.groups)
+
+module MyApplicationName
+  class Application < Rails::Application
+
+    config.autoload_paths << Rails.root.join('app/commands')
+    config.autoload_paths << Rails.root.join('app/events')
+    config.autoload_paths << Rails.root.join('app/handlers')
+
+  end
+end
+
 ```
 
 ## Development
