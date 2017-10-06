@@ -2,6 +2,7 @@
 
 CQRS and Event Driven Development architecture for Ruby projects.
 
+- [Installation](#installation)
 - [Structure](#structure)
   - [Command](#command)
   - [Event](#event)
@@ -10,6 +11,14 @@ CQRS and Event Driven Development architecture for Ruby projects.
 - [Development](#development)
 
 Full documentation here: https://ideonetwork.github.io/ruby-evnt/
+
+## Installation
+
+To use the gem you need to add it on your Gemfile
+
+```ruby
+gem 'evnt'
+```
 
 ## Structure
 
