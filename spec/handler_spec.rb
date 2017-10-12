@@ -3,8 +3,9 @@
 require 'spec_helper'
 
 RSpec.describe Evnt::Handler do
+  handler = Evnt::Handler.new
+
   it 'should be initialized' do
-    handler = Evnt::Handler.new
     expect(handler).not_to be nil
   end
 end
