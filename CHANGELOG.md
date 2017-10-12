@@ -5,6 +5,7 @@
 - Initialize code examples on repository.
 - Rename the "stop" function inside commands to "err".
 - Add single validation for commands parameters.
+- Update tests.
 
 ## Version 2.0.1
 
