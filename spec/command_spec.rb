@@ -3,8 +3,19 @@
 require 'spec_helper'
 
 RSpec.describe Evnt::Command do
+  command = Evnt::Command.new(attr1: 'foo', attr2: 'bar')
+
   it 'should be initialized' do
-    command = Evnt::Command.new(attr1: 'foo', attr2: 'bar')
     expect(command).not_to be nil
+  end
+
+  it 'should have a complete? function' do
+    expect(command.completed?).not_to be nil
+    expect(command.completed?).to be_a TrueClass
+  end
+
+  it 'should have a errors function' do
+    expect(command.errors).not_to be nil
+    expect(command.errors).to be_a Array
   end
 end
