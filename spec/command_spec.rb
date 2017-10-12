@@ -18,4 +18,14 @@ RSpec.describe Evnt::Command do
     expect(command.errors).not_to be nil
     expect(command.errors).to be_a Array
   end
+
+  it 'should have a error_messages function' do
+    expect(command.error_messages).not_to be nil
+    expect(command.error_messages).to be_a Array
+  end
+
+  it 'should have a error_codes function' do
+    expect(command.error_codes).not_to be nil
+    expect(command.error_codes).to be_a Array
+  end
 end
