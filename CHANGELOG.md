@@ -1,5 +1,7 @@
 # Evnt changelog
 
+## Version 2.1.1
+
 ## Version 2.1.0
 
 - Initialize code examples on repository.
