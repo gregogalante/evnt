@@ -1,10 +1,10 @@
 # Evnt changelog
 
-## Version 2.0.2
+## Version 2.1.0
 
 - Initialize code examples on repository.
 - Rename the "stop" function inside commands to "err".
-- Add single validation for commands parameters.
+- Add single validation for commands parameters with the Validator class.
 - Update tests.
 
 ## Version 2.0.1

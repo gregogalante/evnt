@@ -5,6 +5,6 @@ module Evnt
   ##
   # Constant containing the current gem version.
   ##
-  VERSION = '2.0.2'
+  VERSION = '2.1.0'
 
 end

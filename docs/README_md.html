@@ -57,10 +57,12 @@
 
   <ul class="link-list" role="directory">
     <li><a href="#label-Evnt">Evnt</a>
+    <li><a href="#label-Installation">Installation</a>
     <li><a href="#label-Structure">Structure</a>
     <li><a href="#label-Command">Command</a>
     <li><a href="#label-Event">Event</a>
     <li><a href="#label-Handler">Handler</a>
+    <li><a href="#label-Rails+integration">Rails integration</a>
     <li><a href="#label-Development">Development</a>
   </ul>
 </div>
@@ -88,6 +90,8 @@
 
 <p>CQRS and Event Driven Development architecture for Ruby projects.</p>
 <ul><li>
+<p><a href="#installation">Installation</a></p>
+</li><li>
 <p><a href="#structure">Structure</a></p>
 </li><li>
 <p><a href="#command">Command</a></p>
@@ -95,10 +99,21 @@
 <p><a href="#event">Event</a></p>
 </li><li>
 <p><a href="#handler">Handler</a></p>
+</li><li>
+<p><a href="#rails-integration">Rails integration</a></p>
+</li><li>
+<p><a href="#development">Development</a></p>
 </li></ul>
 
 <p>Full documentation here: <a
 href="https://ideonetwork.github.io/ruby-evnt">ideonetwork.github.io/ruby-evnt</a>/</p>
+
+<h2 id="label-Installation">Installation<span><a href="#label-Installation">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>To use the gem you need to add it on your Gemfile</p>
+
+<pre class="ruby"><span class="ruby-identifier">gem</span> <span class="ruby-string">&#39;evnt&#39;</span>
+</pre>
 
 <h2 id="label-Structure">Structure<span><a href="#label-Structure">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
@@ -205,7 +220,7 @@ command.</p>
 <span class="ruby-keyword">end</span>
 </pre>
 
-<p>It&#39;s also possible to use stop method inside the command to raise an
+<p>It&#39;s also possible to use err method inside the command to raise an
 exception with the option <strong>exception: true</strong>. An example of
 usage should be:</p>
 
@@ -220,6 +235,23 @@ usage should be:</p>
   )
 <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
   <span class="ruby-identifier">puts</span> <span class="ruby-identifier">e</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>Some validations are similar for every command (like presence or paramter
+type), so you can also use general validations instead of
+<strong>to_validate_params</strong> block. An example of general
+validations should be:</p>
+
+<pre class="ruby">
+<span class="ruby-keyword">class</span> <span class="ruby-constant">CreateOrderCommand</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Command</span>
+
+  <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">user_id</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">integer</span>, <span class="ruby-identifier">presence</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">product_id</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">integer</span>, <span class="ruby-identifier">presence</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">quantity</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">integer</span>, <span class="ruby-identifier">presence</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>
+
+  <span class="ruby-comment"># ...</span>
+
 <span class="ruby-keyword">end</span>
 </pre>
 
@@ -362,6 +394,44 @@ code only for reloaded events you can use the
 
   <span class="ruby-keyword">end</span>
 
+<span class="ruby-keyword">end</span>
+</pre>
+
+<h2 id="label-Rails+integration">Rails integration<span><a href="#label-Rails+integration">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p><a href="Evnt.html">Evnt</a> can be used with Ruby on Rails to extends the
+MVC pattern.</p>
+
+<p>To use the gem with Rails you need to create three folders inside the ./app
+project&#39;s path:</p>
+<ul><li>
+<p><strong>./app/commands</strong></p>
+</li><li>
+<p><strong>./app/events</strong></p>
+</li><li>
+<p><strong>./app/handlers</strong></p>
+</li></ul>
+
+<p>You also need to require all files from these folders. To do this you need
+to edit the ./config/application.rb file like this example:</p>
+
+<pre class="ruby">
+<span class="ruby-identifier">require_relative</span> <span class="ruby-string">&#39;boot&#39;</span>
+
+<span class="ruby-identifier">require</span> <span class="ruby-string">&#39;rails/all&#39;</span>
+
+<span class="ruby-comment"># Require the gems listed in Gemfile, including any gems</span>
+<span class="ruby-comment"># you&#39;ve limited to :test, :development, or :production.</span>
+<span class="ruby-constant">Bundler</span>.<span class="ruby-identifier">require</span>(<span class="ruby-operator">*</span><span class="ruby-constant">Rails</span>.<span class="ruby-identifier">groups</span>)
+
+<span class="ruby-keyword">module</span> <span class="ruby-constant">MyApplicationName</span>
+  <span class="ruby-keyword">class</span> <span class="ruby-constant">Application</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Rails</span><span class="ruby-operator">::</span><span class="ruby-constant">Application</span>
+
+    <span class="ruby-identifier">config</span>.<span class="ruby-identifier">autoload_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;app/commands&#39;</span>)
+    <span class="ruby-identifier">config</span>.<span class="ruby-identifier">autoload_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;app/events&#39;</span>)
+    <span class="ruby-identifier">config</span>.<span class="ruby-identifier">autoload_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;app/handlers&#39;</span>)
+
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span>
 </pre>
 

@@ -2,7 +2,7 @@
 
 ##
 # This example show a basic usage of the Evnt gem.
-# Version: 2.0.2
+# Version: 2.1.0
 ##
 
 require_relative './commands/basic_command'

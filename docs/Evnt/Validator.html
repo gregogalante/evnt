@@ -71,6 +71,8 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-c-validate_blank">::validate_blank</a>
+    
     <li ><a href="#method-c-validate_option">::validate_option</a>
     
     <li ><a href="#method-c-validate_presence">::validate_presence</a>
@@ -116,6 +118,48 @@ and attributes automatically.</p>
        </header>
 
     
+      <div id="method-c-validate_blank" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">validate_blank</span><span
+            class="method-args">(param, value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This function validates the blank of the prameter. A parameter is blank
+when its value is nil, false, or empty.</p>
+
+<h4 id="method-c-validate_blank-label-Attributes">Attributes<span><a href="#method-c-validate_blank-label-Attributes">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<ul><li>
+<p><code>param</code> - The parameter to be validated.</p>
+</li><li>
+<p><code>value</code> - The value of the presence option that should be used.</p>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="validate_blank-source">
+            <pre><span class="ruby-comment"># File lib/evnt/validator.rb, line 99</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_blank</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">blank</span> = (<span class="ruby-operator">!</span><span class="ruby-identifier">param</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">param</span>.<span class="ruby-identifier">empty?</span>)
+  <span class="ruby-identifier">value</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">blank</span> <span class="ruby-operator">:</span> <span class="ruby-operator">!</span><span class="ruby-identifier">blank</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-c-validate_option" class="method-detail ">
         
         <div class="method-heading">
@@ -151,6 +195,8 @@ and attributes automatically.</p>
     <span class="ruby-identifier">validate_type</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">option_value</span>)
   <span class="ruby-keyword">when</span> <span class="ruby-value">:presence</span>
     <span class="ruby-identifier">validate_presence</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">option_value</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:blank</span>
+    <span class="ruby-identifier">validate_blank</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">option_value</span>)
   <span class="ruby-keyword">else</span>
     <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Validator option not accepted&#39;</span>
   <span class="ruby-keyword">end</span>
@@ -192,15 +238,10 @@ present when its value is not nil.</p>
 
           
           <div class="method-source-code" id="validate_presence-source">
-            <pre><span class="ruby-comment"># File lib/evnt/validator.rb, line 83</span>
+            <pre><span class="ruby-comment"># File lib/evnt/validator.rb, line 85</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_presence</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">value</span>)
-  <span class="ruby-comment"># avoid presence check if value is not true</span>
-  <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">value</span>
-
-  <span class="ruby-comment"># check param is not nil</span>
-  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">param</span>.<span class="ruby-identifier">nil?</span>
-
-  <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">is_nil</span> = <span class="ruby-identifier">param</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">value</span> <span class="ruby-operator">?</span> <span class="ruby-operator">!</span><span class="ruby-identifier">is_nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">is_nil</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -238,7 +279,7 @@ present when its value is not nil.</p>
 
           
           <div class="method-source-code" id="validate_type-source">
-            <pre><span class="ruby-comment"># File lib/evnt/validator.rb, line 64</span>
+            <pre><span class="ruby-comment"># File lib/evnt/validator.rb, line 66</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_type</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">value</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">Symbol</span>)
     <span class="ruby-identifier">validate_type_general</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">value</span>)

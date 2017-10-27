@@ -2,7 +2,7 @@
 
 ##
 # This example show the usage of the validation inside the command.
-# Version: 2.0.2
+# Version: 2.1.0
 ##
 
 require_relative './commands/validates_command'
