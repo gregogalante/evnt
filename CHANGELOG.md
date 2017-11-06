@@ -2,6 +2,8 @@
 
 ## Version 2.1.1
 
+- Initialize numeric validation on validator.
+
 ## Version 2.1.0
 
 - Initialize code examples on repository.

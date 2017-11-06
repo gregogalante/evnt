@@ -32,6 +32,8 @@ module Evnt
         end
 
         true
+      rescue StandardError
+        false
       end
 
       ##
@@ -51,9 +53,14 @@ module Evnt
           validate_presence(param, option_value)
         when :blank
           validate_blank(param, option_value)
+        when :numeric
+          validate_numeric(param, option_value)
         else
           raise 'Validator option not accepted'
         end
+      rescue StandardError => e
+        puts e
+        false
       end
 
       ##
@@ -72,6 +79,9 @@ module Evnt
         else
           raise 'Validator type option not accepted'
         end
+      rescue StandardError => e
+        puts e
+        false
       end
 
       ##
@@ -86,6 +96,9 @@ module Evnt
       def validate_presence(param, value)
         is_nil = param.nil?
         value ? !is_nil : is_nil
+      rescue StandardError => e
+        puts e
+        false
       end
 
       ##
@@ -100,6 +113,24 @@ module Evnt
       def validate_blank(param, value)
         blank = (!param || param.empty?)
         value ? blank : !blank
+      rescue StandardError => e
+        puts e
+        false
+      end
+
+      ##
+      # This function validates some numeric options for the parameter.
+      #
+      # ==== Attributes
+      #
+      # * +param+ - The parameter to be validated.
+      # * +value+ - The value object with validation specs.
+      ##
+      def validate_numeric(param, value)
+        # TODO: Continue
+      rescue StandardError => e
+        puts e
+        false
       end
 
       # Private functions:
@@ -135,50 +166,34 @@ module Evnt
       # This function validates a param type for custom types.
       def validate_type_custom(param, value)
         param.instance_of?(Object.const_get(value))
-      rescue StandardError
-        false
       end
 
       def validate_type_boolean(param)
         param.instance_of?(TrueClass) || param.instance_of?(FalseClass)
-      rescue StandardError
-        false
       end
 
       def validate_type_string(param)
         param.instance_of?(String)
-      rescue StandardError
-        false
       end
 
       def validate_type_integer(param)
         param.instance_of?(Integer)
-      rescue StandardError
-        false
       end
 
       def validate_type_symbol(param)
         param.instance_of?(Symbol)
-      rescue StandardError
-        false
       end
 
       def validates_type_float(param)
         param.instance_of?(Float)
-      rescue StandardError
-        false
       end
 
       def validates_type_hash(param)
         param.instance_of?(Hash)
-      rescue StandardError
-        false
       end
 
       def validates_type_array(param)
         param.instance_of?(Array)
-      rescue StandardError
-        false
       end
 
     end
