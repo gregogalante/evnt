@@ -32,7 +32,8 @@ module Evnt
         end
 
         true
-      rescue StandardError
+      rescue StandardError => e
+        puts e
         false
       end
 

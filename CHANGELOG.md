@@ -3,6 +3,7 @@
 ## Version 2.1.1
 
 - Initialize numeric validation on validator.
+- Added error management on validator public functions.
 
 ## Version 2.1.0
 
