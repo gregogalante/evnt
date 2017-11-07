@@ -73,6 +73,8 @@ module Evnt
       # * +value+ - The value of the type option that should be used.
       ##
       def validate_type(param, value)
+        return true if param.nil?
+
         if value.instance_of?(Symbol)
           validate_type_general(param, value)
         elsif value.instance_of?(String)

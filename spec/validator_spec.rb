@@ -21,14 +21,14 @@ RSpec.describe Evnt::Validator do
     expect(validation).to be true
   end
 
-  it 'should not accept a integer value with type: string' do
-    validation = Evnt::Validator.validates(4, type: :string)
+  it 'should accept a nil value with type: string' do
+    validation = Evnt::Validator.validates(nil, type: :string)
     expect(validation).not_to be nil
-    expect(validation).to be false
+    expect(validation).to be true
   end
 
-  it 'should not accept a nil value with type: string' do
-    validation = Evnt::Validator.validates(nil, type: :string)
+  it 'should not accept a integer value with type: string' do
+    validation = Evnt::Validator.validates(4, type: :string)
     expect(validation).not_to be nil
     expect(validation).to be false
   end
@@ -37,6 +37,12 @@ RSpec.describe Evnt::Validator do
 
   it 'should accept a integer value with type: integer' do
     validation = Evnt::Validator.validates(4, type: :integer)
+    expect(validation).not_to be nil
+    expect(validation).to be true
+  end
+
+  it 'should accept a nil value with type: integer' do
+    validation = Evnt::Validator.validates(nil, type: :integer)
     expect(validation).not_to be nil
     expect(validation).to be true
   end
@@ -53,12 +59,6 @@ RSpec.describe Evnt::Validator do
     expect(validation).to be false
   end
 
-  it 'should not accept a nil value with type: integer' do
-    validation = Evnt::Validator.validates(nil, type: :integer)
-    expect(validation).not_to be nil
-    expect(validation).to be false
-  end
-
   # Float
 
   it 'should accept a float value with type: float' do
@@ -67,14 +67,14 @@ RSpec.describe Evnt::Validator do
     expect(validation).to be true
   end
 
-  it 'should not accept a string value with type: float' do
-    validation = Evnt::Validator.validates('hello', type: :float)
+  it 'should accept a nil value with type: float' do
+    validation = Evnt::Validator.validates(nil, type: :float)
     expect(validation).not_to be nil
-    expect(validation).to be false
+    expect(validation).to be true
   end
 
-  it 'should not accept a nil value with type: float' do
-    validation = Evnt::Validator.validates(nil, type: :float)
+  it 'should not accept a string value with type: float' do
+    validation = Evnt::Validator.validates('hello', type: :float)
     expect(validation).not_to be nil
     expect(validation).to be false
   end
@@ -87,13 +87,19 @@ RSpec.describe Evnt::Validator do
     expect(validation).to be true
   end
 
-  it 'should accept a string value with type: symbol' do
+  it 'should accept a nil value with type: symbol' do
+    validation = Evnt::Validator.validates(nil, type: :symbol)
+    expect(validation).not_to be nil
+    expect(validation).to be true
+  end
+
+  it 'should not accept a string value with type: symbol' do
     validation = Evnt::Validator.validates('hello', type: :symbol)
     expect(validation).not_to be nil
     expect(validation).to be false
   end
 
-  it 'should accept a integer value with type: symbol' do
+  it 'should not accept a integer value with type: symbol' do
     validation = Evnt::Validator.validates(5, type: :symbol)
     expect(validation).not_to be nil
     expect(validation).to be false

@@ -4,6 +4,7 @@
 
 - Initialize numeric validation on validator.
 - Added error management on validator public functions.
+- Added nil value accepted on validate types validator.
 
 ## Version 2.1.0
 
