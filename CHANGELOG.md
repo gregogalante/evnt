@@ -1,5 +1,7 @@
 # Evnt changelog
 
+## Version 2.1.2
+
 ## Version 2.1.1
 
 - Initialize numeric validation on validator.
