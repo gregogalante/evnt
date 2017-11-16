@@ -210,7 +210,7 @@ event = CreateOrderEvent.new(
 )
 
 puts event.payload # -> { order_id: 1, user_id: 128, product_id: 534, quantity: 10, evnt: { timestamp: 2017010101, name: 'create_order' } }
-puts event.extras # -> { _total_price: 50 }
+puts event.extras # -> { total_price: 50 }
 ```
 
 After the execution of the **to_write_event** block the event object should notify all its handlers.
@@ -242,7 +242,7 @@ class ProductHandler < Evnt::Handler
 
     to_update_queries do
       # update product quantity
-      product = event.extras[:_product]
+      product = event.extras[:product]
       product.update(quantity: product.quantity - event.payload[:quantity])
     end
 
