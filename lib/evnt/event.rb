@@ -75,10 +75,13 @@ module Evnt
       payload = params.reject { |k, _v| k[0] == '_' }
       @payload = @state[:reloaded] ? payload : _generate_payload(payload)
 
+      # set extras
+      extras = params.select { |k, _v| k[0] == '_' }
+      @extras = extras # TODO: Update key to read extras without the _ char.
+
       # set other datas
       @name = self.class._name
       @attributes = self.class._attributes
-      @extras = params.select { |k, _v| k[0] == '_' }
     end
 
     # This function generates the complete event payload.
