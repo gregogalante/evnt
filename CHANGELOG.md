@@ -2,6 +2,8 @@
 
 ## Version 2.1.2
 
+- Updated event extras hash to have keys without the "_" first char.
+
 ## Version 2.1.1
 
 - Initialize numeric validation on validator.

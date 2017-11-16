@@ -76,8 +76,9 @@ module Evnt
       @payload = @state[:reloaded] ? payload : _generate_payload(payload)
 
       # set extras
+      @extras = {}
       extras = params.select { |k, _v| k[0] == '_' }
-      @extras = extras # TODO: Update key to read extras without the _ char.
+      extras.each { |k, v| @extras[k[1..-1].to_sym] = v }
 
       # set other datas
       @name = self.class._name
