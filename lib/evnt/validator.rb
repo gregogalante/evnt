@@ -161,6 +161,8 @@ module Evnt
           validates_type_hash(param)
         when :array
           validates_type_array(param)
+        when :date
+          validates_type_date(param)
         else
           raise 'Validator type option not accepted'
         end
@@ -197,6 +199,18 @@ module Evnt
 
       def validates_type_array(param)
         param.instance_of?(Array)
+      end
+
+      def validates_type_date(param)
+        is_date = param.instance_of?(Date)
+        return true if is_date
+
+        begin
+          Date.parse(param)
+          true
+        rescue StandardError
+          false
+        end
       end
 
     end

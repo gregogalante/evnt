@@ -2,6 +2,8 @@
 
 ## Version 2.1.3
 
+- Added date type on type validator.
+
 ## Version 2.1.2
 
 - Updated event extras hash to have keys without the "_" first char.
