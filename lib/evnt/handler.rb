@@ -37,6 +37,7 @@ module Evnt
 
     # This function init the handler steps.
     def _init_handler_steps
+      puts @event.name
       self.class._events[@event.name].call
     end
 
