@@ -21,7 +21,6 @@ module Evnt
     ##
     def notify(event)
       _init_handler_data(event)
-      _init_handler_steps
       _run_handler_steps
     end
 
@@ -35,24 +34,20 @@ module Evnt
       @event = event
     end
 
-    # This function init the handler steps.
-    def _init_handler_steps
-      puts @event.name
-      self.class._events[@event.name].call
-    end
-
     # This function calls requested steps for the handler.
     def _run_handler_steps
-      _update_queries if defined?(_update_queries)
+      update_queries = "#{@event.name}_update_queries"
+      send(update_queries) if respond_to? update_queries
 
-      # manage event reloaded
       if event.reloaded?
-        _manage_reloaded_event if defined?(_manage_reloaded_event)
-        return
+        # manage event reloaded
+        manage_reloaded_event = "#{@event.name}_manage_reloaded_event"
+        send(manage_reloaded_event) if respond_to? manage_reloaded_event
+      else
+        # manage normal event
+        manage_event = "#{@event.name}_manage_event"
+        send(manage_event) if respond_to? manage_event
       end
-
-      # manage normal event
-      _manage_event if defined?(_manage_event)
     end
 
     # Class functions:
@@ -61,27 +56,25 @@ module Evnt
     # This class contain the list of settings for the handler.
     class << self
 
-      attr_accessor :_events
-
       # This function sets the blocks executed for a specific event.
       def on(event_name, &block)
-        instance_variable_set(:@_events, {}) unless @_events
-        @_events[event_name] = block
+        @_current_event_name = event_name
+        block.yield
       end
 
       # This function sets the update queries function for the event.
       def to_update_queries(&block)
-        define_method('_update_queries', &block)
+        define_method("#{@_current_event_name}_update_queries", &block)
       end
 
       # This function sets the manage event function for the event.
       def to_manage_event(&block)
-        define_method('_manage_event', &block)
+        define_method("#{@_current_event_name}_manage_event", &block)
       end
 
       # This function sets the manage reloaded event function for the event.
       def to_manage_reloaded_event(&block)
-        define_method('_manage_reloaded_event', &block)
+        define_method("#{@_current_event_name}_manage_reloaded_event", &block)
       end
 
     end
