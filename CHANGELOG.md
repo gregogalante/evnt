@@ -1,5 +1,7 @@
 # Evnt changelog
 
+## Version 2.1.4
+
 ## Version 2.1.3
 
 - Added date type on type validator.
