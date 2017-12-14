@@ -202,15 +202,7 @@ module Evnt
       end
 
       def validates_type_date(param)
-        is_date = param.instance_of?(Date)
-        return true if is_date
-
-        begin
-          Date.parse(param)
-          true
-        rescue StandardError
-          false
-        end
+        param.instance_of?(Date)
       end
 
     end
