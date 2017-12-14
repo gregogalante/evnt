@@ -2,6 +2,8 @@
 
 ## Version 2.1.5
 
+- Fixed date validator to not support string date.
+
 ## Version 2.1.4
 
 - Fixed handler with multiple events errors. Now the **on** method of the handler should call the block immediately and the methods used on the event have different names for each event.
