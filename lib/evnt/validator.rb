@@ -163,6 +163,8 @@ module Evnt
           validates_type_array(param)
         when :date
           validates_type_date(param)
+        when :datetime
+          validates_type_datetime(param)
         else
           raise 'Validator type option not accepted'
         end
@@ -203,6 +205,10 @@ module Evnt
 
       def validates_type_date(param)
         param.instance_of?(Date)
+      end
+
+      def validates_type_datetime(param)
+        param.instance_of?(DateTime)
       end
 
     end

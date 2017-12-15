@@ -2,6 +2,8 @@
 
 ## Version 2.1.6
 
+- Added datetime type validation on validator class.
+
 ## Version 2.1.5
 
 - Fixed date validator to not support string date.
