@@ -6,6 +6,6 @@ RSpec.describe Evnt::Handler do
   handler = Evnt::Handler.new
 
   it 'should be initialized' do
-    expect(handler).not_to be nil
+    expect(handler).not_to eq nil
   end
 end

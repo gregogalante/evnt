@@ -27,14 +27,16 @@ module Evnt
       # * +presence+ - Boolean value used to tells if the presence is required.
       ##
       def validates(param, options)
+        result = param
         options.each do |key, value|
-          return false unless validate_option(param, key, value)
+          result = validate_option(param, key, value)
+          break if result == :ERROR
         end
 
-        true
+        result
       rescue StandardError => e
         puts e
-        false
+        :ERROR
       end
 
       ##
@@ -59,7 +61,7 @@ module Evnt
         end
       rescue StandardError => e
         puts e
-        false
+        :ERROR
       end
 
       ##
@@ -71,7 +73,7 @@ module Evnt
       # * +value+ - The value of the type option that should be used.
       ##
       def validate_type(param, value)
-        return true if param.nil?
+        return param if param.nil?
 
         if value.instance_of?(Symbol)
           validate_type_general(param, value)
@@ -82,7 +84,7 @@ module Evnt
         end
       rescue StandardError => e
         puts e
-        false
+        :ERROR
       end
 
       ##
@@ -96,10 +98,13 @@ module Evnt
       ##
       def validate_presence(param, value)
         is_nil = param.nil?
-        value ? !is_nil : is_nil
+        result = value ? !is_nil : is_nil
+        return param if result
+
+        :ERROR
       rescue StandardError => e
         puts e
-        false
+        :ERROR
       end
 
       ##
@@ -113,10 +118,13 @@ module Evnt
       ##
       def validate_blank(param, value)
         blank = (!param || param.empty?)
-        value ? blank : !blank
+        result = value ? blank : !blank
+        return param if result
+
+        :ERROR
       rescue StandardError => e
         puts e
-        false
+        :ERROR
       end
 
       # Private functions:
@@ -155,43 +163,75 @@ module Evnt
 
       # This function validates a param type for custom types.
       def validate_type_custom(param, value)
-        param.instance_of?(Object.const_get(value))
-      end
-
-      def validate_type_boolean(param)
-        param.instance_of?(TrueClass) || param.instance_of?(FalseClass)
-      end
-
-      def validate_type_string(param)
-        param.instance_of?(String)
-      end
-
-      def validate_type_integer(param)
-        param.instance_of?(Integer)
+        return param if param.instance_of?(Object.const_get(value))
+        :ERROR
       end
 
       def validate_type_symbol(param)
-        param.instance_of?(Symbol)
+        return param if param.instance_of?(Symbol)
+        :ERROR
+      end
+
+      def validate_type_boolean(param)
+        return param if param.instance_of?(TrueClass) || param.instance_of?(FalseClass)
+        return true if [1, 'true'].include? param
+        return false if [0, 'false'].include? param
+        :ERROR
+      end
+
+      def validate_type_integer(param)
+        return param if param.instance_of?(Integer)
+        begin
+          return param.to_i
+        rescue StandardError
+          return :ERROR
+        end
       end
 
       def validates_type_float(param)
-        param.instance_of?(Float)
+        return param if param.instance_of?(Float)
+        begin
+          return param.to_f
+        rescue StandardError
+          return :ERROR
+        end
       end
 
-      def validates_type_hash(param)
-        param.instance_of?(Hash)
-      end
-
-      def validates_type_array(param)
-        param.instance_of?(Array)
+      def validate_type_string(param)
+        return param if param.instance_of?(String)
+        begin
+          return param.to_s
+        rescue StandardError
+          return :ERROR
+        end
       end
 
       def validates_type_date(param)
-        param.instance_of?(Date)
+        return param if param.instance_of?(Date)
+        begin
+          return Date.parse(param)
+        rescue StandardError
+          return :ERROR
+        end
       end
 
       def validates_type_datetime(param)
-        param.instance_of?(DateTime)
+        return param if param.instance_of?(DateTime)
+        begin
+          return DateTime.parse(param)
+        rescue StandardError
+          return :ERROR
+        end
+      end
+
+      def validates_type_hash(param)
+        return param if param.instance_of?(Hash)
+        :ERROR
+      end
+
+      def validates_type_array(param)
+        return param if param.instance_of?(Array)
+        :ERROR
       end
 
     end
