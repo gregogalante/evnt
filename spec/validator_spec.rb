@@ -21,12 +21,6 @@ RSpec.describe Evnt::Validator do
     expect(validation).to be true
   end
 
-  it 'should accept a string date value with type: date' do
-    validation = Evnt::Validator.validates('12/12/2017', type: :date)
-    expect(validation).not_to be nil
-    expect(validation).to be true
-  end
-
   it 'should accept a nil value with type: date' do
     validation = Evnt::Validator.validates(nil, type: :date)
     expect(validation).not_to be nil
@@ -206,10 +200,4 @@ RSpec.describe Evnt::Validator do
     expect(validation).to be false
   end
 
-  # Numeric:
-  # The numeric validation check a number is valid for some
-  # configurations.
-  #################################################################
-
-  # TODO
 end

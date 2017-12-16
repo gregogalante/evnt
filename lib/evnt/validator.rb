@@ -54,8 +54,6 @@ module Evnt
           validate_presence(param, option_value)
         when :blank
           validate_blank(param, option_value)
-        when :numeric
-          validate_numeric(param, option_value)
         else
           raise 'Validator option not accepted'
         end
@@ -116,21 +114,6 @@ module Evnt
       def validate_blank(param, value)
         blank = (!param || param.empty?)
         value ? blank : !blank
-      rescue StandardError => e
-        puts e
-        false
-      end
-
-      ##
-      # This function validates some numeric options for the parameter.
-      #
-      # ==== Attributes
-      #
-      # * +param+ - The parameter to be validated.
-      # * +value+ - The value object with validation specs.
-      ##
-      def validate_numeric(param, value)
-        # TODO: Continue
       rescue StandardError => e
         puts e
         false
