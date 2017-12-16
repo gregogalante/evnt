@@ -327,7 +327,7 @@ character. An example should be:</p>
 )
 
 <span class="ruby-identifier">puts</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">payload</span> <span class="ruby-comment"># -&gt; { order_id: 1, user_id: 128, product_id: 534, quantity: 10, evnt: { timestamp: 2017010101, name: &#39;create_order&#39; } }</span>
-<span class="ruby-identifier">puts</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">extras</span> <span class="ruby-comment"># -&gt; { _total_price: 50 }</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">extras</span> <span class="ruby-comment"># -&gt; { total_price: 50 }</span>
 </pre>
 
 <p>After the execution of the <strong>to_write_event</strong> block the event
@@ -365,7 +365,7 @@ executions ecc.</p>
 
     <span class="ruby-identifier">to_update_queries</span> <span class="ruby-keyword">do</span>
       <span class="ruby-comment"># update product quantity</span>
-      <span class="ruby-identifier">product</span> = <span class="ruby-identifier">event</span>.<span class="ruby-identifier">extras</span>[:<span class="ruby-identifier">_product</span>]
+      <span class="ruby-identifier">product</span> = <span class="ruby-identifier">event</span>.<span class="ruby-identifier">extras</span>[:<span class="ruby-identifier">product</span>]
       <span class="ruby-identifier">product</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-identifier">product</span>.<span class="ruby-identifier">quantity</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">payload</span>[:<span class="ruby-identifier">quantity</span>])
     <span class="ruby-keyword">end</span>
 
@@ -443,14 +443,6 @@ to edit the ./config/application.rb file like this example:</p>
 
 <pre>
 rdoc --op docs</pre>
-
-<p>To exec an example run:</p>
-
-<pre class="ruby">
-<span class="ruby-identifier">cd</span> <span class="ruby-identifier">example</span>
-<span class="ruby-identifier">bundle</span> <span class="ruby-identifier">install</span>
-<span class="ruby-identifier">bundle</span> <span class="ruby-identifier">exec</span> <span class="ruby-identifier">ruby</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">rb</span>
-</pre>
 </main>
 
 

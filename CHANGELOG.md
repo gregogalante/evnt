@@ -2,6 +2,14 @@
 
 ## Version 3.0
 
+### New features:
+
+- Added validator datetime type tests.
+
+### Bug fixed:
+
+/
+
 ## Version 2.1.6
 
 - Added datetime type validation on validator class.
@@ -64,4 +72,4 @@
 
 ## Version 1.0
 
-First official release.
+- First official release.

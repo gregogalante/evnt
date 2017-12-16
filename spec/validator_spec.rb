@@ -13,6 +13,32 @@ RSpec.describe Evnt::Validator do
   # The type validation should check the correct variable type.
   #################################################################
 
+  # Datetime
+
+  it 'should accept a date value with type: datetime' do
+    validation = Evnt::Validator.validates(DateTime.now, type: :datetime)
+    expect(validation).not_to be nil
+    expect(validation).to be true
+  end
+
+  it 'should accept a nil value with type: datetime' do
+    validation = Evnt::Validator.validates(nil, type: :datetime)
+    expect(validation).not_to be nil
+    expect(validation).to be true
+  end
+
+  it 'should not accept a not string date value with type: datetime' do
+    validation = Evnt::Validator.validates('Sambuca', type: :datetime)
+    expect(validation).not_to be nil
+    expect(validation).to be false
+  end
+
+  it 'should not accept a integer date value with type: datetime' do
+    validation = Evnt::Validator.validates(1234, type: :datetime)
+    expect(validation).not_to be nil
+    expect(validation).to be false
+  end
+
   # Date
 
   it 'should accept a date value with type: date' do

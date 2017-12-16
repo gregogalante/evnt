@@ -1,16 +1,10 @@
-Mon, 06 Nov 2017 16:14:52 +0100
-./CHANGELOG.md	Mon, 06 Nov 2017 16:14:40 +0100
-./spec/spec_helper.rb	Mon, 06 Nov 2017 15:48:57 +0100
-./spec/handler_spec.rb	Mon, 06 Nov 2017 15:48:57 +0100
-./spec/evnt_spec.rb	Mon, 06 Nov 2017 15:48:57 +0100
-./spec/validator_spec.rb	Mon, 06 Nov 2017 15:48:57 +0100
-./spec/command_spec.rb	Mon, 06 Nov 2017 15:48:57 +0100
-./spec/event_spec.rb	Mon, 06 Nov 2017 15:48:57 +0100
-./README.md	Mon, 06 Nov 2017 15:48:57 +0100
-./lib/evnt/handler.rb	Mon, 06 Nov 2017 15:48:57 +0100
-./lib/evnt/version.rb	Mon, 06 Nov 2017 15:48:57 +0100
+Sat, 16 Dec 2017 14:25:33 +0100
+./CHANGELOG.md	Fri, 15 Dec 2017 19:19:40 +0100
+./README.md	Thu, 16 Nov 2017 23:48:23 +0100
+./lib/evnt/handler.rb	Sat, 09 Dec 2017 20:19:43 +0100
+./lib/evnt/version.rb	Sat, 16 Dec 2017 14:02:35 +0100
 ./lib/evnt/command.rb	Mon, 06 Nov 2017 15:48:57 +0100
-./lib/evnt/validator.rb	Mon, 06 Nov 2017 16:14:20 +0100
-./lib/evnt/event.rb	Mon, 06 Nov 2017 15:48:57 +0100
-./lib/evnt.rb	Mon, 06 Nov 2017 15:48:57 +0100
-./MIT-LICENSE	Mon, 06 Nov 2017 15:48:57 +0100
+./lib/evnt/validator.rb	Sat, 16 Dec 2017 14:06:56 +0100
+./lib/evnt/event.rb	Thu, 16 Nov 2017 23:46:15 +0100
+./lib/evnt.rb	Wed, 08 Nov 2017 14:09:18 +0100
+./MIT-LICENSE	Mon, 06 Nov 2017 17:26:54 +0100

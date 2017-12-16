@@ -10,3 +10,4 @@ exclude:
 - "./Gemfile.lock"
 - "./evnt.gemspec"
 - "./examples"
+- "./spec"
