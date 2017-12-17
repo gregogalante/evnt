@@ -140,7 +140,7 @@ module Evnt
           err "#{val[:param].capitalize} value not accepted"
           break
         else
-          params[val[:param]] = result
+          @params[val[:param]] = result
         end
       end
 
