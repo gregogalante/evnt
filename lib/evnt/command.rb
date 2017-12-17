@@ -118,7 +118,7 @@ module Evnt
       }
 
       # set other data
-      @params = params.freeze
+      @params = params
     end
 
     # This function calls requested steps (callback) for the command.
@@ -132,8 +132,10 @@ module Evnt
     # This function validates the single parameters sets with the "validates" method.
     def _validate_single_params
       return if self.class._validations.nil? || self.class._validations.empty?
+
       self.class._validations.each do |val|
         result = Evnt::Validator.validates(params[val[:param]], val[:options])
+
         if result == :ERROR
           err "#{val[:param].capitalize} value not accepted"
           break
@@ -141,6 +143,8 @@ module Evnt
           params[val[:param]] = result
         end
       end
+
+      @params.freeze
     end
 
     # Class functions:
