@@ -1,15 +1,13 @@
 # Evnt changelog
 
+## Version 3.0.1
+
 ## Version 3.0
 
 ### New features:
 
 - Added validator datetime type tests.
 - Updated type validators to support values from a web application controller. For example the "true" string should be accepted as a boolean value.
-
-### Bug fixed:
-
-/
 
 ## Version 2.1.6
 
