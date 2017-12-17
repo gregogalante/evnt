@@ -5,6 +5,7 @@
 ### New features:
 
 - Added validator datetime type tests.
+- Updated type validators to support values from a web application controller. For example the "true" string should be accepted as a boolean value.
 
 ### Bug fixed:
 
