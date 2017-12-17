@@ -124,7 +124,7 @@ RSpec.describe Evnt::Validator do
     expect(validation).to eq value.to_s
   end
 
-  # # Integer
+  # Integer
 
   it 'should accept a integer value with type: integer' do
     value = 4
@@ -154,7 +154,7 @@ RSpec.describe Evnt::Validator do
     expect(validation).to eq value.to_i
   end
 
-  # # Float
+  # Float
 
   it 'should accept a float value with type: float' do
     value = 3.15
@@ -163,111 +163,134 @@ RSpec.describe Evnt::Validator do
     expect(validation).to eq value
   end
 
-  # it 'should accept a nil value with type: float' do
-  #   validation = Evnt::Validator.validates(nil, type: :float)
-  #   expect(validation).not_to be nil
-  #   expect(validation).not_to be :ERROR
-  # end
+  it 'should accept a nil value with type: float' do
+    value = nil
+    validation = Evnt::Validator.validates(value, type: :float)
+    expect(validation).not_to eq :ERROR
+    expect(validation).to eq value
+  end
 
-  # it 'should not accept a string value with type: float' do
-  #   validation = Evnt::Validator.validates('hello', type: :float)
-  #   expect(validation).not_to be nil
-  #   expect(validation).to be :ERROR
-  # end
+  it 'should accept a string float value with type: float' do
+    value = '3.25'
+    validation = Evnt::Validator.validates(value, type: :float)
+    expect(validation).not_to eq :ERROR
+    expect(validation).to eq value.to_f
+  end
 
-  # # Symbol
+  it 'should accept a string integer value with type: float' do
+    value = '3'
+    validation = Evnt::Validator.validates(value, type: :float)
+    expect(validation).not_to eq :ERROR
+    expect(validation).to eq value.to_f
+  end
 
-  # it 'should accept a symbol value with type: symbol' do
-  #   validation = Evnt::Validator.validates(:hello, type: :symbol)
-  #   expect(validation).not_to be nil
-  #   expect(validation).not_to be :ERROR
-  # end
+  # Symbol
 
-  # it 'should accept a nil value with type: symbol' do
-  #   validation = Evnt::Validator.validates(nil, type: :symbol)
-  #   expect(validation).not_to be nil
-  #   expect(validation).not_to be :ERROR
-  # end
+  it 'should accept a symbol value with type: symbol' do
+    value = :hello
+    validation = Evnt::Validator.validates(value, type: :symbol)
+    expect(validation).not_to eq :ERROR
+    expect(validation).to eq value
+  end
 
-  # it 'should not accept a string value with type: symbol' do
-  #   validation = Evnt::Validator.validates('hello', type: :symbol)
-  #   expect(validation).not_to be nil
-  #   expect(validation).to be :ERROR
-  # end
+  it 'should accept a nil value with type: symbol' do
+    value = nil
+    validation = Evnt::Validator.validates(value, type: :symbol)
+    expect(validation).not_to eq :ERROR
+    expect(validation).to eq value
+  end
 
-  # it 'should not accept a integer value with type: symbol' do
-  #   validation = Evnt::Validator.validates(5, type: :symbol)
-  #   expect(validation).not_to be nil
-  #   expect(validation).to be :ERROR
-  # end
+  it 'should not accept a string value with type: symbol' do
+    value = 'hello'
+    validation = Evnt::Validator.validates(value, type: :symbol)
+    expect(validation).to eq :ERROR
+    expect(validation).not_to eq value
+  end
+
+  it 'should not accept a integer value with type: symbol' do
+    value = 5
+    validation = Evnt::Validator.validates(value, type: :symbol)
+    expect(validation).to eq :ERROR
+    expect(validation).not_to eq value
+  end
 
   # # Presence:
   # # The presence validation permit to check that a value is
   # # not nil. Every other value that is not nil should be accepted.
   # #################################################################
 
-  # it 'should not accept a nil value with presence: true' do
-  #   validation = Evnt::Validator.validates(nil, presence: true)
-  #   expect(validation).not_to be nil
-  #   expect(validation).to be :ERROR
-  # end
+  it 'should not accept a nil value with presence: true' do
+    value = nil
+    validation = Evnt::Validator.validates(value, presence: true)
+    expect(validation).to eq :ERROR
+    expect(validation).not_to eq value
+  end
 
-  # it 'should accept a not nil value with presence: true' do
-  #   validation = Evnt::Validator.validates('foo', presence: true)
-  #   expect(validation).not_to be nil
-  #   expect(validation).not_to be :ERROR
-  # end
+  it 'should accept a not nil value with presence: true' do
+    value = 'foo'
+    validation = Evnt::Validator.validates(value, presence: true)
+    expect(validation).not_to eq :ERROR
+    expect(validation).to eq value
+  end
 
-  # it 'should accept an empty array value with presence: true' do
-  #   validation = Evnt::Validator.validates([], presence: true)
-  #   expect(validation).not_to be nil
-  #   expect(validation).not_to be :ERROR
-  # end
+  it 'should accept an empty array value with presence: true' do
+    value = []
+    validation = Evnt::Validator.validates(value, presence: true)
+    expect(validation).not_to eq :ERROR
+    expect(validation).to eq value
+  end
 
-  # it 'should accept an empty hash value with presence: true' do
-  #   validation = Evnt::Validator.validates({}, presence: true)
-  #   expect(validation).not_to be nil
-  #   expect(validation).not_to be :ERROR
-  # end
+  it 'should accept an empty hash value with presence: true' do
+    value = {}
+    validation = Evnt::Validator.validates(value, presence: true)
+    expect(validation).not_to eq :ERROR
+    expect(validation).to eq value
+  end
 
-  # it 'should accept a false boolean value with presence: true' do
-  #   validation = Evnt::Validator.validates(false, presence: true)
-  #   expect(validation).not_to be nil
-  #   expect(validation).not_to be :ERROR
-  # end
+  it 'should accept a false boolean value with presence: true' do
+    value = false
+    validation = Evnt::Validator.validates(value, presence: true)
+    expect(validation).not_to eq :ERROR
+    expect(validation).to eq value
+  end
 
-  # it 'should accept a true boolean value with presence: true' do
-  #   validation = Evnt::Validator.validates(true, presence: true)
-  #   expect(validation).not_to be nil
-  #   expect(validation).not_to be :ERROR
-  # end
+  it 'should accept a true boolean value with presence: true' do
+    value = true
+    validation = Evnt::Validator.validates(value, presence: true)
+    expect(validation).not_to eq :ERROR
+    expect(validation).to eq value
+  end
 
-  # it 'should not accept an empty string value with presence: false' do
-  #   validation = Evnt::Validator.validates('', presence: false)
-  #   expect(validation).not_to be nil
-  #   expect(validation).to be :ERROR
-  # end
+  it 'should not accept an empty string value with presence: false' do
+    value = ''
+    validation = Evnt::Validator.validates(value, presence: false)
+    expect(validation).to eq :ERROR
+    expect(validation).not_to eq value
+  end
 
-  # it 'should accept a nil value with presence: false' do
-  #   validation = Evnt::Validator.validates(nil, presence: false)
-  #   expect(validation).not_to be nil
-  #   expect(validation).not_to be :ERROR
-  # end
+  it 'should accept a nil value with presence: false' do
+    value = nil
+    validation = Evnt::Validator.validates(value, presence: false)
+    expect(validation).not_to eq :ERROR
+    expect(validation).to eq value
+  end
 
   # # Blank:
   # # The blank validation check a string is not empty.
   # #################################################################
 
-  # it 'should accept a long string value with blank: false' do
-  #   validation = Evnt::Validator.validates('helloworld', blank: false)
-  #   expect(validation).not_to be nil
-  #   expect(validation).not_to be :ERROR
-  # end
+  it 'should accept a long string value with blank: false' do
+    value = 'helloworld'
+    validation = Evnt::Validator.validates(value, blank: false)
+    expect(validation).not_to eq :ERROR
+    expect(validation).to eq value
+  end
 
-  # it 'should not accept an empty string value with blank: false' do
-  #   validation = Evnt::Validator.validates('', blank: false)
-  #   expect(validation).not_to be nil
-  #   expect(validation).to be :ERROR
-  # end
+  it 'should not accept an empty string value with blank: false' do
+    value = ''
+    validation = Evnt::Validator.validates(value, blank: false)
+    expect(validation).to eq :ERROR
+    expect(validation).not_to eq value
+  end
 
 end
