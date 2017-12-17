@@ -29,7 +29,7 @@ module Evnt
       def validates(param, options)
         result = param
         options.each do |key, value|
-          result = validate_option(param, key, value)
+          result = validate_option(result, key, value)
           break if result == :ERROR
         end
 
