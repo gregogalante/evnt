@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 require 'rspec'
+require_relative '../utils/file_system_utils'
 require_relative '../commands/create_text_file_command'
+
+RSpec.configure do |c|
+  c.include FileSystemUtils
+end
 
 RSpec.describe CreateTextFileCommand do
   context 'a name parameter with an invalid value' do
@@ -27,6 +32,22 @@ RSpec.describe CreateTextFileCommand do
       expect(command.error_messages.first).to eq 'Name value not accepted'
       command = CreateTextFileCommand.new(name: 'foo bar')
       expect(command.error_messages.first).to eq 'Name value not accepted'
+    end
+  end
+
+  context 'a name of an already existing file' do
+    it 'should not be completed' do
+      create_file('tmp.txt')
+      command = CreateTextFileCommand.new(name: 'tmp')
+      expect(command.completed?).to be false
+      remove_file('tmp.txt')
+    end
+
+    it 'should return a correct error message' do
+      create_file('tmp.txt')
+      command = CreateTextFileCommand.new(name: 'tmp')
+      expect(command.error_messages.first).to eq 'File already created'
+      remove_file('tmp.txt')
     end
   end
 end
