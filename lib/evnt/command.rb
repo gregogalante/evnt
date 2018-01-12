@@ -145,7 +145,7 @@ module Evnt
         end
       end
 
-      @params.freeze
+      @params
     end
 
     # Class functions:

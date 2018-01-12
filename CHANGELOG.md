@@ -5,6 +5,7 @@
 ### New features:
 
 - Added to_normalize_params block on commands to change parameters before validations.
+- Removed params freeze after the single params validation on commands.
 
 ## Version 3.0
 
