@@ -34,6 +34,7 @@ Commands are used to run single tasks on the system. It's like a controller on a
 
 Every command has three steps to execute:
 
+- The params normalization which normalize the parameters used to run the command.
 - The params validation which validates the parameters used to run the command.
 - The logic validation which checks the command can be executed in compliance with the system rules.
 - The event intialization which initializes an event object used to save the command.
@@ -42,6 +43,10 @@ An example of command should be:
 
 ```ruby
 class CreateOrderCommand < Evnt::Command
+
+  to_normalize_params do
+    params[:quantity] = params[:quantity].to_i
+  end
 
   to_validate_params do
     # check params presence

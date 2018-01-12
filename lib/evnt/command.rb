@@ -123,7 +123,8 @@ module Evnt
 
     # This function calls requested steps (callback) for the command.
     def _run_command_steps
-      _validate_single_params
+      _normalize_params if @state[:result] && defined?(_normalize_params)
+      _validate_single_params if @state[:result]
       _validate_params if @state[:result] && defined?(_validate_params)
       _validate_logic if @state[:result] && defined?(_validate_logic)
       _initialize_events if @state[:result] && defined?(_initialize_events)
@@ -160,6 +161,11 @@ module Evnt
         validations = instance_variable_get(:@_validations) || []
         validations.push(param: param, options: options)
         instance_variable_set(:@_validations, validations)
+      end
+
+      # This function sets the normalize params function for the command.
+      def to_normalize_params(&block)
+        define_method('_normalize_params', &block)
       end
 
       # This function sets the validate params function for the command.

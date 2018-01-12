@@ -2,6 +2,10 @@
 
 ## Version 3.0.1
 
+### New features:
+
+- Added to_normalize_params block on commands to change parameters before validations.
+
 ## Version 3.0
 
 ### New features:
