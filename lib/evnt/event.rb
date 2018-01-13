@@ -38,10 +38,16 @@ module Evnt
     #
     # ==== Attributes
     #
-    # * +params+ - The list of parameters for the command.
+    # * +params+ - The list of parameters for the event.
+    # * +_options+ - The list of options for the event.
+    #
+    # ==== Options
+    #
+    # * +silent+ - Boolean value used to avoid the call of the notify method of
+    # handlers.
     ##
-    def initialize(params)
-      _init_event_data(params)
+    def initialize(params, _options: {})
+      _init_event_data(params, _options)
       _validate_payload
       _run_event_steps
       _notify_handlers
@@ -65,10 +71,15 @@ module Evnt
     private
 
     # This function initializes the event required data.
-    def _init_event_data(params)
+    def _init_event_data(params, options)
       # set state
       @state = {
         reloaded: !params[:evnt].nil?
+      }
+
+      # set options
+      @options = {
+        silent: options[:silent] || false
       }
 
       # set payload
@@ -113,6 +124,7 @@ module Evnt
     # This function notify all handlers for the event.
     def _notify_handlers
       return unless self.class._handlers
+      return if @options[:silent]
 
       # notify every handler
       self.class._handlers.each do |handler|

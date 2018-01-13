@@ -6,7 +6,7 @@ require_relative '../events/create_file_event'
 require_relative '../handlers/file_system_handler'
 
 handler = FileSystemHandler.new
-event = CreateFileEvent.new(file_name: 'foo', file_extension: 'txt')
+event = CreateFileEvent.new(file_name: 'foo', file_extension: 'txt', _options: { silent: true })
 
 RSpec.configure do |c|
   c.include FileSystemUtils

@@ -176,7 +176,7 @@ system.</p>
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(params)</span>
+            class="method-args">(params, _options: {})</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -191,16 +191,26 @@ in their name are not saved on the payload.</p>
 
 <h4 id="method-c-new-label-Attributes">Attributes<span><a href="#method-c-new-label-Attributes">&para;</a> <a href="#top">&uarr;</a></span></h4>
 <ul><li>
-<p><code>params</code> - The list of parameters for the command.</p>
+<p><code>params</code> - The list of parameters for the event.</p>
+</li><li>
+<p><code>_options</code> - The list of options for the event.</p>
 </li></ul>
+
+<h4 id="method-c-new-label-Options">Options<span><a href="#method-c-new-label-Options">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<ul><li>
+<p><code>silent</code> - Boolean value used to avoid the call of the notify
+method of</p>
+</li></ul>
+
+<p>handlers.</p>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 42</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">params</span>)
-  <span class="ruby-identifier">_init_event_data</span>(<span class="ruby-identifier">params</span>)
+            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 48</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">_options</span><span class="ruby-operator">:</span> {})
+  <span class="ruby-identifier">_init_event_data</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">_options</span>)
   <span class="ruby-identifier">_validate_payload</span>
   <span class="ruby-identifier">_run_event_steps</span>
   <span class="ruby-identifier">_notify_handlers</span>
@@ -244,7 +254,7 @@ inside the event params.</p>
 
           
           <div class="method-source-code" id="reloaded-3F-source">
-            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 57</span>
+            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">reloaded?</span>
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:reloaded</span>]
 <span class="ruby-keyword">end</span></pre>

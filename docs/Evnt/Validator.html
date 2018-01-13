@@ -358,7 +358,7 @@ required.</p>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">validates</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">options</span>)
   <span class="ruby-identifier">result</span> = <span class="ruby-identifier">param</span>
   <span class="ruby-identifier">options</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">result</span> = <span class="ruby-identifier">validate_option</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
+    <span class="ruby-identifier">result</span> = <span class="ruby-identifier">validate_option</span>(<span class="ruby-identifier">result</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
     <span class="ruby-keyword">break</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">result</span> <span class="ruby-operator">==</span> <span class="ruby-value">:ERROR</span>
   <span class="ruby-keyword">end</span>
 

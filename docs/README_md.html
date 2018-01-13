@@ -138,6 +138,9 @@ client.</p>
 
 <p>Every command has three steps to execute:</p>
 <ul><li>
+<p>The params normalization which normalize the parameters used to run the
+command.</p>
+</li><li>
 <p>The params validation which validates the parameters used to run the
 command.</p>
 </li><li>
@@ -151,6 +154,10 @@ command.</p>
 <p>An example of command should be:</p>
 
 <pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">CreateOrderCommand</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Command</span>
+
+  <span class="ruby-identifier">to_normalize_params</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>] = <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>].<span class="ruby-identifier">to_i</span>
+  <span class="ruby-keyword">end</span>
 
   <span class="ruby-identifier">to_validate_params</span> <span class="ruby-keyword">do</span>
     <span class="ruby-comment"># check params presence</span>
