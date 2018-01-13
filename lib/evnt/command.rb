@@ -26,8 +26,8 @@ module Evnt
     #
     # * +exceptions+ - Boolean value used to activate the throw of excetions.
     ##
-    def initialize(params, _options: {})
-      _init_command_data(params, _options)
+    def initialize(params)
+      _init_command_data(params)
       _run_command_steps
     end
 
@@ -105,14 +105,15 @@ module Evnt
     private
 
     # This function initializes the command required data.
-    def _init_command_data(params, options)
+    def _init_command_data(params)
       # set state
       @state = {
         result: true,
         errors: []
       }
-
+      
       # set options
+      options = params[:_options] || {}
       @options = {
         exceptions: options[:exceptions] || false
       }

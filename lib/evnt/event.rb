@@ -46,8 +46,8 @@ module Evnt
     # * +silent+ - Boolean value used to avoid the call of the notify method of
     # handlers.
     ##
-    def initialize(params, _options: {})
-      _init_event_data(params, _options)
+    def initialize(params)
+      _init_event_data(params)
       _validate_payload
       _run_event_steps
       _notify_handlers
@@ -71,13 +71,14 @@ module Evnt
     private
 
     # This function initializes the event required data.
-    def _init_event_data(params, options)
+    def _init_event_data(params)
       # set state
       @state = {
         reloaded: !params[:evnt].nil?
       }
 
       # set options
+      options = params[:_options] || {}
       @options = {
         silent: options[:silent] || false
       }
