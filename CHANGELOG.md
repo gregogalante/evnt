@@ -4,6 +4,8 @@
 
 ### New features:
 
+- Added options support to events.
+- Added silent option to events to avoid the call of handlers.
 - Added to_normalize_params block on commands to change parameters before validations.
 - Removed params freeze after the single params validation on commands.
 
