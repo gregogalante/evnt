@@ -1,6 +1,6 @@
 # Evnt changelog
 
-## Version 3.0.2
+## Version 3.0.2 IN-PROGRESS
 
 ## Version 3.0.1
 

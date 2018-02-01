@@ -16,6 +16,12 @@ Full documentation here: https://ideonetwork.github.io/ruby-evnt/
 
 To use the gem you need to add it on your Gemfile
 
+- Latest version
+```ruby
+gem 'evnt', git: 'https://github.com/ideonetwork/ruby-evnt'
+```
+
+- Legacy version
 ```ruby
 gem 'evnt'
 ```
@@ -30,7 +36,7 @@ Evnt is developed to be used over all kinds of projects and frameworks (like Rub
 
 ### Command
 
-Commands are used to run single tasks on the system. It's like a controller on an MVC architecture without the communication with the client.
+Commands are used to run single tasks on the system. It's like a controller on an MVC architecture.
 
 Every command has three steps to execute:
 
@@ -44,15 +50,16 @@ An example of command should be:
 ```ruby
 class CreateOrderCommand < Evnt::Command
 
+  validates :user_id, type: :integer, presence: true
+  validates :product_id, type: :integer, presence: true
+  validates :quantity, type: :integer, presence: true
+
   to_normalize_params do
     params[:quantity] = params[:quantity].to_i
   end
 
   to_validate_params do
-    # check params presence
-    err 'User should be present' if params[:user_id].blank?
-    err 'Product should be present' if params[:product_id].blank?
-    err 'Quantity should be present' if params[:quantity].blank?
+    err 'Quantity should be positive' unless params[:quantity].positive?
   end
 
   to_validate_logic do
@@ -136,22 +143,6 @@ rescue => e
 end
 ```
 
-Some validations are similar for every command (like presence or paramter type), so you can also use general validations instead of **to_validate_params** block. An example of general validations should be:
-
-```ruby
-
-class CreateOrderCommand < Evnt::Command
-
-  validates :user_id, type: :integer, presence: true
-  validates :product_id, type: :integer, presence: true
-  validates :quantity, type: :integer, presence: true
-
-  # ...
-
-end
-
-```
-
 ### Event
 
 Events are used to save on a persistent data structure what happends on the system.
@@ -180,7 +171,10 @@ class CreateOrderEvent < Evnt::Event
 
   to_write_event do
     # save event on database
-    Event.create(name: name, payload: payload)
+    Event.create(
+      name: name,
+      payload: payload
+    )
   end
 
 end
@@ -201,7 +195,7 @@ puts event.attributes # -> [:order_id, :user_id, :product_id, :quantity]
 puts event.payload # -> { order_id: 1, user_id: 128, product_id: 534, quantity: 10, evnt: { timestamp: 2017010101, name: 'create_order' } }
 ```
 
-The event payload should contain all event attributes and a reserver attributes "evnt" used to store the event timestamp and the event name.
+The event payload should contain all event attributes and a reserved attributes "evnt" used to store the event timestamp and the event name.
 
 It's also possible to give datas to the event without save them on the event payload, to do this you shuld only use a key with "_" as first character. An example should be:
 
@@ -282,6 +276,12 @@ end
 ## Rails integration
 
 Evnt can be used with Ruby on Rails to extends the MVC pattern.
+
+### Generators integration
+
+TODO
+
+### Manual integration
 
 To use the gem with Rails you need to create three folders inside the ./app project's path:
 
