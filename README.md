@@ -18,7 +18,7 @@ To use the gem you need to add it on your Gemfile
 
 Latest version
 ```ruby
-gem 'evnt', git: 'https://github.com/ideonetwork/ruby-evnt'
+gem 'evnt', git: 'https://github.com/ideonetwork/evnt'
 ```
 
 Legacy version
