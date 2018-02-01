@@ -10,18 +10,18 @@ CQRS and Event Driven Development architecture for Ruby projects.
 - [Rails integration](#rails-integration)
 - [Development](#development)
 
-Full documentation here: https://ideonetwork.github.io/ruby-evnt/
+Full documentation here: https://ideonetwork.github.io/evnt/
 
 ## Installation
 
 To use the gem you need to add it on your Gemfile
 
-- Latest version
+Latest version
 ```ruby
 gem 'evnt', git: 'https://github.com/ideonetwork/ruby-evnt'
 ```
 
-- Legacy version
+Legacy version
 ```ruby
 gem 'evnt'
 ```
