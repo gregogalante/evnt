@@ -46,7 +46,7 @@ module Evnt
     # * +silent+ - Boolean value used to avoid the call of the notify method of
     # handlers.
     ##
-    def initialize(params)
+    def initialize(params = {})
       _init_event_data(params)
       _validate_payload
       _run_event_steps

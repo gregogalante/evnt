@@ -2,6 +2,14 @@
 
 ## Version 3.0.2 IN-PROGRESS
 
+### New features:
+
+- Added initializer generator for Ruby on Rails application.
+
+### Bug fix:
+
+- Fixed required parameters on command and event initializer.
+
 ## Version 3.0.1
 
 ### New features:

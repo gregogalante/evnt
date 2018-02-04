@@ -279,7 +279,21 @@ Evnt can be used with Ruby on Rails to extends the MVC pattern.
 
 ### Generators integration
 
-TODO
+There's a simple generator that can be used to inizialize a Rails application with Evnt.
+
+```shell
+
+rails generate evnt:initializer
+
+```
+
+This command should:
+
+- Create an **application_command.rb** on app/commands directory.
+- Create an **application_event.rb** on app/events directory.
+- Create an **application_handler.rb** on app/handlers directory.
+- Create tests for the three new classes added on the project.
+- Added app/commands, app/events and app/handlers on config.autoload_paths setting of the application.
 
 ### Manual integration
 

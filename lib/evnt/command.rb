@@ -26,7 +26,7 @@ module Evnt
     #
     # * +exceptions+ - Boolean value used to activate the throw of excetions.
     ##
-    def initialize(params)
+    def initialize(params = {})
       _init_command_data(params)
       _run_command_steps
     end
