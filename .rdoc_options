@@ -11,3 +11,4 @@ exclude:
 - "./evnt.gemspec"
 - "./examples"
 - "./spec"
+- "./lib/generators"
