@@ -176,7 +176,7 @@ system.</p>
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(params, _options: {})</span>
+            class="method-args">(params = {})</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -209,8 +209,8 @@ method of</p>
           
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 48</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">_options</span><span class="ruby-operator">:</span> {})
-  <span class="ruby-identifier">_init_event_data</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">_options</span>)
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">params</span> = {})
+  <span class="ruby-identifier">_init_event_data</span>(<span class="ruby-identifier">params</span>)
   <span class="ruby-identifier">_validate_payload</span>
   <span class="ruby-identifier">_run_event_steps</span>
   <span class="ruby-identifier">_notify_handlers</span>

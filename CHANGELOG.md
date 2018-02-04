@@ -2,17 +2,10 @@
 
 ## Version 3.0.2 IN-PROGRESS
 
-### New features:
-
 - Added initializer generator for Ruby on Rails application.
-
-### Bug fix:
-
 - Fixed required parameters on command and event initializer.
 
 ## Version 3.0.1
-
-### New features:
 
 - Added options support to events.
 - Added silent option to events to avoid the call of handlers.
@@ -20,8 +13,6 @@
 - Removed params freeze after the single params validation on commands.
 
 ## Version 3.0
-
-### New features:
 
 - Added validator datetime type tests.
 - Updated type validators to support values from a web application controller. For example the "true" string should be accepted as a boolean value.

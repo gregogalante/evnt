@@ -146,7 +146,7 @@ client.</p>
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(params, _options: {})</span>
+            class="method-args">(params = {})</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -175,8 +175,8 @@ excetions.</p>
           
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 28</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">_options</span><span class="ruby-operator">:</span> {})
-  <span class="ruby-identifier">_init_command_data</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">_options</span>)
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">params</span> = {})
+  <span class="ruby-identifier">_init_command_data</span>(<span class="ruby-identifier">params</span>)
   <span class="ruby-identifier">_run_command_steps</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
