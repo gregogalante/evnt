@@ -8,6 +8,11 @@ CQRS and Event Driven Development architecture for Ruby projects.
   - [Event](#event)
   - [Handler](#handler)
 - [Rails integration](#rails-integration)
+  - [Generators integration](#generators-integration)
+    - [Command generators](#command-generators)
+    - [Event generators](#event-generators)
+    - [Handler generators](#handler-generators)
+  - [Manual integration](#manual-integration)
 - [Development](#development)
 
 Full documentation here: https://ideonetwork.github.io/evnt/
@@ -295,7 +300,7 @@ This command should:
 - Create tests for the three new classes added on the project.
 - Added app/commands, app/events and app/handlers on config.autoload_paths setting of the application.
 
-#### Command
+#### Command generators
 
 Usage:
 
@@ -322,7 +327,7 @@ module Authentication
 end
 ```
 
-#### Event
+#### Event generators
 
 Usage:
 
@@ -347,7 +352,7 @@ module Authentication
 end
 ```
 
-#### Handler
+#### Handler generators
 
 Usage:
 
