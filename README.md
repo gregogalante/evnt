@@ -307,7 +307,7 @@ rails generate evnt:command Authentication::LoginCommand email:string password:s
 
 ```shell
 
-rails generate evnt:event Authentication::LoginEvent user_uuid:string ip_address:string
+rails generate evnt:event Authentication::LoginEvent user_uuid ip_address
 
 ```
 
