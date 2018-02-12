@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+<% @handler_modules.each_with_index do |module_name, index| %>
+<%= '  ' * index %>module <%= module_name %>
+<% end %>
+<%= '  ' * @handler_modules.length %># <%= @handler_class %>
+<%= '  ' * @handler_modules.length %>class <%= @handler_class %> < ApplicationHandler
+<% @handler_events.each do |event| %>
+<%= '  ' * (@handler_modules.length + 1) %>on :<%= event %> do; end
+<% end %>
+<%= '  ' * @handler_modules.length %>end
+<% @handler_modules.each_with_index do |_module_name, index| %>
+<%= '  ' * (@handler_modules.length - index - 1) %>end
+<% end %>

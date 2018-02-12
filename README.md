@@ -311,6 +311,14 @@ rails generate evnt:event Authentication::LoginEvent user_uuid ip_address
 
 ```
 
+#### Handler
+
+```shell
+
+rails generate evnt:handler AuthenticationHandler authentication_login_event authentication_signup_event
+
+```
+
 ### Manual integration
 
 To use the gem with Rails you need to create three folders inside the ./app project's path:
