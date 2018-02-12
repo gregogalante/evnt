@@ -299,7 +299,15 @@ This command should:
 
 ```shell
 
-rails generate evnt:command AuthenticationCommands::LoginCommand email:string password:string
+rails generate evnt:command Authentication::LoginCommand email:string password:string ip_address:string
+
+```
+
+#### Event
+
+```shell
+
+rails generate evnt:event Authentication::LoginEvent user_uuid:string ip_address:string
 
 ```
 

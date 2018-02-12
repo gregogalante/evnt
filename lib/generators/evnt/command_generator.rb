@@ -13,9 +13,8 @@ module Evnt
 
     def create_comand
       path = informations.first.split('::')
-      @command_name = path.last.camelize
+      @command_class = path.last.camelize
       @command_modules = path - [path.last]
-
       @command_params = (informations - [informations.first]).map do |data|
         data = data.split(':')
         data.length > 1 ? ":#{data.first}, type: :#{data.last}" : ":#{data.first}"
@@ -30,7 +29,7 @@ module Evnt
     def command_path
       path = './app/commands'
       @command_modules.map { |m| path = "#{path}/#{m.underscore}" }
-      path = "#{path}/#{@command_name.underscore}.rb"
+      path = "#{path}/#{@command_class.underscore}.rb"
       path
     end
 

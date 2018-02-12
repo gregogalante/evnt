@@ -2,8 +2,8 @@
 <% @command_modules.each_with_index do |module_name, index| %>
 <%= '  ' * index %>module <%= module_name %>
 <% end %>
-<%= '  ' * @command_modules.length %># <%= @command_name %>
-<%= '  ' * @command_modules.length %>class <%= @command_name %> < ApplicationCommand
+<%= '  ' * @command_modules.length %># <%= @command_class %>
+<%= '  ' * @command_modules.length %>class <%= @command_class %> < ApplicationCommand
 <% @command_params.each do |param| %>
 <%= '  ' * (@command_modules.length + 1) %>validates <%= param %>
 <% end %>

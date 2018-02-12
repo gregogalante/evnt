@@ -4,6 +4,7 @@
 
 - Added initializer generator for Ruby on Rails application.
 - Added command generator for Ruby on Rails application.
+- Added event generator for Ruby on Rails application.
 - Fixed required parameters on command and event initializer.
 
 ## Version 3.0.1

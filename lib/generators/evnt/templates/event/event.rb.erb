@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+<% @event_modules.each_with_index do |module_name, index| %>
+<%= '  ' * index %>module <%= module_name %>
+<% end %>
+<%= '  ' * @event_modules.length %># <%= @event_class %>
+<%= '  ' * @event_modules.length %>class <%= @event_class %> < ApplicationEvent
+
+<%= '  ' * (@event_modules.length + 1) %>name_is :<%= @event_name %>
+<% unless @event_attributes.blank? %>
+<%= '  ' * (@event_modules.length + 1) %>attributes_are <%= @event_attributes %>
+<% end %>
+<%= '  ' * @event_modules.length %>end
+<% @event_modules.each_with_index do |_module_name, index| %>
+<%= '  ' * (@event_modules.length - index - 1) %>end
+<% end %>
