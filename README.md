@@ -297,13 +297,34 @@ This command should:
 
 #### Command
 
+Usage:
+
 ```shell
 
 rails generate evnt:command Authentication::LoginCommand email:string password:string ip_address:string
 
 ```
 
+Output:
+
+```ruby
+# ./app/commands/authentication/login_command.rb
+module Authentication
+  class LoginCommand < ApplicationCommand
+
+    validates :email, type: :string
+
+    validates :password, type: :string
+
+    validates :ip_address, type: :string
+
+  end
+end
+```
+
 #### Event
+
+Usage:
 
 ```shell
 
@@ -311,12 +332,42 @@ rails generate evnt:event Authentication::LoginEvent user_uuid ip_address
 
 ```
 
+Output:
+
+```ruby
+# ./app/events/authentication/login_event.rb
+module Authentication
+  class LoginEvent < ApplicationEvent
+
+    name_is :authentication_login_event
+
+    attributes_are :user_uuid, :ip_address
+
+  end
+end
+```
+
 #### Handler
+
+Usage:
 
 ```shell
 
 rails generate evnt:handler AuthenticationHandler authentication_login_event authentication_signup_event
 
+```
+
+Output:
+
+```ruby
+# ./app/handlers/authentication_handler.rb
+class AuthenticationHandler < ApplicationHandler
+
+  on :authentication_login_event do; end
+
+  on :authentication_signup_event do; end
+
+end
 ```
 
 ### Manual integration
