@@ -3,6 +3,7 @@
 ## Version 3.0.2 IN-PROGRESS
 
 - Added initializer generator for Ruby on Rails application.
+- Added command generator for Ruby on Rails application.
 - Fixed required parameters on command and event initializer.
 
 ## Version 3.0.1

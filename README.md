@@ -295,6 +295,14 @@ This command should:
 - Create tests for the three new classes added on the project.
 - Added app/commands, app/events and app/handlers on config.autoload_paths setting of the application.
 
+#### Command
+
+```shell
+
+rails generate evnt:command AuthenticationCommands::LoginCommand email:string password:string
+
+```
+
 ### Manual integration
 
 To use the gem with Rails you need to create three folders inside the ./app project's path:

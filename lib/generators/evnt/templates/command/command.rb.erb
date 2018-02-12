@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+<% @command_modules.each_with_index do |module_name, index| %>
+<%= '  ' * index %>module <%= module_name %>
+<% end %>
+<%= '  ' * @command_modules.length %># <%= @command_name %>
+<%= '  ' * @command_modules.length %>class <%= @command_name %> < ApplicationCommand
+<% @command_params.each do |param| %>
+<%= '  ' * (@command_modules.length + 1) %>validates <%= param %>
+<% end %>
+<%= '  ' * @command_modules.length %>end
+<% @command_modules.each_with_index do |_module_name, index| %>
+<%= '  ' * (@command_modules.length - index - 1) %>end
+<% end %>
