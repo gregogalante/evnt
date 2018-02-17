@@ -96,7 +96,7 @@ module Evnt
       )
 
       # raise error if command needs exceptions
-      raise error if @options[:exceptions]
+      raise message if @options[:exceptions]
     end
 
     # Private functions:
@@ -111,7 +111,7 @@ module Evnt
         result: true,
         errors: []
       }
-      
+
       # set options
       options = params[:_options] || {}
       @options = {
