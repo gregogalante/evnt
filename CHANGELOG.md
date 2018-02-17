@@ -1,5 +1,7 @@
 # Evnt changelog
 
+## Version 3.0.3 IN-PROGRESS
+
 ## Version 3.0.2
 
 - Added initializer generator for Ruby on Rails application.
