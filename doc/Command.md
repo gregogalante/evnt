@@ -47,4 +47,24 @@ class CreateOrderCommand < Evnt::Command
 end
 ```
 
+## Logic validation
+
+The logic validation step is used to check if the command can be executed with respect to the system logics.
+The logic validation is defined with the block **to_validate_logic**. An example of logic validation should be:
+
+```ruby
+class CreateOrderCommand < Evnt::Command
+    to_validate_logic do
+        product = Product.find_by(uuid: params[:product_uuid])
+
+        unless product
+            err('product_uuid not accepted')
+            break
+        end
+
+        err('quantity not accepeted') if product.free_quantitity >= params[:quantity]
+    end
+end
+```
+
 # TODO
