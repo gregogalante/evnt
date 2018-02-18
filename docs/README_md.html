@@ -64,6 +64,9 @@
     <li><a href="#label-Handler">Handler</a>
     <li><a href="#label-Rails+integration">Rails integration</a>
     <li><a href="#label-Generators+integration">Generators integration</a>
+    <li><a href="#label-Command+generators">Command generators</a>
+    <li><a href="#label-Event+generators">Event generators</a>
+    <li><a href="#label-Handler+generators">Handler generators</a>
     <li><a href="#label-Manual+integration">Manual integration</a>
     <li><a href="#label-Development">Development</a>
   </ul>
@@ -105,6 +108,17 @@
 <p><a href="#handler">Handler</a></p>
 </li><li>
 <p><a href="#rails-integration">Rails integration</a></p>
+</li><li>
+<p><a href="#generators-integration">Generators integration</a></p>
+<ul><li>
+<p><a href="#command-generators">Command generators</a></p>
+</li><li>
+<p><a href="#event-generators">Event generators</a></p>
+</li><li>
+<p><a href="#handler-generators">Handler generators</a></p>
+</li></ul>
+</li><li>
+<p><a href="#manual-integration">Manual integration</a></p>
 </li><li>
 <p><a href="#development">Development</a></p>
 </li></ul>
@@ -425,6 +439,69 @@ directory.</p>
 <p>Added app/commands, app/events and app/handlers on config.autoload_paths
 setting of the application.</p>
 </li></ul>
+
+<h4 id="label-Command+generators">Command generators<span><a href="#label-Command+generators">&para;</a> <a href="#top">&uarr;</a></span></h4>
+
+<p>Usage:</p>
+
+<pre>
+rails generate evnt:command Authentication::LoginCommand email:string password:string ip_address:string</pre>
+
+<p>Output:</p>
+
+<pre class="ruby"><span class="ruby-comment"># ./app/commands/authentication/login_command.rb</span>
+<span class="ruby-keyword">module</span> <span class="ruby-constant">Authentication</span>
+  <span class="ruby-keyword">class</span> <span class="ruby-constant">LoginCommand</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">ApplicationCommand</span>
+
+    <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">email</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">string</span>
+
+    <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">password</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">string</span>
+
+    <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">ip_address</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">string</span>
+
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<h4 id="label-Event+generators">Event generators<span><a href="#label-Event+generators">&para;</a> <a href="#top">&uarr;</a></span></h4>
+
+<p>Usage:</p>
+
+<pre>
+rails generate evnt:event Authentication::LoginEvent user_uuid ip_address</pre>
+
+<p>Output:</p>
+
+<pre class="ruby"><span class="ruby-comment"># ./app/events/authentication/login_event.rb</span>
+<span class="ruby-keyword">module</span> <span class="ruby-constant">Authentication</span>
+  <span class="ruby-keyword">class</span> <span class="ruby-constant">LoginEvent</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">ApplicationEvent</span>
+
+    <span class="ruby-identifier">name_is</span> :<span class="ruby-identifier">authentication_login_event</span>
+
+    <span class="ruby-identifier">attributes_are</span> :<span class="ruby-identifier">user_uuid</span>, :<span class="ruby-identifier">ip_address</span>
+
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<h4 id="label-Handler+generators">Handler generators<span><a href="#label-Handler+generators">&para;</a> <a href="#top">&uarr;</a></span></h4>
+
+<p>Usage:</p>
+
+<pre>
+rails generate evnt:handler AuthenticationHandler authentication_login_event authentication_signup_event</pre>
+
+<p>Output:</p>
+
+<pre class="ruby"><span class="ruby-comment"># ./app/handlers/authentication_handler.rb</span>
+<span class="ruby-keyword">class</span> <span class="ruby-constant">AuthenticationHandler</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">ApplicationHandler</span>
+
+  <span class="ruby-identifier">on</span> :<span class="ruby-identifier">authentication_login_event</span> <span class="ruby-keyword">do</span>; <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">on</span> :<span class="ruby-identifier">authentication_signup_event</span> <span class="ruby-keyword">do</span>; <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span>
+</pre>
 
 <h3 id="label-Manual+integration">Manual integration<span><a href="#label-Manual+integration">&para;</a> <a href="#top">&uarr;</a></span></h3>
 

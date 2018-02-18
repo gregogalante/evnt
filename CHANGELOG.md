@@ -1,6 +1,8 @@
 # Evnt changelog
 
-## Version 3.0.3 IN-PROGRESS
+## Version 3.1.0 IN-PROGRESS
+
+- Updated validator class with new awesome structure.
 
 ## Version 3.0.2
 

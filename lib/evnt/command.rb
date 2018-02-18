@@ -136,13 +136,13 @@ module Evnt
       return if self.class._validations.nil? || self.class._validations.empty?
 
       self.class._validations.each do |val|
-        result = Evnt::Validator.validates(params[val[:param]], val[:options])
+        validator = Evnt::Validator.new(params[val[:param]], val[:options])
 
-        if result == :ERROR
+        if validator.passed?
+          @params[val[:param]] = validator.value
+        else
           err "#{val[:param].capitalize} value not accepted"
           break
-        else
-          @params[val[:param]] = result
         end
       end
 

@@ -1,9 +1,9 @@
-Sun, 04 Feb 2018 19:19:14 +0100
-./CHANGELOG.md	Sun, 04 Feb 2018 19:17:19 +0100
-./README.md	Sun, 04 Feb 2018 19:12:04 +0100
+Sun, 18 Feb 2018 14:53:11 +0100
+./CHANGELOG.md	Sat, 17 Feb 2018 19:08:18 +0100
+./README.md	Tue, 13 Feb 2018 00:58:58 +0100
 ./lib/evnt/handler.rb	Thu, 01 Feb 2018 21:20:54 +0100
-./lib/evnt/version.rb	Thu, 01 Feb 2018 21:20:54 +0100
-./lib/evnt/command.rb	Sun, 04 Feb 2018 19:03:06 +0100
+./lib/evnt/version.rb	Sat, 17 Feb 2018 19:08:10 +0100
+./lib/evnt/command.rb	Sat, 17 Feb 2018 19:06:40 +0100
 ./lib/evnt/validator.rb	Thu, 01 Feb 2018 21:20:54 +0100
 ./lib/evnt/event.rb	Sun, 04 Feb 2018 19:03:11 +0100
 ./lib/evnt.rb	Thu, 01 Feb 2018 21:20:54 +0100
