@@ -318,4 +318,31 @@ RSpec.describe Evnt::Validator do
     expect(validation.passed?).to eq false
   end
 
+  # Number:
+  #################################################################
+
+  it 'it should not accept a value minor than min option' do
+    value = 5
+    validation = Evnt::Validator.new(value, type: :integer, min: 10)
+    expect(validation.passed?).to eq false
+  end
+
+  it 'it should accept a value plus than min option' do
+    value = 5
+    validation = Evnt::Validator.new(value, type: :integer, min: 4)
+    expect(validation.passed?).to eq true
+  end
+
+  it 'it should not accept a value plus than max option' do
+    value = 5
+    validation = Evnt::Validator.new(value, type: :integer, max: 4)
+    expect(validation.passed?).to eq false
+  end
+
+  it 'it should accept a value minor than max option' do
+    value = 5
+    validation = Evnt::Validator.new(value, type: :integer, max: 6)
+    expect(validation.passed?).to eq true
+  end
+
 end

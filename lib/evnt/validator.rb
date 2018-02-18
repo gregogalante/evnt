@@ -68,7 +68,12 @@ module Evnt
       when :string
         _validates_string_blank if @_result
         _validates_string_length if @_result
-        _validates_string_max_length if @result
+      when :integer
+        _validates_number_min if @_result
+        _validates_number_max if @_result
+      when :float
+        _validates_number_min if @_result
+        _validates_number_max if @_result
       end
     end
 
@@ -152,18 +157,21 @@ module Evnt
     end
 
     def _validates_string_length
-      return if @_options[:length].nil?
+      return if @value.nil? || @_options[:length].nil?
       @_result = @value.length == @_options[:length]
     end
 
-    def _validates_string_min_length
-      return if @_options[:min_length].nil?
-      @_result = @value.length >= @_options[:min_length]
+    # Number validations:
+    ##########################################################################
+
+    def _validates_number_min
+      return if @value.nil? || @_options[:min].nil?
+      @_result = @value >= @_options[:min]
     end
 
-    def _validates_string_max_length
-      return if @_options[:max_length].nil?
-      @_result = @value.length <= @_options[:max_length]
+    def _validates_number_max
+      return if @value.nil? || @_options[:max].nil?
+      @_result = @value <= @_options[:max]
     end
 
   end
