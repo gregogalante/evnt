@@ -31,7 +31,7 @@ class CreateOrderCommand < Evnt::Command
 end
 ```
 
-See the **Evnt::Validator** class documentation to get the completed list of possible validations.
+See the [Evnt::Validator](https://github.com/ideonetwork/evnt/blob/master/doc/Validator.md) class documentation to get the completed list of possible validations.
 
 If you need to normalize and validate parameters manually you can also define the blocks **to_normalize_params** and **to_validate_params**. An example of manually validation should be:
 
