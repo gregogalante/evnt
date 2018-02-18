@@ -1,24 +1,15 @@
-# README
+# Rails application example
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Example of Evnt gem usage for a rails application.
 
-Things you may want to cover:
+## Usage
 
-* Ruby version
+```shell
 
-* System dependencies
+bundle install
 
-* Configuration
+rails s
 
-* Database creation
+```
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Send a post request to: http://localhost:3000/create_order
