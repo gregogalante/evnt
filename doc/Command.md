@@ -6,13 +6,16 @@ A command can be generated with a single class that extends **Evnt::Command**.
 
 ```ruby
 class CreateOrderCommand < Evnt::Command; end
+
+command = CreateOrderCommand.new(foo: 'bar')
+puts command.completed?
 ```
 
 Every command has three steps to execute after its initialization:
 
 - The **parameters normalization and validation** which validates the parameters used to run the command.
 - The **logic validation** which checks the command can be executed in compliance with the system rules.
-- The **event intialization** which initializes an event object used to save the command.
+- The **events intialization** which initializes one or more events.
 
 ## Parameters normalization and validation
 
@@ -67,4 +70,8 @@ class CreateOrderCommand < Evnt::Command
 end
 ```
 
-# TODO
+The err() function is used to create a command error and stop the execution of the next step. A command error is a hash object with a code and a message value that can be readed outside the command with the errors() method.
+
+## Events initialization
+
+TODO
