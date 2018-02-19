@@ -58,6 +58,8 @@
   <ul class="link-list" role="directory">
     <li><a href="#label-Command">Command</a>
     <li><a href="#label-Parameters+normalization+and+validation">Parameters normalization and validation</a>
+    <li><a href="#label-Logic+validation">Logic validation</a>
+    <li><a href="#label-Events+initialization">Events initialization</a>
   </ul>
 </div>
 
@@ -76,6 +78,8 @@
   
     <li><a href="../doc/Command_md.html">Command</a>
   
+    <li><a href="../doc/Validator_md.html">Validator</a>
+  
   </ul>
 </div>
 
@@ -93,6 +97,9 @@ single action that can be executed by an actor.</p>
 <strong>Evnt::Command</strong>.</p>
 
 <pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">CreateOrderCommand</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Command</span>; <span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">command</span> = <span class="ruby-constant">CreateOrderCommand</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">foo</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;bar&#39;</span>)
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">completed?</span>
 </pre>
 
 <p>Every command has three steps to execute after its initialization:</p>
@@ -103,8 +110,8 @@ validates the parameters used to run the command.</p>
 <p>The <strong>logic validation</strong> which checks the command can be
 executed in compliance with the system rules.</p>
 </li><li>
-<p>The <strong>event intialization</strong> which initializes an event object
-used to save the command.</p>
+<p>The <strong>events intialization</strong> which initializes one or more
+events.</p>
 </li></ul>
 
 <h2 id="label-Parameters+normalization+and+validation">Parameters normalization and validation<span><a href="#label-Parameters+normalization+and+validation">&para;</a> <a href="#top">&uarr;</a></span></h2>
@@ -126,8 +133,9 @@ to check the parameters type and normalize their value.</p>
 <span class="ruby-keyword">end</span>
 </pre>
 
-<p>See the <strong>Evnt::Validator</strong> class documentation to get the
-completed list of possible validations.</p>
+<p>See the <a
+href="https://github.com/ideonetwork/evnt/blob/master/doc/Validator.md">Evnt::Validator</a>
+class documentation to get the completed list of possible validations.</p>
 
 <p>If you need to normalize and validate parameters manually you can also
 define the blocks <strong>to_normalize_params</strong> and
@@ -144,6 +152,36 @@ should be:</p>
     <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span>
 </pre>
+
+<h2 id="label-Logic+validation">Logic validation<span><a href="#label-Logic+validation">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>The logic validation step is used to check if the command can be executed
+with respect to the system logics. The logic validation is defined with the
+block <strong>to_validate_logic</strong>. An example of logic validation
+should be:</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">CreateOrderCommand</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Command</span>
+    <span class="ruby-identifier">to_validate_logic</span> <span class="ruby-keyword">do</span>
+        <span class="ruby-identifier">product</span> = <span class="ruby-constant">Product</span>.<span class="ruby-identifier">find_by</span>(<span class="ruby-identifier">uuid</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">product_uuid</span>])
+
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">product</span>
+            <span class="ruby-identifier">err</span>(<span class="ruby-string">&#39;product_uuid not accepted&#39;</span>)
+            <span class="ruby-keyword">break</span>
+        <span class="ruby-keyword">end</span>
+
+        <span class="ruby-identifier">err</span>(<span class="ruby-string">&#39;quantity not accepeted&#39;</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">product</span>.<span class="ruby-identifier">free_quantitity</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>]
+    <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>The err() function is used to create a command error and stop the execution
+of the next step. A command error is a hash object with a code and a
+message value that can be readed outside the command with the errors()
+method.</p>
+
+<h2 id="label-Events+initialization">Events initialization<span><a href="#label-Events+initialization">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>TODO</p>
 </main>
 
 

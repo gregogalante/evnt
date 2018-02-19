@@ -64,6 +64,9 @@ module Evnt
     end
 
     def _validates_custom
+      _validates_global_in if @_result
+      _validates_global_out if @_result
+
       case @_options[:type]
       when :string
         _validates_string_blank if @_result
@@ -147,13 +150,25 @@ module Evnt
       @_result = false
     end
 
+    # Global validations:
+    ##########################################################################
+
+    def _validates_global_in
+      return if @value.nil? || @_options[:in].nil?
+      @_result = @_options[:in].include?(@value)
+    end
+
+    def _validates_global_out
+      return if @value.nil? || @_options[:out].nil?
+      @_result = !@_options[:out].include?(@value)
+    end
+
     # String validations:
     ##########################################################################
 
     def _validates_string_blank
-      return if @_options[:blank].nil?
-      blank = (!@value || @value.empty?)
-      @_result = @_options[:blank] ? blank : !blank
+      return if @value.nil? || @_options[:blank].nil?
+      @_result = @_options[:blank] ? @value.empty? : !@value.empty?
     end
 
     def _validates_string_length

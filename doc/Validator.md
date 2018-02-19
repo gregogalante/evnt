@@ -70,6 +70,22 @@ Evnt::Validator.new(user, type: 'User').passed? # -> true
 
 Custom options are options that should be used only with specific value types.
 
+### Global options
+
+#### - In
+
+```ruby
+Evnt::Validator.new(1, type: :integer, in: [1, 2, 3]).passed? # -> true
+Evnt::Validator.new(1, type: :integer, in: [2, 3]).passed? # -> false
+```
+
+#### - Out
+
+```ruby
+Evnt::Validator.new(1, type: :integer, out: [1, 2, 3]).passed? # -> false
+Evnt::Validator.new(1, type: :integer, in: [2, 3]).passed? # -> true
+```
+
 ### String options
 
 #### - Blank
