@@ -72,6 +72,8 @@ Custom options are options that should be used only with specific value types.
 
 ### Global options
 
+Global options are used for all supported types.
+
 #### - In
 
 ```ruby
@@ -87,6 +89,8 @@ Evnt::Validator.new(1, type: :integer, out: [2, 3]).passed? # -> true
 ```
 
 ### String options
+
+String options are used for string type.
 
 #### - Blank
 
