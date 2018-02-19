@@ -83,7 +83,7 @@ Evnt::Validator.new(1, type: :integer, in: [2, 3]).passed? # -> false
 
 ```ruby
 Evnt::Validator.new(1, type: :integer, out: [1, 2, 3]).passed? # -> false
-Evnt::Validator.new(1, type: :integer, in: [2, 3]).passed? # -> true
+Evnt::Validator.new(1, type: :integer, out: [2, 3]).passed? # -> true
 ```
 
 ### String options
