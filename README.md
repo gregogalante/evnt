@@ -34,6 +34,8 @@ Evnt is developed to be used over all kinds of projects and frameworks (like Rub
 - [Event](https://github.com/ideonetwork/evnt/blob/master/doc/Event.md)
 - [Handler](https://github.com/ideonetwork/evnt/blob/master/doc/Handler.md)
 
+Every entity is a simple class that should be extended to structure your awesome project.
+
 ## Development
 
 To update the documentation run:
