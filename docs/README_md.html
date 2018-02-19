@@ -59,15 +59,6 @@
     <li><a href="#label-Evnt">Evnt</a>
     <li><a href="#label-Installation">Installation</a>
     <li><a href="#label-Structure">Structure</a>
-    <li><a href="#label-Command">Command</a>
-    <li><a href="#label-Event">Event</a>
-    <li><a href="#label-Handler">Handler</a>
-    <li><a href="#label-Rails+integration">Rails integration</a>
-    <li><a href="#label-Generators+integration">Generators integration</a>
-    <li><a href="#label-Command+generators">Command generators</a>
-    <li><a href="#label-Event+generators">Event generators</a>
-    <li><a href="#label-Handler+generators">Handler generators</a>
-    <li><a href="#label-Manual+integration">Manual integration</a>
     <li><a href="#label-Development">Development</a>
   </ul>
 </div>
@@ -87,6 +78,12 @@
   
     <li><a href="./doc/Command_md.html">Command</a>
   
+    <li><a href="./doc/Event_md.html">Event</a>
+  
+    <li><a href="./doc/Handler_md.html">Handler</a>
+  
+    <li><a href="./doc/RailsIntegration_md.html">RailsIntegration</a>
+  
     <li><a href="./doc/Validator_md.html">Validator</a>
   
   </ul>
@@ -99,35 +96,30 @@
 
 <h1 id="label-Evnt"><a href="Evnt.html">Evnt</a><span><a href="#label-Evnt">&para;</a> <a href="#top">&uarr;</a></span></h1>
 
-<p>CQRS and Event Driven Development architecture for Ruby projects.</p>
+<p>CQRS and <a href="doc/Event_md.html">Event</a> Driven Development
+architecture for Ruby projects.</p>
 <ul><li>
 <p><a href="#installation">Installation</a></p>
 </li><li>
 <p><a href="#structure">Structure</a></p>
 </li><li>
-<p><a href="#command">Command</a></p>
+<p><a
+href="https://github.com/ideonetwork/evnt/blob/master/doc/Command.md">Command</a></p>
 </li><li>
-<p><a href="#event">Event</a></p>
+<p><a
+href="https://github.com/ideonetwork/evnt/blob/master/doc/Event.md">Event</a></p>
 </li><li>
-<p><a href="#handler">Handler</a></p>
+<p><a
+href="https://github.com/ideonetwork/evnt/blob/master/doc/Handler.md">Handler</a></p>
 </li><li>
-<p><a href="#rails-integration">Rails integration</a></p>
-</li><li>
-<p><a href="#generators-integration">Generators integration</a></p>
-<ul><li>
-<p><a href="#command-generators">Command generators</a></p>
-</li><li>
-<p><a href="#event-generators">Event generators</a></p>
-</li><li>
-<p><a href="#handler-generators">Handler generators</a></p>
-</li></ul>
-</li><li>
-<p><a href="#manual-integration">Manual integration</a></p>
+<p><a
+href="https://github.com/ideonetwork/evnt/blob/master/doc/RailsIntegration.md">Rails
+integration</a></p>
 </li><li>
 <p><a href="#development">Development</a></p>
 </li></ul>
 
-<p>Full documentation here: <a
+<p>Full class documentation here: <a
 href="https://ideonetwork.github.io/evnt">ideonetwork.github.io/evnt</a>/</p>
 
 <h2 id="label-Installation">Installation<span><a href="#label-Installation">&para;</a> <a href="#top">&uarr;</a></span></h2>
@@ -145,399 +137,15 @@ href="https://ideonetwork.github.io/evnt">ideonetwork.github.io/evnt</a>/</p>
 projects and frameworks (like Ruby on Rails or Sinatra), so it contains
 only three types of entities:</p>
 <ul><li>
-<p><a href="doc/Command_md.html">Command</a></p>
+<p><a
+href="https://github.com/ideonetwork/evnt/blob/master/doc/Command.md">Command</a></p>
 </li><li>
-<p>Event</p>
+<p><a
+href="https://github.com/ideonetwork/evnt/blob/master/doc/Event.md">Event</a></p>
 </li><li>
-<p>Handler</p>
+<p><a
+href="https://github.com/ideonetwork/evnt/blob/master/doc/Handler.md">Handler</a></p>
 </li></ul>
-
-<h3 id="label-Command"><a href="doc/Command_md.html">Command</a><span><a href="#label-Command">&para;</a> <a href="#top">&uarr;</a></span></h3>
-
-<p>Commands are used to run single tasks on the system. It&#39;s like a
-controller on an MVC architecture.</p>
-
-<p>Every command has three steps to execute:</p>
-<ul><li>
-<p>The params normalization and validation which validates the parameters used
-to run the command.</p>
-</li><li>
-<p>The logic validation which checks the command can be executed in compliance
-with the system rules.</p>
-</li><li>
-<p>The event intialization which initializes an event object used to save the
-command.</p>
-</li></ul>
-
-<p>An example of command should be:</p>
-
-<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">CreateOrderCommand</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Command</span>
-
-  <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">user_id</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">integer</span>, <span class="ruby-identifier">presence</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>
-  <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">product_id</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">integer</span>, <span class="ruby-identifier">presence</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>
-  <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">quantity</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">integer</span>, <span class="ruby-identifier">presence</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>
-
-  <span class="ruby-identifier">to_normalize_params</span> <span class="ruby-keyword">do</span>
-    <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>] = <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>].<span class="ruby-identifier">to_i</span>
-  <span class="ruby-keyword">end</span>
-
-  <span class="ruby-identifier">to_validate_params</span> <span class="ruby-keyword">do</span>
-    <span class="ruby-identifier">err</span> <span class="ruby-string">&#39;Quantity should be positive&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>].<span class="ruby-identifier">positive?</span>
-  <span class="ruby-keyword">end</span>
-
-  <span class="ruby-identifier">to_validate_logic</span> <span class="ruby-keyword">do</span>
-    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by</span>(<span class="ruby-identifier">id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">user_id</span>])
-    <span class="ruby-ivar">@product</span> = <span class="ruby-constant">Product</span>.<span class="ruby-identifier">find_by</span>(<span class="ruby-identifier">id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">product_id</span>])
-
-    <span class="ruby-comment"># check user exist</span>
-    <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@user</span>
-      <span class="ruby-identifier">err</span> <span class="ruby-string">&#39;The user does not exist&#39;</span>
-      <span class="ruby-keyword">break</span>
-    <span class="ruby-keyword">end</span>
-
-    <span class="ruby-comment"># check product exist</span>
-    <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@product</span>
-      <span class="ruby-identifier">err</span> <span class="ruby-string">&#39;The product does not exist&#39;</span>
-      <span class="ruby-keyword">break</span>
-    <span class="ruby-keyword">end</span>
-
-    <span class="ruby-comment"># check quantity exist for the product</span>
-    <span class="ruby-identifier">err</span> <span class="ruby-string">&#39;The requested quantity is not available&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">quantity</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>]
-
-    <span class="ruby-comment"># check user has money to buy the product</span>
-    <span class="ruby-identifier">err</span> <span class="ruby-string">&#39;You do not have enought money&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">money</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">price</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>]
-  <span class="ruby-keyword">end</span>
-
-  <span class="ruby-identifier">to_initialize_events</span> <span class="ruby-keyword">do</span>
-    <span class="ruby-comment"># generate order id</span>
-    <span class="ruby-identifier">order_id</span> = <span class="ruby-constant">SecureRandom</span>.<span class="ruby-identifier">uuid</span>
-
-    <span class="ruby-comment"># initialize event</span>
-    <span class="ruby-keyword">begin</span>
-      <span class="ruby-constant">CreateOrderEvent</span>.<span class="ruby-identifier">new</span>(
-        <span class="ruby-identifier">order_id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">order_id</span>,
-        <span class="ruby-identifier">user_id</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">id</span>,
-        <span class="ruby-identifier">product_id</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">id</span>,
-        <span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>],
-        <span class="ruby-identifier">_user</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@user</span>,
-        <span class="ruby-identifier">_product</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@product</span>
-      )
-    <span class="ruby-keyword">rescue</span>
-      <span class="ruby-identifier">err</span> <span class="ruby-string">&#39;Sorry, there was an error&#39;</span>, <span class="ruby-identifier">code</span><span class="ruby-operator">:</span> <span class="ruby-value">500</span>
-    <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">end</span>
-
-<span class="ruby-keyword">end</span>
-</pre>
-
-<p>An example of command usage should be:</p>
-
-<pre class="ruby"><span class="ruby-identifier">command</span> = <span class="ruby-constant">CreateOrderCommand</span>.<span class="ruby-identifier">new</span>(
-  <span class="ruby-identifier">user_id</span><span class="ruby-operator">:</span> <span class="ruby-value">128</span>,
-  <span class="ruby-identifier">product_id</span><span class="ruby-operator">:</span> <span class="ruby-value">534</span>,
-  <span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-value">10</span>
-)
-
-<span class="ruby-keyword">if</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">completed?</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;Command completed&#39;</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">params</span> <span class="ruby-comment"># -&gt; { user_id: 128, product_id: 534, quantity: 10 }</span>
-<span class="ruby-keyword">else</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">errors</span> <span class="ruby-comment"># array of hashes with a { message, code } structure</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">error_messages</span> <span class="ruby-comment"># array of error messages</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">error_codes</span> <span class="ruby-comment"># array of error codes</span>
-<span class="ruby-keyword">end</span>
-</pre>
-
-<p>It&#39;s also possible to use err method inside the command to raise an
-exception with the option <strong>exception: true</strong>. An example of
-usage should be:</p>
-
-<pre class="ruby"><span class="ruby-keyword">begin</span>
-  <span class="ruby-identifier">command</span> = <span class="ruby-constant">CreateOrderCommand</span>.<span class="ruby-identifier">new</span>(
-    <span class="ruby-identifier">user_id</span><span class="ruby-operator">:</span> <span class="ruby-value">128</span>,
-    <span class="ruby-identifier">product_id</span><span class="ruby-operator">:</span> <span class="ruby-value">534</span>,
-    <span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-value">10</span>,
-    <span class="ruby-identifier">_options</span><span class="ruby-operator">:</span> {
-      <span class="ruby-identifier">excption</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>
-    }
-  )
-<span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">e</span>
-<span class="ruby-keyword">end</span>
-</pre>
-
-<h3 id="label-Event">Event<span><a href="#label-Event">&para;</a> <a href="#top">&uarr;</a></span></h3>
-
-<p>Events are used to save on a persistent data structure what happends on the
-system.</p>
-
-<p>Every event has three informations:</p>
-<ul><li>
-<p>The <strong>name</strong> is an unique identifier of the event.</p>
-</li><li>
-<p>The <strong>attributes</strong> are the list of attributes required from
-the event to be saved.</p>
-</li><li>
-<p>The <strong>handlers</strong> are a list of handler objects which will be
-notified when the event is completed.</p>
-</li></ul>
-
-<p>Every event has also a single function used to write the event information
-on the data structure.</p>
-
-<p>An example of event should be:</p>
-
-<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">CreateOrderEvent</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Event</span>
-
-  <span class="ruby-identifier">name_is</span> :<span class="ruby-identifier">create_order</span>
-
-  <span class="ruby-identifier">attributes_are</span> :<span class="ruby-identifier">order_id</span>, :<span class="ruby-identifier">user_id</span>, :<span class="ruby-identifier">product_id</span>, :<span class="ruby-identifier">quantity</span>
-
-  <span class="ruby-identifier">handlers_are</span> [
-    <span class="ruby-constant">ProductHandler</span>.<span class="ruby-identifier">new</span>,
-    <span class="ruby-constant">UserNotifierHandler</span>.<span class="ruby-identifier">new</span>
-  ]
-
-  <span class="ruby-identifier">to_write_event</span> <span class="ruby-keyword">do</span>
-    <span class="ruby-comment"># save event on database</span>
-    <span class="ruby-constant">Event</span>.<span class="ruby-identifier">create</span>(
-      <span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-identifier">name</span>,
-      <span class="ruby-identifier">payload</span><span class="ruby-operator">:</span> <span class="ruby-identifier">payload</span>
-    )
-  <span class="ruby-keyword">end</span>
-
-<span class="ruby-keyword">end</span>
-</pre>
-
-<p>An example of event usage should be:</p>
-
-<pre class="ruby"><span class="ruby-identifier">event</span> = <span class="ruby-constant">CreateOrderEvent</span>.<span class="ruby-identifier">new</span>(
-  <span class="ruby-identifier">order_id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">order_id</span>,
-  <span class="ruby-identifier">user_id</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">id</span>,
-  <span class="ruby-identifier">product_id</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">id</span>,
-  <span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>]
-)
-
-<span class="ruby-identifier">puts</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">name</span> <span class="ruby-comment"># -&gt; :create_order</span>
-<span class="ruby-identifier">puts</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">attributes</span> <span class="ruby-comment"># -&gt; [:order_id, :user_id, :product_id, :quantity]</span>
-<span class="ruby-identifier">puts</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">payload</span> <span class="ruby-comment"># -&gt; { order_id: 1, user_id: 128, product_id: 534, quantity: 10, evnt: { timestamp: 2017010101, name: &#39;create_order&#39; } }</span>
-</pre>
-
-<p>The event payload should contain all event attributes and a reserved
-attributes “evnt” used to store the event timestamp and the event name.</p>
-
-<p>It&#39;s also possible to give datas to the event without save them on the
-event payload, to do this you shuld only use a key with “_” as first
-character. An example should be:</p>
-
-<pre class="ruby"><span class="ruby-identifier">event</span> = <span class="ruby-constant">CreateOrderEvent</span>.<span class="ruby-identifier">new</span>(
-  <span class="ruby-identifier">order_id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">order_id</span>,
-  <span class="ruby-identifier">user_id</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">id</span>,
-  <span class="ruby-identifier">product_id</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">id</span>,
-  <span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>],
-  <span class="ruby-identifier">_total_price</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>] <span class="ruby-operator">*</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">price</span>
-)
-
-<span class="ruby-identifier">puts</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">payload</span> <span class="ruby-comment"># -&gt; { order_id: 1, user_id: 128, product_id: 534, quantity: 10, evnt: { timestamp: 2017010101, name: &#39;create_order&#39; } }</span>
-<span class="ruby-identifier">puts</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">extras</span> <span class="ruby-comment"># -&gt; { total_price: 50 }</span>
-</pre>
-
-<p>After the execution of the <strong>to_write_event</strong> block the event
-object should notify all its handlers.</p>
-
-<p>Sometimes you need to reload an old event to notify handlers to re-build
-queries from events. To initialize a new event object with the payload of
-an old event you can pass the old event payload to the event constructor:</p>
-
-<pre class="ruby"><span class="ruby-identifier">events</span> = <span class="ruby-constant">Event</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;create_order&#39;</span>)
-<span class="ruby-identifier">reloaded_event</span> = <span class="ruby-constant">CreateOrderEvent</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">events</span>.<span class="ruby-identifier">sample</span>.<span class="ruby-identifier">payload</span>)
-
-<span class="ruby-identifier">puts</span> <span class="ruby-identifier">reloaded_event</span>.<span class="ruby-identifier">reloaded?</span> <span class="ruby-comment"># -&gt; true</span>
-</pre>
-
-<h3 id="label-Handler">Handler<span><a href="#label-Handler">&para;</a> <a href="#top">&uarr;</a></span></h3>
-
-<p>Handlers are used to listen one or more events and run tasks after their
-execution.</p>
-
-<p>Every handler event management has two steps to execute:</p>
-<ul><li>
-<p>The queries update which updates temporary data structures used to read
-datas.</p>
-</li><li>
-<p>The manage event code which run other tasks like mailers, parallel
-executions ecc.</p>
-</li></ul>
-
-<p>An example of handler shuould be:</p>
-
-<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">ProductHandler</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Handler</span>
-
-  <span class="ruby-identifier">on</span> :<span class="ruby-identifier">create_order</span> <span class="ruby-keyword">do</span>
-
-    <span class="ruby-identifier">to_update_queries</span> <span class="ruby-keyword">do</span>
-      <span class="ruby-comment"># update product quantity</span>
-      <span class="ruby-identifier">product</span> = <span class="ruby-identifier">event</span>.<span class="ruby-identifier">extras</span>[:<span class="ruby-identifier">product</span>]
-      <span class="ruby-identifier">product</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-identifier">product</span>.<span class="ruby-identifier">quantity</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">payload</span>[:<span class="ruby-identifier">quantity</span>])
-    <span class="ruby-keyword">end</span>
-
-    <span class="ruby-identifier">to_manage_event</span> <span class="ruby-keyword">do</span>
-      <span class="ruby-comment"># this block is called only for not reloaded events</span>
-    <span class="ruby-keyword">end</span>
-
-  <span class="ruby-keyword">end</span>
-
-<span class="ruby-keyword">end</span>
-</pre>
-
-<p>The execution of <strong>to_update_queries</strong> block runs after every
-events initialization. The execution of <strong>to_manage_event</strong>
-block runs only for not reloaded events initialization.</p>
-
-<p>Sometimes you need to run some code to manage only reloaded events. To run
-code only for reloaded events you can use the
-<strong>to_manage_reloaded_event</strong> block:</p>
-
-<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">ProductHandler</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Handler</span>
-
-  <span class="ruby-identifier">on</span> :<span class="ruby-identifier">create_order</span> <span class="ruby-keyword">do</span>
-
-    <span class="ruby-identifier">to_manage_reloaded_event</span> <span class="ruby-keyword">do</span>
-      <span class="ruby-comment"># this block is called only for reloaded events</span>
-    <span class="ruby-keyword">end</span>
-
-  <span class="ruby-keyword">end</span>
-
-<span class="ruby-keyword">end</span>
-</pre>
-
-<h2 id="label-Rails+integration">Rails integration<span><a href="#label-Rails+integration">&para;</a> <a href="#top">&uarr;</a></span></h2>
-
-<p><a href="Evnt.html">Evnt</a> can be used with Ruby on Rails to extends the
-MVC pattern.</p>
-
-<h3 id="label-Generators+integration">Generators integration<span><a href="#label-Generators+integration">&para;</a> <a href="#top">&uarr;</a></span></h3>
-
-<p>There&#39;s a simple generator that can be used to inizialize a Rails
-application with <a href="Evnt.html">Evnt</a>.</p>
-
-<pre class="ruby">
-<span class="ruby-identifier">rails</span> <span class="ruby-identifier">generate</span> <span class="ruby-identifier">evnt</span>:<span class="ruby-identifier">initializer</span>
-</pre>
-
-<p>This command should:</p>
-<ul><li>
-<p>Create an <strong>application_command.rb</strong> on app/commands
-directory.</p>
-</li><li>
-<p>Create an <strong>application_event.rb</strong> on app/events directory.</p>
-</li><li>
-<p>Create an <strong>application_handler.rb</strong> on app/handlers
-directory.</p>
-</li><li>
-<p>Create tests for the three new classes added on the project.</p>
-</li><li>
-<p>Added app/commands, app/events and app/handlers on config.autoload_paths
-setting of the application.</p>
-</li></ul>
-
-<h4 id="label-Command+generators"><a href="doc/Command_md.html">Command</a> generators<span><a href="#label-Command+generators">&para;</a> <a href="#top">&uarr;</a></span></h4>
-
-<p>Usage:</p>
-
-<pre>
-rails generate evnt:command Authentication::LoginCommand email:string password:string ip_address:string</pre>
-
-<p>Output:</p>
-
-<pre class="ruby"><span class="ruby-comment"># ./app/commands/authentication/login_command.rb</span>
-<span class="ruby-keyword">module</span> <span class="ruby-constant">Authentication</span>
-  <span class="ruby-keyword">class</span> <span class="ruby-constant">LoginCommand</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">ApplicationCommand</span>
-
-    <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">email</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">string</span>
-
-    <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">password</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">string</span>
-
-    <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">ip_address</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">string</span>
-
-  <span class="ruby-keyword">end</span>
-<span class="ruby-keyword">end</span>
-</pre>
-
-<h4 id="label-Event+generators">Event generators<span><a href="#label-Event+generators">&para;</a> <a href="#top">&uarr;</a></span></h4>
-
-<p>Usage:</p>
-
-<pre>
-rails generate evnt:event Authentication::LoginEvent user_uuid ip_address</pre>
-
-<p>Output:</p>
-
-<pre class="ruby"><span class="ruby-comment"># ./app/events/authentication/login_event.rb</span>
-<span class="ruby-keyword">module</span> <span class="ruby-constant">Authentication</span>
-  <span class="ruby-keyword">class</span> <span class="ruby-constant">LoginEvent</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">ApplicationEvent</span>
-
-    <span class="ruby-identifier">name_is</span> :<span class="ruby-identifier">authentication_login_event</span>
-
-    <span class="ruby-identifier">attributes_are</span> :<span class="ruby-identifier">user_uuid</span>, :<span class="ruby-identifier">ip_address</span>
-
-  <span class="ruby-keyword">end</span>
-<span class="ruby-keyword">end</span>
-</pre>
-
-<h4 id="label-Handler+generators">Handler generators<span><a href="#label-Handler+generators">&para;</a> <a href="#top">&uarr;</a></span></h4>
-
-<p>Usage:</p>
-
-<pre>
-rails generate evnt:handler AuthenticationHandler authentication_login_event authentication_signup_event</pre>
-
-<p>Output:</p>
-
-<pre class="ruby"><span class="ruby-comment"># ./app/handlers/authentication_handler.rb</span>
-<span class="ruby-keyword">class</span> <span class="ruby-constant">AuthenticationHandler</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">ApplicationHandler</span>
-
-  <span class="ruby-identifier">on</span> :<span class="ruby-identifier">authentication_login_event</span> <span class="ruby-keyword">do</span>; <span class="ruby-keyword">end</span>
-
-  <span class="ruby-identifier">on</span> :<span class="ruby-identifier">authentication_signup_event</span> <span class="ruby-keyword">do</span>; <span class="ruby-keyword">end</span>
-
-<span class="ruby-keyword">end</span>
-</pre>
-
-<h3 id="label-Manual+integration">Manual integration<span><a href="#label-Manual+integration">&para;</a> <a href="#top">&uarr;</a></span></h3>
-
-<p>To use the gem with Rails you need to create three folders inside the ./app
-project&#39;s path:</p>
-<ul><li>
-<p><strong>./app/commands</strong></p>
-</li><li>
-<p><strong>./app/events</strong></p>
-</li><li>
-<p><strong>./app/handlers</strong></p>
-</li></ul>
-
-<p>You also need to require all files from these folders. To do this you need
-to edit the ./config/application.rb file like this example:</p>
-
-<pre class="ruby">
-<span class="ruby-identifier">require_relative</span> <span class="ruby-string">&#39;boot&#39;</span>
-
-<span class="ruby-identifier">require</span> <span class="ruby-string">&#39;rails/all&#39;</span>
-
-<span class="ruby-comment"># Require the gems listed in Gemfile, including any gems</span>
-<span class="ruby-comment"># you&#39;ve limited to :test, :development, or :production.</span>
-<span class="ruby-constant">Bundler</span>.<span class="ruby-identifier">require</span>(<span class="ruby-operator">*</span><span class="ruby-constant">Rails</span>.<span class="ruby-identifier">groups</span>)
-
-<span class="ruby-keyword">module</span> <span class="ruby-constant">MyApplicationName</span>
-  <span class="ruby-keyword">class</span> <span class="ruby-constant">Application</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Rails</span><span class="ruby-operator">::</span><span class="ruby-constant">Application</span>
-
-    <span class="ruby-identifier">config</span>.<span class="ruby-identifier">autoload_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;app/commands&#39;</span>)
-    <span class="ruby-identifier">config</span>.<span class="ruby-identifier">autoload_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;app/events&#39;</span>)
-    <span class="ruby-identifier">config</span>.<span class="ruby-identifier">autoload_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;app/handlers&#39;</span>)
-
-  <span class="ruby-keyword">end</span>
-<span class="ruby-keyword">end</span>
-</pre>
 
 <h2 id="label-Development">Development<span><a href="#label-Development">&para;</a> <a href="#top">&uarr;</a></span></h2>
 

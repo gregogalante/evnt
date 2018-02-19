@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>RailsIntegration - Evnt Gem</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+  var index_rel_prefix = "../";
+</script>
+
+<script src="../js/jquery.js"></script>
+<script src="../js/darkfish.js"></script>
+
+<link href="../css/fonts.css" rel="stylesheet">
+<link href="../css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+<div class="nav-section">
+  <h3>Table of Contents</h3>
+
+  <ul class="link-list" role="directory">
+    <li><a href="#label-Rails+integration">Rails integration</a>
+    <li><a href="#label-Generators+integration">Generators integration</a>
+    <li><a href="#label-Command+generators">Command generators</a>
+    <li><a href="#label-Event+generators">Event generators</a>
+    <li><a href="#label-Handler+generators">Handler generators</a>
+    <li><a href="#label-Manual+integration">Manual integration</a>
+  </ul>
+</div>
+
+
+  <div id="project-metadata">
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../CHANGELOG_md.html">CHANGELOG</a>
+  
+    <li><a href="../MIT-LICENSE.html">MIT-LICENSE</a>
+  
+    <li><a href="../README_md.html">README</a>
+  
+    <li><a href="../doc/Command_md.html">Command</a>
+  
+    <li><a href="../doc/Event_md.html">Event</a>
+  
+    <li><a href="../doc/Handler_md.html">Handler</a>
+  
+    <li><a href="../doc/RailsIntegration_md.html">RailsIntegration</a>
+  
+    <li><a href="../doc/Validator_md.html">Validator</a>
+  
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page doc/RailsIntegration.md">
+
+<h1 id="label-Rails+integration">Rails integration<span><a href="#label-Rails+integration">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<p><a href="../Evnt.html">Evnt</a> can be used with Ruby on Rails to extends
+the MVC pattern.</p>
+
+<h2 id="label-Generators+integration">Generators integration<span><a href="#label-Generators+integration">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>There&#39;s a simple generator that can be used to inizialize a Rails
+application with <a href="../Evnt.html">Evnt</a>.</p>
+
+<pre class="ruby">
+<span class="ruby-identifier">rails</span> <span class="ruby-identifier">generate</span> <span class="ruby-identifier">evnt</span>:<span class="ruby-identifier">initializer</span>
+</pre>
+
+<p>This command should:</p>
+<ul><li>
+<p>Create an <strong>application_command.rb</strong> on app/commands
+directory.</p>
+</li><li>
+<p>Create an <strong>application_event.rb</strong> on app/events directory.</p>
+</li><li>
+<p>Create an <strong>application_handler.rb</strong> on app/handlers
+directory.</p>
+</li><li>
+<p>Create tests for the three new classes added on the project.</p>
+</li><li>
+<p>Added app/commands, app/events and app/handlers on config.autoload_paths
+setting of the application.</p>
+</li></ul>
+
+<h3 id="label-Command+generators"><a href="Command_md.html">Command</a> generators<span><a href="#label-Command+generators">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>Usage:</p>
+
+<pre>
+rails generate evnt:command Authentication::LoginCommand email:string password:string ip_address:string</pre>
+
+<p>Output:</p>
+
+<pre class="ruby"><span class="ruby-comment"># ./app/commands/authentication/login_command.rb</span>
+<span class="ruby-keyword">module</span> <span class="ruby-constant">Authentication</span>
+  <span class="ruby-keyword">class</span> <span class="ruby-constant">LoginCommand</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">ApplicationCommand</span>
+
+    <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">email</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">string</span>
+
+    <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">password</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">string</span>
+
+    <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">ip_address</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">string</span>
+
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<h3 id="label-Event+generators"><a href="Event_md.html">Event</a> generators<span><a href="#label-Event+generators">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>Usage:</p>
+
+<pre>
+rails generate evnt:event Authentication::LoginEvent user_uuid ip_address</pre>
+
+<p>Output:</p>
+
+<pre class="ruby"><span class="ruby-comment"># ./app/events/authentication/login_event.rb</span>
+<span class="ruby-keyword">module</span> <span class="ruby-constant">Authentication</span>
+  <span class="ruby-keyword">class</span> <span class="ruby-constant">LoginEvent</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">ApplicationEvent</span>
+
+    <span class="ruby-identifier">name_is</span> :<span class="ruby-identifier">authentication_login_event</span>
+
+    <span class="ruby-identifier">attributes_are</span> :<span class="ruby-identifier">user_uuid</span>, :<span class="ruby-identifier">ip_address</span>
+
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<h3 id="label-Handler+generators"><a href="Handler_md.html">Handler</a> generators<span><a href="#label-Handler+generators">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>Usage:</p>
+
+<pre>
+rails generate evnt:handler AuthenticationHandler authentication_login_event authentication_signup_event</pre>
+
+<p>Output:</p>
+
+<pre class="ruby"><span class="ruby-comment"># ./app/handlers/authentication_handler.rb</span>
+<span class="ruby-keyword">class</span> <span class="ruby-constant">AuthenticationHandler</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">ApplicationHandler</span>
+
+  <span class="ruby-identifier">on</span> :<span class="ruby-identifier">authentication_login_event</span> <span class="ruby-keyword">do</span>; <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">on</span> :<span class="ruby-identifier">authentication_signup_event</span> <span class="ruby-keyword">do</span>; <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span>
+</pre>
+
+<h2 id="label-Manual+integration">Manual integration<span><a href="#label-Manual+integration">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>To use the gem with Rails you need to create three folders inside the ./app
+project&#39;s path:</p>
+<ul><li>
+<p><strong>./app/commands</strong></p>
+</li><li>
+<p><strong>./app/events</strong></p>
+</li><li>
+<p><strong>./app/handlers</strong></p>
+</li></ul>
+
+<p>You also need to require all files from these folders. To do this you need
+to edit the ./config/application.rb file like this example:</p>
+
+<pre class="ruby">
+<span class="ruby-identifier">require_relative</span> <span class="ruby-string">&#39;boot&#39;</span>
+
+<span class="ruby-identifier">require</span> <span class="ruby-string">&#39;rails/all&#39;</span>
+
+<span class="ruby-comment"># Require the gems listed in Gemfile, including any gems</span>
+<span class="ruby-comment"># you&#39;ve limited to :test, :development, or :production.</span>
+<span class="ruby-constant">Bundler</span>.<span class="ruby-identifier">require</span>(<span class="ruby-operator">*</span><span class="ruby-constant">Rails</span>.<span class="ruby-identifier">groups</span>)
+
+<span class="ruby-keyword">module</span> <span class="ruby-constant">MyApplicationName</span>
+  <span class="ruby-keyword">class</span> <span class="ruby-constant">Application</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Rails</span><span class="ruby-operator">::</span><span class="ruby-constant">Application</span>
+
+    <span class="ruby-identifier">config</span>.<span class="ruby-identifier">autoload_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;app/commands&#39;</span>)
+    <span class="ruby-identifier">config</span>.<span class="ruby-identifier">autoload_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;app/events&#39;</span>)
+    <span class="ruby-identifier">config</span>.<span class="ruby-identifier">autoload_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;app/handlers&#39;</span>)
+
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+</pre>
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://rdoc.github.io/rdoc">RDoc</a> 5.1.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

@@ -89,6 +89,12 @@
   
     <li><a href="../doc/Command_md.html">Command</a>
   
+    <li><a href="../doc/Event_md.html">Event</a>
+  
+    <li><a href="../doc/Handler_md.html">Handler</a>
+  
+    <li><a href="../doc/RailsIntegration_md.html">RailsIntegration</a>
+  
     <li><a href="../doc/Validator_md.html">Validator</a>
   
   </ul>
@@ -185,7 +191,7 @@ types.</p>
 <h4 id="label-+Out">- Out<span><a href="#label-+Out">&para;</a> <a href="#top">&uarr;</a></span></h4>
 
 <pre class="ruby"><span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Validator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">1</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">integer</span>, <span class="ruby-identifier">out</span><span class="ruby-operator">:</span> [<span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>]).<span class="ruby-identifier">passed?</span> <span class="ruby-comment"># -&gt; false</span>
-<span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Validator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">1</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">integer</span>, <span class="ruby-keyword">in</span><span class="ruby-operator">:</span> [<span class="ruby-value">2</span>, <span class="ruby-value">3</span>]).<span class="ruby-identifier">passed?</span> <span class="ruby-comment"># -&gt; true</span>
+<span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Validator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">1</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">integer</span>, <span class="ruby-identifier">out</span><span class="ruby-operator">:</span> [<span class="ruby-value">2</span>, <span class="ruby-value">3</span>]).<span class="ruby-identifier">passed?</span> <span class="ruby-comment"># -&gt; true</span>
 </pre>
 
 <h3 id="label-String+options">String options<span><a href="#label-String+options">&para;</a> <a href="#top">&uarr;</a></span></h3>
