@@ -31,6 +31,8 @@ class CreateOrderCommand < Evnt::Command
     # This validation should check if quantity parmeter is not nil, is a integer
     # (or can be normalized to a integer) and is positive.
     vaidates :quantity, type: :integer, presence: true, min: 1
+
+    # ...
 end
 ```
 
@@ -40,6 +42,8 @@ If you need to normalize and validate parameters manually you can also define th
 
 ```ruby
 class CreateOrderCommand < Evnt::Command
+    # ...
+
     to_normalize_params do
         params[:quantity] ||= 1
     end
@@ -47,6 +51,8 @@ class CreateOrderCommand < Evnt::Command
     to_validate_params do
         err('product_uuid not accepted') unless params[:product_uuid]
     end
+
+    # ...
 end
 ```
 
@@ -57,6 +63,8 @@ The logic validation is defined with the block **to_validate_logic**. An example
 
 ```ruby
 class CreateOrderCommand < Evnt::Command
+    # ...
+
     to_validate_logic do
         product = Product.find_by(uuid: params[:product_uuid])
 
@@ -67,6 +75,8 @@ class CreateOrderCommand < Evnt::Command
 
         err('quantity not accepeted') if product.free_quantitity >= params[:quantity]
     end
+
+    # ...
 end
 ```
 
@@ -74,4 +84,57 @@ The err() function is used to create a command error and stop the execution of t
 
 ## Events initialization
 
-TODO
+The events initialization step is the last step executed by a command. It is the **to_initialize_events** block which should contain the initialization of one or more events.
+An example of events initialization should be:
+
+```ruby
+class CreateOrderCommand < Evnt::Command
+    # ...
+
+    to_initialize_events do
+        OrderCreatedEvent.new(
+            order_uuid: SecureRandom.uuid,
+            product_uuid: params[:product_uuid],
+            quantity: params[:quantity]
+        )
+    end
+
+    # ...
+end
+```
+
+## Usage
+
+An example of command usage should be:
+
+```ruby
+command = CreateOrderCommand.new(
+    product_uuid: 534,
+    quantity: 10
+)
+
+puts command.params # -> { product_id: 534, quantity: 10 }
+
+unless command.completed?
+    puts command.errors # array of hashes with a { message, code } structure
+    puts command.error_messages # array of error messages
+    puts command.error_codes # array of error codes
+end
+```
+
+It's also possible to use err method inside the command to raise an exception with the option **exception: true**. An example of usage should be:
+
+```ruby
+begin
+    command = CreateOrderCommand.new(
+        user_id: 128,
+        product_id: 534,
+        quantity: 10,
+        _options: {
+            excption: true
+        }
+    )
+rescue => e
+    puts e
+end
+```
