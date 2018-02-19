@@ -37,7 +37,7 @@ Sometimes you need to run some code to manage only reloaded events. To run code 
 ```ruby
 class ProductHandler < Evnt::Handler
 
-  on :create_order do
+  on :order_created do
 
     to_manage_reloaded_event do
       # this block is called only for reloaded events
