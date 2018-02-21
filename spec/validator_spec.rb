@@ -282,6 +282,18 @@ RSpec.describe Evnt::Validator do
   # Global:
   #################################################################
 
+  it 'should should not accept a value not equal to the equal option' do
+    value = 1
+    validation = Evnt::Validator.new(value, type: :integer, equal: 2)
+    expect(validation.passed?).to eq false
+  end
+
+  it 'should should accept a value equal to the equal option' do
+    value = 2
+    validation = Evnt::Validator.new(value, type: :integer, equal: 2)
+    expect(validation.passed?).to eq true
+  end
+
   it 'should should not accept a value not included in the in option values' do
     value = 1
     validation = Evnt::Validator.new(value, type: :integer, in: [2, 3, 4])

@@ -1,5 +1,9 @@
 # Evnt changelog
 
+## Version 3.1.1
+
+- Added equal options on validator global options.
+
 ## Version 3.1.0
 
 - Updated validator class with new awesome structure.

@@ -64,6 +64,7 @@ module Evnt
     end
 
     def _validates_custom
+      _validates_global_equal if @_result
       _validates_global_in if @_result
       _validates_global_out if @_result
 
@@ -152,6 +153,11 @@ module Evnt
 
     # Global validations:
     ##########################################################################
+
+    def _validates_global_equal
+      return if @value.nil? || @_options[:equal].nil?
+      @_result = @_options[:equal] == @value
+    end
 
     def _validates_global_in
       return if @value.nil? || @_options[:in].nil?
