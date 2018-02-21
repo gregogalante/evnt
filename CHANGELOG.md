@@ -2,7 +2,7 @@
 
 ## Version 3.1.1
 
-- Added equal options on validator global options.
+- Added equal option on validator global options.
 
 ## Version 3.1.0
 
