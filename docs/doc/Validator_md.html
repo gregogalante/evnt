@@ -63,11 +63,13 @@
     <li><a href="#label-+Type">- Type</a>
     <li><a href="#label-Custom+options">Custom options</a>
     <li><a href="#label-Global+options">Global options</a>
+    <li><a href="#label-+Equal">- Equal</a>
     <li><a href="#label-+In">- In</a>
     <li><a href="#label-+Out">- Out</a>
     <li><a href="#label-String+options">String options</a>
     <li><a href="#label-+Blank">- Blank</a>
     <li><a href="#label-+Length">- Length</a>
+    <li><a href="#label-+Regex">- Regex</a>
     <li><a href="#label-Number+options">Number options</a>
     <li><a href="#label-+Min">- Min</a>
     <li><a href="#label-+Max">- Max</a>
@@ -184,6 +186,12 @@ types.</p>
 
 <p>Global options are used for all supported types.</p>
 
+<h4 id="label-+Equal">- Equal<span><a href="#label-+Equal">&para;</a> <a href="#top">&uarr;</a></span></h4>
+
+<pre class="ruby"><span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Validator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">1</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">integer</span>, <span class="ruby-identifier">equal</span><span class="ruby-operator">:</span> <span class="ruby-value">1</span>).<span class="ruby-identifier">passed?</span> <span class="ruby-comment"># -&gt; true</span>
+<span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Validator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">1</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">integer</span>, <span class="ruby-identifier">equal</span><span class="ruby-operator">:</span> <span class="ruby-value">2</span>).<span class="ruby-identifier">passed?</span> <span class="ruby-comment"># -&gt; false</span>
+</pre>
+
 <h4 id="label-+In">- In<span><a href="#label-+In">&para;</a> <a href="#top">&uarr;</a></span></h4>
 
 <pre class="ruby"><span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Validator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">1</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">integer</span>, <span class="ruby-keyword">in</span><span class="ruby-operator">:</span> [<span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>]).<span class="ruby-identifier">passed?</span> <span class="ruby-comment"># -&gt; true</span>
@@ -212,6 +220,12 @@ types.</p>
 
 <pre class="ruby"><span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Validator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&#39;a&#39;</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">string</span>, <span class="ruby-identifier">length</span><span class="ruby-operator">:</span> <span class="ruby-value">1</span>).<span class="ruby-identifier">passed?</span> <span class="ruby-comment"># -&gt; true</span>
 <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Validator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&#39;a&#39;</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">string</span>, <span class="ruby-identifier">length</span><span class="ruby-operator">:</span> <span class="ruby-value">4</span>).<span class="ruby-identifier">passed?</span> <span class="ruby-comment"># -&gt; false</span>
+</pre>
+
+<h4 id="label-+Regex">- Regex<span><a href="#label-+Regex">&para;</a> <a href="#top">&uarr;</a></span></h4>
+
+<pre class="ruby"><span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Validator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&#39;Hello1&#39;</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">string</span>, <span class="ruby-identifier">regex</span><span class="ruby-operator">:</span> <span class="ruby-regexp">/^(?=.*[a-zA-Z])(?=.*[0-9]).{6,20}$/</span>).<span class="ruby-identifier">passed?</span> <span class="ruby-comment"># -&gt; true</span>
+<span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Validator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&#39;hello&#39;</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">string</span>, <span class="ruby-identifier">regex</span><span class="ruby-operator">:</span> <span class="ruby-regexp">/^(?=.*[a-zA-Z])(?=.*[0-9]).{6,20}$/</span>).<span class="ruby-identifier">passed?</span> <span class="ruby-comment"># -&gt; false</span>
 </pre>
 
 <h3 id="label-Number+options">Number options<span><a href="#label-Number+options">&para;</a> <a href="#top">&uarr;</a></span></h3>

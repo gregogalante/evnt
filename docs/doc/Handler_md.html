@@ -128,7 +128,7 @@ code only for reloaded events you can use the
 
 <pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">ProductHandler</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Handler</span>
 
-  <span class="ruby-identifier">on</span> :<span class="ruby-identifier">create_order</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-identifier">on</span> :<span class="ruby-identifier">order_created</span> <span class="ruby-keyword">do</span>
 
     <span class="ruby-identifier">to_manage_reloaded_event</span> <span class="ruby-keyword">do</span>
       <span class="ruby-comment"># this block is called only for reloaded events</span>
