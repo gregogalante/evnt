@@ -3,6 +3,7 @@
 ## Version 3.1.1
 
 - Added equal option on validator global options.
+- Added regex option on validator string options.
 
 ## Version 3.1.0
 

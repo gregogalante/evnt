@@ -72,6 +72,7 @@ module Evnt
       when :string
         _validates_string_blank if @_result
         _validates_string_length if @_result
+        _validates_string_regex if @_result
       when :integer
         _validates_number_min if @_result
         _validates_number_max if @_result
@@ -180,6 +181,11 @@ module Evnt
     def _validates_string_length
       return if @value.nil? || @_options[:length].nil?
       @_result = @value.length == @_options[:length]
+    end
+
+    def _validates_string_regex
+      return if @value.nil? || @_options[:regex].nil?
+      @_result = @value.match?(@_options[:regex])
     end
 
     # Number validations:

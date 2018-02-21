@@ -115,6 +115,13 @@ Evnt::Validator.new('a', type: :string, length: 1).passed? # -> true
 Evnt::Validator.new('a', type: :string, length: 4).passed? # -> false
 ```
 
+#### - Regex
+
+```ruby
+Evnt::Validator.new('Hello1', type: :string, regex: /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,20}$/).passed? # -> true
+Evnt::Validator.new('hello', type: :string, regex: /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,20}$/).passed? # -> false
+```
+
 ### Number options
 
 Number options are used for integer and float types.
