@@ -115,6 +115,20 @@ Evnt::Validator.new('a', type: :string, length: 1).passed? # -> true
 Evnt::Validator.new('a', type: :string, length: 4).passed? # -> false
 ```
 
+#### - Min length
+
+```ruby
+Evnt::Validator.new('a', type: :string, min_length: 2).passed? # -> false
+Evnt::Validator.new('hello', type: :string, min_length: 2).passed? # -> true
+```
+
+#### - Max length
+
+```ruby
+Evnt::Validator.new('a', type: :string, max_length: 2).passed? # -> true
+Evnt::Validator.new('hello', type: :string, max_length: 2).passed? # -> false
+```
+
 #### - Regex
 
 ```ruby
