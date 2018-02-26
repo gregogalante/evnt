@@ -141,7 +141,7 @@ module Evnt
         if validator.passed?
           @params[val[:param]] = validator.value
         else
-          err "#{val[:param].capitalize} value not accepted"
+          err val[:options][:err] || "#{val[:param].capitalize} value not accepted"
           break
         end
       end

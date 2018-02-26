@@ -30,7 +30,7 @@ class CreateOrderCommand < Evnt::Command
     validates :product_uuid, type: :string, presence: true, blank: false
     # This validation should check if quantity parmeter is not nil, is a integer
     # (or can be normalized to a integer) and is positive.
-    vaidates :quantity, type: :integer, presence: true, min: 1
+    vaidates :quantity, type: :integer, presence: true, min: 1, err: 'Custom error message'
 
     # ...
 end
