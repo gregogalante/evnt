@@ -1,5 +1,9 @@
 # Evnt changelog
 
+## Version 3.1.2 IN-PROGESS.
+
+- Added min length and max length on validator string options.
+
 ## Version 3.1.1
 
 - Added equal option on validator global options.
