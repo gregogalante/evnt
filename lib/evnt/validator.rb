@@ -81,6 +81,15 @@ module Evnt
       when :float
         _validates_number_min if @_result
         _validates_number_max if @_result
+      when :time
+        _validates_time_min if @_result
+        _validates_time_max if @_result
+      when :date
+        _validates_time_min if @_result
+        _validates_time_max if @_result
+      when :datetime
+        _validates_time_min if @_result
+        _validates_time_max if @_result
       end
     end
 
@@ -209,6 +218,19 @@ module Evnt
     end
 
     def _validates_number_max
+      return if @value.nil? || @_options[:max].nil?
+      @_result = @value <= @_options[:max]
+    end
+
+    # Time validations:
+    ##########################################################################
+
+    def _validates_time_min
+      return if @value.nil? || @_options[:min].nil?
+      @_result = @value >= @_options[:min]
+    end
+
+    def _validates_time_max
       return if @value.nil? || @_options[:max].nil?
       @_result = @value <= @_options[:max]
     end

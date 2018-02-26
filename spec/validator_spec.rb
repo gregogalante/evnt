@@ -420,4 +420,31 @@ RSpec.describe Evnt::Validator do
     expect(validation.passed?).to eq true
   end
 
+  # Time:
+  #################################################################
+
+  it 'it should not accept a date less than min option' do
+    value = Date.today
+    validation = Evnt::Validator.new(value, type: :date, min: Date.today + 1)
+    expect(validation.passed?).to eq false
+  end
+
+  it 'it should accept a date more than min option' do
+    value = Date.today
+    validation = Evnt::Validator.new(value, type: :date, min: Date.today - 1)
+    expect(validation.passed?).to eq true
+  end
+
+  it 'it should not accept a date more than max option' do
+    value = Date.today
+    validation = Evnt::Validator.new(value, type: :date, max: Date.today - 1)
+    expect(validation.passed?).to eq false
+  end
+
+  it 'it should accept a date less than max option' do
+    value = Date.today
+    validation = Evnt::Validator.new(value, type: :date, max: Date.today + 1)
+    expect(validation.passed?).to eq true
+  end
+
 end

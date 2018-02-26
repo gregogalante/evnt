@@ -153,3 +153,21 @@ Evnt::Validator.new(3, type: :integer, min: 4).passed? # -> false
 Evnt::Validator.new(3, type: :integer, max: 1).passed? # -> false
 Evnt::Validator.new(3, type: :integer, max: 4).passed? # -> true
 ```
+
+### Time options
+
+Time options are used for date, datetime and time types.
+
+#### - Min
+
+```ruby
+Evnt::Validator.new(Date.today, type: :date, min: Date.today - 1).passed? # -> true
+Evnt::Validator.new(Date.today, type: :date, min: Date.today + 1).passed? # -> false
+```
+
+#### - Max
+
+```ruby
+Evnt::Validator.new(Date.today, type: :date, max: Date.today + 1).passed? # -> true
+Evnt::Validator.new(Date.today, type: :date, max: Date.today - 1).passed? # -> false
+```
