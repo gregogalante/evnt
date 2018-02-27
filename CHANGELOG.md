@@ -1,8 +1,10 @@
 # Evnt changelog
 
-## Version 3.1.2 IN-PROGESS.
+## Version 3.1.2
 
 - Added min length and max length on validator string options.
+- Added min and max on validator time options.
+- Added custom error message on command validators.
 
 ## Version 3.1.1
 
