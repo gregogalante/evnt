@@ -25,6 +25,8 @@ module Evnt
     # ==== Options
     #
     # * +exceptions+ - Boolean value used to activate the throw of excetions.
+    # * +nullify_empty_params+ - Transform empty params to nil values so the validator
+    # should consider them as nil values.
     ##
     def initialize(params = {})
       _init_command_data(params)
@@ -115,7 +117,8 @@ module Evnt
       # set options
       options = params[:_options] || {}
       @options = {
-        exceptions: options[:exceptions] || false
+        exceptions: options[:exceptions] || false,
+        nullify_empty_params: options[:nullify_empty_params] || false
       }
 
       # set other data
@@ -136,7 +139,13 @@ module Evnt
       return if self.class._validations.nil? || self.class._validations.empty?
 
       self.class._validations.each do |val|
-        validator = Evnt::Validator.new(params[val[:param]], val[:options])
+        begin
+          value_to_validate = @option[:nullify_empty_params] && params[val[:param]].empty? ? nil : params[val[:param]]
+        rescue StandardError
+          value_to_validate = params[val[:param]]
+        end
+
+        validator = Evnt::Validator.new(value_to_validate, val[:options])
 
         if validator.passed?
           @params[val[:param]] = validator.value

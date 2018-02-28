@@ -1,5 +1,9 @@
 # Evnt changelog
 
+## Version 3.1.3 IN-PROGRESS
+
+- Added nullify_empty_params option on command to set to nil empty paramteters.
+
 ## Version 3.1.2
 
 - Added min length and max length on validator string options.
