@@ -1,8 +1,9 @@
 # Evnt changelog
 
-## Version 3.1.3 IN-PROGRESS
+## Version 3.1.3
 
 - Added nullify_empty_params option on command to set to nil empty paramteters.
+- Added default_options support for commands and events.
 
 ## Version 3.1.2
 

@@ -81,3 +81,32 @@ reloaded_event = OrderCreatedEvent.new(events.sample.payload)
 
 puts reloaded_event.reloaded? # -> true
 ```
+
+## Options
+
+Options permits to change the way to work of the event. Options can be defined on the event initialization or as default inside the event class.
+
+Set default options inside the event:
+
+```ruby
+class OrderCreatedEvent < Evnt::Event
+    default_options silent: true
+end
+```
+
+Set options on event initialization:
+
+```ruby
+event = OrderCreatedEvent.new(
+    order_uuid: SecureRandom.uuid,
+    product_uuid: params[:product_uuid],
+    quantity: params[:quantity],
+    _options: {
+        silent: true
+    }
+)
+```
+
+### Silent option
+
+The silent option permit to initialize a new event witout the notification of its handler. This option can be used for tests or for specific use cases.

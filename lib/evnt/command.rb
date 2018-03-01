@@ -115,7 +115,7 @@ module Evnt
       }
 
       # set options
-      options = params[:_options] || {}
+      options = params[:_options] || @_default_options || {}
       @options = {
         exceptions: options[:exceptions] || false,
         nullify_empty_params: options[:nullify_empty_params] || false
@@ -166,7 +166,12 @@ module Evnt
     # This class contain the list of settings for the command.
     class << self
 
-      attr_accessor :_validations
+      attr_accessor :_default_options, :_validations
+
+      # This function sets the default options that should be used by the command.
+      def default_options(options)
+        instance_variable_set(:@_default_options, options)
+      end
 
       # This function sets the single validation request for a command parameter.
       def validates(param, options)

@@ -122,19 +122,77 @@ unless command.completed?
 end
 ```
 
-It's also possible to use err method inside the command to raise an exception with the option **exception: true**. An example of usage should be:
+## Options
+
+Options permits to change the way to work of the command. Options can be defined on the command initialization or as default inside the command class.
+
+Set default options inside the command:
 
 ```ruby
+class CreateOrderCommand < Evnt::Command
+    default_options excption: true, nullify_empty_params: true
+end
+```
+
+Set options on command initialization:
+
+```ruby
+command = CreateOrderCommand.new(
+    user_id: 128,
+    product_id: 534,
+    quantity: 10,
+    _options: {
+        excption: true,
+        nullify_empty_params: true
+    }
+)
+```
+
+### Exception option
+
+Exception option permits the usage of err method inside the command to raise an exception. An example of usage should be:
+
+```ruby
+class CreateOrderCommand < Evnt::Command
+    validates :product_uuid, type: :string, presence: true, blank: false, err: 'Product uuid not accepted'
+
+    # ...
+end
+
 begin
     command = CreateOrderCommand.new(
         user_id: 128,
-        product_id: 534,
         quantity: 10,
         _options: {
             excption: true
         }
     )
 rescue => e
-    puts e
+    puts e # -> Product uuid not accepted
 end
+```
+
+### Nullify empty params option
+
+This options permits to consider nil all parameters that respond false to the empty? method. An example of usage should be:
+
+```ruby
+class CreateOrderCommand < Evnt::Command
+    PRODUCTS = [1, 2, 3, 4]
+
+    validates :product_uuid, type: :string, in: PRODUCTS, err: 'Product uuid not accepted'
+
+    # ...
+end
+
+command = CreateOrderCommand.new(
+    user_id: 128,
+    product_uuid: '',
+    quantity: 10,
+    _options: {
+        nullify_empty_params: true
+    }
+)
+
+puts command.completed? # -> true
 ```

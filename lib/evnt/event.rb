@@ -78,7 +78,7 @@ module Evnt
       }
 
       # set options
-      options = params[:_options] || {}
+      options = params[:_options] || @_default_options || {}
       @options = {
         silent: options[:silent] || false
       }
@@ -139,7 +139,12 @@ module Evnt
     # This class contain the list of settings for the event.
     class << self
 
-      attr_accessor :_name, :_attributes, :_handlers
+      attr_accessor :_default_options, :_name, :_attributes, :_handlers
+
+      # This function sets the default options that should be used by the event.
+      def default_options(options)
+        instance_variable_set(:@_default_options, options)
+      end
 
       # This function sets the name for the event.
       def name_is(event_name)
