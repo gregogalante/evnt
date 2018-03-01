@@ -36,18 +36,35 @@ module Evnt
 
     # This function calls requested steps for the handler.
     def _run_handler_steps
-      update_queries = "#{@event.name}_update_queries"
-      send(update_queries) if respond_to? update_queries
+      _safe_update_queries(@event.name)
 
       if event.reloaded?
         # manage event reloaded
-        manage_reloaded_event = "#{@event.name}_manage_reloaded_event"
-        send(manage_reloaded_event) if respond_to? manage_reloaded_event
+        _safe_manage_reloaded_event(@event.name)
       else
         # manage normal event
-        manage_event = "#{@event.name}_manage_event"
-        send(manage_event) if respond_to? manage_event
+        _safe_manage_event(@event.name)
       end
+    end
+
+    # Safe defined functions:
+
+    def _safe_update_queries(event)
+      update_queries = "#{event}_update_queries"
+      return send(update_queries) if respond_to? update_queries
+      nil
+    end
+
+    def _safe_manage_reloaded_event(event)
+      manage_reloaded_event = "#{event}_manage_reloaded_event"
+      return send(manage_reloaded_event) if respond_to? manage_reloaded_event
+      nil
+    end
+
+    def _safe_manage_event(event)
+      manage_event = "#{event}_manage_event"
+      return send(manage_event) if respond_to? manage_event
+      nil
     end
 
     # Class functions:

@@ -81,7 +81,7 @@ module Evnt
       initial_options = {
         silent: false
       }
-      default_options = @_default_options || {}
+      default_options = _safe_default_options || {}
       params_options = params[:_options] || {}
       @options = initial_options.merge(default_options)
                                 .merge(params_options)
@@ -96,8 +96,8 @@ module Evnt
       extras.each { |k, v| @extras[k[1..-1].to_sym] = v }
 
       # set other datas
-      @name = self.class._name
-      @attributes = self.class._attributes
+      @name = _safe_name
+      @attributes = _safe_attributes
     end
 
     # This function generates the complete event payload.
@@ -105,7 +105,7 @@ module Evnt
       # add evnt informations
       params[:evnt] = {
         timestamp: Time.now.to_i,
-        name: self.class._name
+        name: @name
       }
       # return payload
       params
@@ -113,27 +113,52 @@ module Evnt
 
     # This function validates all payload and check they are completed.
     def _validate_payload
-      return unless self.class._attributes
-
       # check all attributes are present
-      check_attr = (@payload.keys - [:evnt]) == self.class._attributes
+      check_attr = (@payload.keys - [:evnt]) == @attributes
       raise 'Event parameters are not correct' unless check_attr
     end
 
     # This function calls requested steps for the event.
     def _run_event_steps
-      _write_event if defined?(_write_event)
+      _safe_write_event
     end
 
     # This function notify all handlers for the event.
     def _notify_handlers
-      return unless self.class._handlers
       return if @options[:silent]
+      handlers = _safe_handlers
 
       # notify every handler
-      self.class._handlers.each do |handler|
+      handlers.each do |handler|
         handler.notify(self)
       end
+    end
+
+    # Safe defined functions:
+
+    def _safe_default_options
+      return _default_options if defined?(_default_options)
+      {}
+    end
+
+    def _safe_name
+      return _name if defined?(_name)
+      ''
+    end
+
+    def _safe_attributes
+      return _attributes if defined?(_attributes)
+      []
+    end
+
+    def _safe_handlers
+      return _handlers if defined?(_handlers)
+      []
+    end
+
+    def _safe_write_event
+      return _write_event if defined?(_write_event)
+      nil
     end
 
     # Class functions:
@@ -142,26 +167,33 @@ module Evnt
     # This class contain the list of settings for the event.
     class << self
 
-      attr_accessor :_default_options, :_name, :_attributes, :_handlers
-
       # This function sets the default options that should be used by the event.
       def default_options(options)
-        instance_variable_set(:@_default_options, options)
+        @@options ||= {}
+        @@options.merge!(options)
+
+        define_method('_default_options', -> { return @@options })
       end
 
       # This function sets the name for the event.
-      def name_is(event_name)
-        instance_variable_set(:@_name, event_name)
+      def name_is(name)
+        define_method('_name', -> { return name })
       end
 
       # This function sets the list of attributes for the event.
       def attributes_are(*attributes)
-        instance_variable_set(:@_attributes, attributes)
+        @@attributes ||= []
+        @@attributes.concat(attributes)
+
+        define_method('_attributes', -> { return @@attributes })
       end
 
       # This function sets the list of handlers for the event.
       def handlers_are(handlers)
-        instance_variable_set(:@_handlers, handlers)
+        @@handlers ||= []
+        @@handlers.concat(handlers)
+
+        define_method('_handlers', -> { return @@handlers })
       end
 
       # This function sets the write event function for the event.

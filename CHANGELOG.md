@@ -1,5 +1,41 @@
 # Evnt changelog
 
+## Version 3.2.0
+
+Moved all instance variables defined on commands and events classes to method so values can be merged with superclass values.
+
+Now can be executed events code like this example:
+
+```ruby
+class AnimalEvent < Evnt::Event
+
+  attributes_are :type, :sex
+
+end
+
+class AquaticAnimalEvent < AnimalEvent
+
+  attributes_are :water_type
+
+end
+
+shark = AquaticAnimalEvent.new(
+  type: 'aquatic',
+  sex: 'male',
+  water_type: 'salt'
+)
+
+puts shark.attributes # -> [:type, :sex, :water_type]
+```
+
+This functionality works with:
+
+- Commands default options.
+- Commands validations.
+- Events default options.
+- Events attributes.
+- Events handlers.
+
 ## Version 3.1.4
 
 - Fixed default options merge.

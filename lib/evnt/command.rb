@@ -119,7 +119,7 @@ module Evnt
         exceptions: false,
         nullify_empty_params: false
       }
-      default_options = @_default_options || {}
+      default_options = _safe_default_options || {}
       params_options = params[:_options] || {}
       @options = initial_options.merge(default_options)
                                 .merge(params_options)
@@ -131,17 +131,16 @@ module Evnt
     # This function calls requested steps (callback) for the command.
     def _run_command_steps
       _validate_single_params
-      _normalize_params if @state[:result] && defined?(_normalize_params)
-      _validate_params if @state[:result] && defined?(_validate_params)
-      _validate_logic if @state[:result] && defined?(_validate_logic)
-      _initialize_events if @state[:result] && defined?(_initialize_events)
+      _safe_normalize_params if @state[:result]
+      _safe_validate_params if @state[:result]
+      _safe_validate_logic if @state[:result]
+      _safe_initialize_events if @state[:result]
     end
 
     # This function validates the single parameters sets with the "validates" method.
     def _validate_single_params
-      return if self.class._validations.nil? || self.class._validations.empty?
-
-      self.class._validations.each do |val|
+      validations = _safe_validations
+      validations.each do |val|
         value_to_validate = _value_to_validate(val)
         validator = Evnt::Validator.new(value_to_validate, val[:options])
 
@@ -163,24 +162,58 @@ module Evnt
       params[val[:param]]
     end
 
+    # Safe defined functions:
+
+    def _safe_default_options
+      return _default_options if defined?(_default_options)
+      {}
+    end
+
+    def _safe_validations
+      return _validations if defined?(_validations)
+      []
+    end
+
+    def _safe_normalize_params
+      return _normalize_params if defined?(_normalize_params)
+      nil
+    end
+
+    def _safe_validate_params
+      return _validate_params if defined?(_validate_params)
+      nil
+    end
+
+    def _safe_validate_logic
+      return _validate_logic if defined?(_validate_logic)
+      nil
+    end
+
+    def _safe_initialize_events
+      return _initialize_events if defined?(_initialize_events)
+      nil
+    end
+
     # Class functions:
     ############################################################################
 
     # This class contain the list of settings for the command.
     class << self
 
-      attr_accessor :_default_options, :_validations
-
       # This function sets the default options that should be used by the command.
       def default_options(options)
-        instance_variable_set(:@_default_options, options)
+        @@options ||= {}
+        @@options.merge!(options)
+
+        define_method('_default_options', -> { return @@options })
       end
 
       # This function sets the single validation request for a command parameter.
       def validates(param, options)
-        validations = instance_variable_get(:@_validations) || []
-        validations.push(param: param, options: options)
-        instance_variable_set(:@_validations, validations)
+        @@validations ||= []
+        @@validations.push(param: param, options: options)
+
+        define_method('_validations', -> { return @@validations })
       end
 
       # This function sets the normalize params function for the command.
