@@ -2,8 +2,18 @@
 
 require 'spec_helper'
 
+class SuperCommand < Evnt::Command
+end
+
+class MyCommand < SuperCommand
+
+  validates :attr1, type: :string
+  validates :attr2, type: :string
+
+end
+
 RSpec.describe Evnt::Command do
-  command = Evnt::Command.new(attr1: 'foo', attr2: 'bar')
+  command = MyCommand.new(attr1: 'foo', attr2: 'bar')
 
   it 'should be initialized' do
     expect(command).not_to eq nil

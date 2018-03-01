@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'evnt/version'
-require_relative 'evnt/command'
-require_relative 'evnt/event'
-require_relative 'evnt/handler'
-require_relative 'evnt/validator'
+require 'evnt/version'
+require 'evnt/command'
+require 'evnt/event'
+require 'evnt/handler'
+require 'evnt/validator'
 
 ##
 # Evnt is a gem developed to integrate a event driven development
