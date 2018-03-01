@@ -2,7 +2,13 @@
 
 require 'spec_helper'
 
-class MyEvent < Evnt::Event
+class SuperEvent < Evnt::Event
+
+  attributes_are :attr1
+
+end
+
+class MyEvent < SuperEvent
 
   attributes_are :attr1, :attr2
 

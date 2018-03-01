@@ -1,5 +1,9 @@
 # Evnt changelog
 
+## Version 3.2.2
+
+- Fixed event attributes concat.
+
 ## Version 3.2.1
 
 - Fixed tests.

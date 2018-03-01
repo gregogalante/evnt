@@ -168,7 +168,7 @@ module Evnt
     class << self
 
       # This function sets the default options that should be used by the event.
-      def default_options(options)
+      def default_options(*options)
         @@options ||= {}
         @@options.merge!(options)
 
@@ -183,7 +183,7 @@ module Evnt
       # This function sets the list of attributes for the event.
       def attributes_are(*attributes)
         @@attributes ||= []
-        @@attributes.concat(attributes)
+        @@attributes.concat(attributes).uniq!
 
         define_method('_attributes', -> { return @@attributes })
       end

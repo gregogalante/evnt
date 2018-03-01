@@ -201,7 +201,7 @@ module Evnt
     class << self
 
       # This function sets the default options that should be used by the command.
-      def default_options(options)
+      def default_options(*options)
         @@options ||= {}
         @@options.merge!(options)
 
