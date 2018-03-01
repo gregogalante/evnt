@@ -1,5 +1,9 @@
 # Evnt changelog
 
+## Version 3.1.4
+
+- Fixed default options merge.
+
 ## Version 3.1.3
 
 - Added nullify_empty_params option on command to set to nil empty paramteters.

@@ -115,11 +115,14 @@ module Evnt
       }
 
       # set options
-      options = params[:_options] || @_default_options || {}
-      @options = {
-        exceptions: options[:exceptions] || false,
-        nullify_empty_params: options[:nullify_empty_params] || false
+      initial_options = {
+        exceptions: false,
+        nullify_empty_params: false
       }
+      default_options = @_default_options || {}
+      params_options = params[:_options] || {}
+      @options = initial_options.merge(default_options)
+                                .merge(params_options)
 
       # set other data
       @params = params

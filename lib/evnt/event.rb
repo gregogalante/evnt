@@ -78,10 +78,13 @@ module Evnt
       }
 
       # set options
-      options = params[:_options] || @_default_options || {}
-      @options = {
-        silent: options[:silent] || false
+      initial_options = {
+        silent: false
       }
+      default_options = @_default_options || {}
+      params_options = params[:_options] || {}
+      @options = initial_options.merge(default_options)
+                                .merge(params_options)
 
       # set payload
       payload = params.reject { |k, _v| k[0] == '_' }
