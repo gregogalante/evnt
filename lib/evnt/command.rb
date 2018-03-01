@@ -139,12 +139,7 @@ module Evnt
       return if self.class._validations.nil? || self.class._validations.empty?
 
       self.class._validations.each do |val|
-        begin
-          value_to_validate = @option[:nullify_empty_params] && params[val[:param]].empty? ? nil : params[val[:param]]
-        rescue StandardError
-          value_to_validate = params[val[:param]]
-        end
-
+        value_to_validate = _value_to_validate(val)
         validator = Evnt::Validator.new(value_to_validate, val[:options])
 
         if validator.passed?
@@ -156,6 +151,13 @@ module Evnt
       end
 
       @params
+    end
+
+    def _value_to_validate(val)
+      return nil if @options[:nullify_empty_params] && params[val[:param]].empty?
+      params[val[:param]]
+    rescue StandardError
+      params[val[:param]]
     end
 
     # Class functions:
