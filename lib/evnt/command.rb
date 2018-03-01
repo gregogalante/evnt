@@ -202,18 +202,18 @@ module Evnt
 
       # This function sets the default options that should be used by the command.
       def default_options(*options)
-        @@options ||= {}
-        @@options.merge!(options)
+        command_options = respond_to?('_default_options') ? send('_default_options') : {}
+        command_options.merge!(options)
 
-        define_method('_default_options', -> { return @@options })
+        define_method('_default_options', -> { return command_options })
       end
 
       # This function sets the single validation request for a command parameter.
       def validates(param, options)
-        @@validations ||= []
-        @@validations.push(param: param, options: options)
+        command_validations = respond_to?('_validations') ? send('_validations') : []
+        command_validations.push(param: param, options: options)
 
-        define_method('_validations', -> { return @@validations })
+        define_method('_validations', -> { return command_validations })
       end
 
       # This function sets the normalize params function for the command.

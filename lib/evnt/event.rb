@@ -169,10 +169,10 @@ module Evnt
 
       # This function sets the default options that should be used by the event.
       def default_options(*options)
-        @@options ||= {}
-        @@options.merge!(options)
+        event_options = respond_to?('_default_options') ? send('_default_options') : {}
+        event_options.merge!(options)
 
-        define_method('_default_options', -> { return @@options })
+        define_method('_default_options', -> { return event_options })
       end
 
       # This function sets the name for the event.
@@ -182,18 +182,18 @@ module Evnt
 
       # This function sets the list of attributes for the event.
       def attributes_are(*attributes)
-        @@attributes ||= []
-        @@attributes.concat(attributes).uniq!
+        event_attributes = respond_to?('_attributes') ? send('_attributes') : []
+        event_attributes.concat(attributes).uniq!
 
-        define_method('_attributes', -> { return @@attributes })
+        define_method('_attributes', -> { return event_attributes })
       end
 
       # This function sets the list of handlers for the event.
       def handlers_are(handlers)
-        @@handlers ||= []
-        @@handlers.concat(handlers)
+        event_handlers = respond_to?('_handlers') ? send('_handlers') : []
+        event_handlers.concat(handlers)
 
-        define_method('_handlers', -> { return @@handlers })
+        define_method('_handlers', -> { return event_handlers })
       end
 
       # This function sets the write event function for the event.

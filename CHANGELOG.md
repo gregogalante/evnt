@@ -1,5 +1,9 @@
 # Evnt changelog
 
+## Version 3.2.3
+
+- Fixed bad errors.
+
 ## Version 3.2.2
 
 - Fixed event attributes concat.
