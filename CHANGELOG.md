@@ -1,5 +1,9 @@
 # Evnt changelog
 
+## Version 3.2.5
+
+- Fixed bad errors.
+
 ## Version 3.2.4
 
 - Fixed bad errors.

@@ -169,8 +169,9 @@ module Evnt
 
       # This function sets the default options that should be used by the event.
       def default_options(options)
-        event_options = respond_to?('_default_options') ? send('_default_options') : {}
-        event_options.merge!(options)
+        @options ||= {}
+        @options.merge!(options)
+        event_options = @options
 
         define_method('_default_options', -> { return event_options })
       end
@@ -182,16 +183,18 @@ module Evnt
 
       # This function sets the list of attributes for the event.
       def attributes_are(*attributes)
-        event_attributes = respond_to?('_attributes') ? send('_attributes') : []
-        event_attributes.concat(attributes).uniq!
+        @attributes ||= []
+        @attributes.concat(attributes).uniq!
+        event_attributes = @attributes
 
         define_method('_attributes', -> { return event_attributes })
       end
 
       # This function sets the list of handlers for the event.
       def handlers_are(handlers)
-        event_handlers = respond_to?('_handlers') ? send('_handlers') : []
-        event_handlers.concat(handlers)
+        @handlers ||= []
+        @handlers.concat(handlers)
+        event_handlers = @handlers
 
         define_method('_handlers', -> { return event_handlers })
       end
