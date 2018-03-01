@@ -1,5 +1,10 @@
 # Evnt changelog
 
+## Version 3.2.1
+
+- Fixed tests.
+- Updated documentation.
+
 ## Version 3.2.0
 
 Moved all instance variables defined on commands and events classes to method so values can be merged with superclass values.

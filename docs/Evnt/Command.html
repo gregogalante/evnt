@@ -168,13 +168,18 @@ client.</p>
 <ul><li>
 <p><code>exceptions</code> - Boolean value used to activate the throw of
 excetions.</p>
+</li><li>
+<p><code>nullify_empty_params</code> - Transform empty params to nil values so
+the validator</p>
 </li></ul>
+
+<p>should consider them as nil values.</p>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 28</span>
+            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 30</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">params</span> = {})
   <span class="ruby-identifier">_init_command_data</span>(<span class="ruby-identifier">params</span>)
   <span class="ruby-identifier">_run_command_steps</span>
@@ -217,7 +222,7 @@ should be a boolean value.</p>
 
           
           <div class="method-source-code" id="completed-3F-source">
-            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 67</span>
+            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 69</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">completed?</span>
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:result</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -251,7 +256,7 @@ object should be an array of integers.</p>
 
           
           <div class="method-source-code" id="error_codes-source">
-            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 59</span>
+            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 61</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">error_codes</span>
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:errors</span>].<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>[<span class="ruby-value">:code</span>] }
 <span class="ruby-keyword">end</span></pre>
@@ -285,7 +290,7 @@ returned object should be an array of strings.</p>
 
           
           <div class="method-source-code" id="error_messages-source">
-            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 51</span>
+            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 53</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">error_messages</span>
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:errors</span>].<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>[<span class="ruby-value">:message</span>] }
 <span class="ruby-keyword">end</span></pre>
@@ -321,7 +326,7 @@ function.</p>
 
           
           <div class="method-source-code" id="errors-source">
-            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 43</span>
+            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 45</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">errors</span>
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:errors</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -373,7 +378,7 @@ active, it should raise a new error.</p>
 
           
           <div class="method-source-code" id="err-source">
-            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 90</span>
+            <pre><span class="ruby-comment"># File lib/evnt/command.rb, line 92</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">err</span>(<span class="ruby-identifier">message</span>, <span class="ruby-identifier">code</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>)
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:result</span>] = <span class="ruby-keyword">false</span>
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:errors</span>].<span class="ruby-identifier">push</span>(

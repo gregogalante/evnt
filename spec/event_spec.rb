@@ -2,9 +2,15 @@
 
 require 'spec_helper'
 
+class MyEvent < Evnt::Event
+
+  attributes_are :attr1, :attr2
+
+end
+
 RSpec.describe Evnt::Event do
   parameters = { attr1: 'foo', attr2: 'bar', _extra1: 'yuppy' }
-  event = Evnt::Event.new(parameters)
+  event = MyEvent.new(parameters)
 
   it 'should be initialized' do
     expect(event).not_to eq nil

@@ -61,6 +61,8 @@
     <li><a href="#label-Usage">Usage</a>
     <li><a href="#label-Basic+usage">Basic usage</a>
     <li><a href="#label-Advanced+usage">Advanced usage</a>
+    <li><a href="#label-Options">Options</a>
+    <li><a href="#label-Silent+option">Silent option</a>
   </ul>
 </div>
 
@@ -186,6 +188,36 @@ an old event you can pass the old event payload to the event constructor:</p>
 
 <span class="ruby-identifier">puts</span> <span class="ruby-identifier">reloaded_event</span>.<span class="ruby-identifier">reloaded?</span> <span class="ruby-comment"># -&gt; true</span>
 </pre>
+
+<h2 id="label-Options">Options<span><a href="#label-Options">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>Options permits to change the way to work of the event. Options can be
+defined on the event initialization or as default inside the event class.</p>
+
+<p>Set default options inside the event:</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">OrderCreatedEvent</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Event</span>
+    <span class="ruby-identifier">default_options</span> <span class="ruby-identifier">silent</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>Set options on event initialization:</p>
+
+<pre class="ruby"><span class="ruby-identifier">event</span> = <span class="ruby-constant">OrderCreatedEvent</span>.<span class="ruby-identifier">new</span>(
+    <span class="ruby-identifier">order_uuid</span><span class="ruby-operator">:</span> <span class="ruby-constant">SecureRandom</span>.<span class="ruby-identifier">uuid</span>,
+    <span class="ruby-identifier">product_uuid</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">product_uuid</span>],
+    <span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">quantity</span>],
+    <span class="ruby-identifier">_options</span><span class="ruby-operator">:</span> {
+        <span class="ruby-identifier">silent</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>
+    }
+)
+</pre>
+
+<h3 id="label-Silent+option">Silent option<span><a href="#label-Silent+option">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>The silent option permit to initialize a new event witout the notification
+of its handler. This option can be used for tests or for specific use
+cases.</p>
 </main>
 
 

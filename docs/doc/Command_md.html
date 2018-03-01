@@ -61,6 +61,9 @@
     <li><a href="#label-Logic+validation">Logic validation</a>
     <li><a href="#label-Events+initialization">Events initialization</a>
     <li><a href="#label-Usage">Usage</a>
+    <li><a href="#label-Options">Options</a>
+    <li><a href="#label-Exception+option">Exception option</a>
+    <li><a href="#label-Nullify+empty+params+option">Nullify empty params option</a>
   </ul>
 </div>
 
@@ -136,7 +139,7 @@ to check the parameters type and normalize their value.</p>
     <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">product_uuid</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">string</span>, <span class="ruby-identifier">presence</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>, <span class="ruby-identifier">blank</span><span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>
     <span class="ruby-comment"># This validation should check if quantity parmeter is not nil, is a integer</span>
     <span class="ruby-comment"># (or can be normalized to a integer) and is positive.</span>
-    <span class="ruby-identifier">vaidates</span> :<span class="ruby-identifier">quantity</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">integer</span>, <span class="ruby-identifier">presence</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>, <span class="ruby-identifier">min</span><span class="ruby-operator">:</span> <span class="ruby-value">1</span>
+    <span class="ruby-identifier">vaidates</span> :<span class="ruby-identifier">quantity</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">integer</span>, <span class="ruby-identifier">presence</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>, <span class="ruby-identifier">min</span><span class="ruby-operator">:</span> <span class="ruby-value">1</span>, <span class="ruby-identifier">err</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;Custom error message&#39;</span>
 
     <span class="ruby-comment"># ...</span>
 <span class="ruby-keyword">end</span>
@@ -236,22 +239,79 @@ should be:</p>
 <span class="ruby-keyword">end</span>
 </pre>
 
-<p>It&#39;s also possible to use err method inside the command to raise an
-exception with the option <strong>exception: true</strong>. An example of
-usage should be:</p>
+<h2 id="label-Options">Options<span><a href="#label-Options">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<pre class="ruby"><span class="ruby-keyword">begin</span>
+<p>Options permits to change the way to work of the command. Options can be
+defined on the command initialization or as default inside the command
+class.</p>
+
+<p>Set default options inside the command:</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">CreateOrderCommand</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Command</span>
+    <span class="ruby-identifier">default_options</span> <span class="ruby-identifier">excption</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>, <span class="ruby-identifier">nullify_empty_params</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>Set options on command initialization:</p>
+
+<pre class="ruby"><span class="ruby-identifier">command</span> = <span class="ruby-constant">CreateOrderCommand</span>.<span class="ruby-identifier">new</span>(
+    <span class="ruby-identifier">user_id</span><span class="ruby-operator">:</span> <span class="ruby-value">128</span>,
+    <span class="ruby-identifier">product_id</span><span class="ruby-operator">:</span> <span class="ruby-value">534</span>,
+    <span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-value">10</span>,
+    <span class="ruby-identifier">_options</span><span class="ruby-operator">:</span> {
+        <span class="ruby-identifier">excption</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>,
+        <span class="ruby-identifier">nullify_empty_params</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>
+    }
+)
+</pre>
+
+<h3 id="label-Exception+option">Exception option<span><a href="#label-Exception+option">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>Exception option permits the usage of err method inside the command to
+raise an exception. An example of usage should be:</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">CreateOrderCommand</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Command</span>
+    <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">product_uuid</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">string</span>, <span class="ruby-identifier">presence</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>, <span class="ruby-identifier">blank</span><span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>, <span class="ruby-identifier">err</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;Product uuid not accepted&#39;</span>
+
+    <span class="ruby-comment"># ...</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">begin</span>
     <span class="ruby-identifier">command</span> = <span class="ruby-constant">CreateOrderCommand</span>.<span class="ruby-identifier">new</span>(
         <span class="ruby-identifier">user_id</span><span class="ruby-operator">:</span> <span class="ruby-value">128</span>,
-        <span class="ruby-identifier">product_id</span><span class="ruby-operator">:</span> <span class="ruby-value">534</span>,
         <span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-value">10</span>,
         <span class="ruby-identifier">_options</span><span class="ruby-operator">:</span> {
             <span class="ruby-identifier">excption</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>
         }
     )
 <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
-    <span class="ruby-identifier">puts</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-identifier">e</span> <span class="ruby-comment"># -&gt; Product uuid not accepted</span>
 <span class="ruby-keyword">end</span>
+</pre>
+
+<h3 id="label-Nullify+empty+params+option">Nullify empty params option<span><a href="#label-Nullify+empty+params+option">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>This options permits to consider nil all parameters that respond false to
+the empty? method. An example of usage should be:</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">CreateOrderCommand</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Command</span>
+    <span class="ruby-constant">PRODUCTS</span> = [<span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>, <span class="ruby-value">4</span>]
+
+    <span class="ruby-identifier">validates</span> :<span class="ruby-identifier">product_uuid</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> :<span class="ruby-identifier">string</span>, <span class="ruby-keyword">in</span><span class="ruby-operator">:</span> <span class="ruby-constant">PRODUCTS</span>, <span class="ruby-identifier">err</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;Product uuid not accepted&#39;</span>
+
+    <span class="ruby-comment"># ...</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">command</span> = <span class="ruby-constant">CreateOrderCommand</span>.<span class="ruby-identifier">new</span>(
+    <span class="ruby-identifier">user_id</span><span class="ruby-operator">:</span> <span class="ruby-value">128</span>,
+    <span class="ruby-identifier">product_uuid</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;&#39;</span>,
+    <span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-value">10</span>,
+    <span class="ruby-identifier">_options</span><span class="ruby-operator">:</span> {
+        <span class="ruby-identifier">nullify_empty_params</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>
+    }
+)
+
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">completed?</span> <span class="ruby-comment"># -&gt; true</span>
 </pre>
 </main>
 

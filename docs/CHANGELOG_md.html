@@ -57,6 +57,10 @@
 
   <ul class="link-list" role="directory">
     <li><a href="#label-Evnt+changelog">Evnt changelog</a>
+    <li><a href="#label-Version+3.2.0">Version 3.2.0</a>
+    <li><a href="#label-Version+3.1.4">Version 3.1.4</a>
+    <li><a href="#label-Version+3.1.3">Version 3.1.3</a>
+    <li><a href="#label-Version+3.1.2">Version 3.1.2</a>
     <li><a href="#label-Version+3.1.1">Version 3.1.1</a>
     <li><a href="#label-Version+3.1.0">Version 3.1.0</a>
     <li><a href="#label-Version+3.0.2">Version 3.0.2</a>
@@ -110,6 +114,69 @@
 <main role="main" aria-label="Page CHANGELOG.md">
 
 <h1 id="label-Evnt+changelog"><a href="Evnt.html">Evnt</a> changelog<span><a href="#label-Evnt+changelog">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<h2 id="label-Version+3.2.0">Version 3.2.0<span><a href="#label-Version+3.2.0">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>Moved all instance variables defined on commands and events classes to
+method so values can be merged with superclass values.</p>
+
+<p>Now can be executed events code like this example:</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">AnimalEvent</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Event</span>
+
+  <span class="ruby-identifier">attributes_are</span> :<span class="ruby-identifier">type</span>, :<span class="ruby-identifier">sex</span>
+
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">class</span> <span class="ruby-constant">AquaticAnimalEvent</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">AnimalEvent</span>
+
+  <span class="ruby-identifier">attributes_are</span> :<span class="ruby-identifier">water_type</span>
+
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">shark</span> = <span class="ruby-constant">AquaticAnimalEvent</span>.<span class="ruby-identifier">new</span>(
+  <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;aquatic&#39;</span>,
+  <span class="ruby-identifier">sex</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;male&#39;</span>,
+  <span class="ruby-identifier">water_type</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;salt&#39;</span>
+)
+
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">shark</span>.<span class="ruby-identifier">attributes</span> <span class="ruby-comment"># -&gt; [:type, :sex, :water_type]</span>
+</pre>
+
+<p>This functionality works with:</p>
+<ul><li>
+<p>Commands default options.</p>
+</li><li>
+<p>Commands validations.</p>
+</li><li>
+<p>Events default options.</p>
+</li><li>
+<p>Events attributes.</p>
+</li><li>
+<p>Events handlers.</p>
+</li></ul>
+
+<h2 id="label-Version+3.1.4">Version 3.1.4<span><a href="#label-Version+3.1.4">&para;</a> <a href="#top">&uarr;</a></span></h2>
+<ul><li>
+<p>Fixed default options merge.</p>
+</li></ul>
+
+<h2 id="label-Version+3.1.3">Version 3.1.3<span><a href="#label-Version+3.1.3">&para;</a> <a href="#top">&uarr;</a></span></h2>
+<ul><li>
+<p>Added nullify_empty_params option on command to set to nil empty
+paramteters.</p>
+</li><li>
+<p>Added default_options support for commands and events.</p>
+</li></ul>
+
+<h2 id="label-Version+3.1.2">Version 3.1.2<span><a href="#label-Version+3.1.2">&para;</a> <a href="#top">&uarr;</a></span></h2>
+<ul><li>
+<p>Added min length and max length on validator string options.</p>
+</li><li>
+<p>Added min and max on validator time options.</p>
+</li><li>
+<p>Added custom error message on command validators.</p>
+</li></ul>
 
 <h2 id="label-Version+3.1.1">Version 3.1.1<span><a href="#label-Version+3.1.1">&para;</a> <a href="#top">&uarr;</a></span></h2>
 <ul><li>
