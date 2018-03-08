@@ -8,9 +8,11 @@ There's a simple generator that can be used to inizialize a Rails application wi
 
 ```shell
 
-rails generate evnt:initializer
+rails generate evnt:initializer --migrated
 
 ```
+
+The **migrated** option is used to generate a model EvntEvent used to save events on a table of the database.
 
 This command should:
 

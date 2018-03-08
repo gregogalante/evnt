@@ -106,9 +106,11 @@ the MVC pattern.</p>
 <p>There&#39;s a simple generator that can be used to inizialize a Rails
 application with <a href="../Evnt.html">Evnt</a>.</p>
 
-<pre class="ruby">
-<span class="ruby-identifier">rails</span> <span class="ruby-identifier">generate</span> <span class="ruby-identifier">evnt</span>:<span class="ruby-identifier">initializer</span>
-</pre>
+<pre>
+rails generate evnt:initializer --migrated</pre>
+
+<p>The <strong>migrated</strong> option is used to generate a model EvntEvent
+used to save events on a table of the database.</p>
 
 <p>This command should:</p>
 <ul><li>

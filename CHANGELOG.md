@@ -1,5 +1,9 @@
 # Evnt changelog
 
+## Vesion 3.2.6 IN-PROGRESS
+
+- Added "--migrated" option on initializer generator  generate a tableto save events.
+
 ## Version 3.2.5
 
 - Fixed bad errors.
@@ -23,7 +27,9 @@
 
 ## Version 3.2.0
 
-Moved all instance variables defined on commands and events classes to method so values can be merged with superclass values.
+- New update for classes inheritance (explained below).
+
+All instance variables defined on commands and events classes are transformed in methods so values can be merged with superclass values (settings can be inherited).
 
 Now can be executed events code like this example:
 
@@ -51,11 +57,11 @@ puts shark.attributes # -> [:type, :sex, :water_type]
 
 This functionality works with:
 
-- Commands default options.
-- Commands validations.
-- Events default options.
-- Events attributes.
-- Events handlers.
+* Commands default options.
+* Commands validations.
+* Events default options.
+* Events attributes.
+* Events handlers.
 
 ## Version 3.1.4
 

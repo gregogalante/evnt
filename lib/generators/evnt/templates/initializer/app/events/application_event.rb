@@ -5,11 +5,12 @@ class ApplicationEvent < Evnt::Event
 
   default_options silent: false
 
+  # Change this block with what you want to do to save event!
   to_write_event do
-    # EventModel.create(
-    #   name: name,
-    #   payload: payload
-    # )
+    EvntEvent.create(
+      name: name,
+      payload: payload
+    )
   end
 
 end
