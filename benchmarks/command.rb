@@ -26,17 +26,25 @@ puts '#' * 60
 # Cost to instantiate with validation
 # ####################################################
 
-class CommandValidation1Class < Evnt::Command
-
+class CommandValidationPresenceClass < Evnt::Command
   validates :name, presence: true
+end
 
+class CommandValidationTypeClass < Evnt::Command
+  validates :name, type: :string
+end
+
+class CommandValidationBlankClass < Evnt::Command
+  validates :name, type: :string, blank: false
 end
 
 puts
 puts 'Cost to instantiate with validation:'
 puts '#' * 60
 Benchmark.benchmark(Benchmark::CAPTION) do |x|
-  x.report('validation 1:') { CommandValidation1Class.new(name: 'foo') }
+  x.report('validation presence:') { CommandValidationPresenceClass.new(name: 'foo') }
+  x.report('validation type:') { CommandValidationTypeClass.new(name: 'foo') }
+  x.report('validation blank:') { CommandValidationBlankClass.new(name: 'foo') }
 end
 puts '#' * 60
 puts '#' * 60
