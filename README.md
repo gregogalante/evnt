@@ -1,5 +1,7 @@
 # Evnt
 
+[![Gem Version](https://badge.fury.io/rb/evnt.svg)](https://badge.fury.io/rb/evnt)
+
 CQRS and Event Driven Development architecture for Ruby projects.
 
 - [Installation](#installation)
