@@ -2,7 +2,7 @@
 
 ## Vesion 3.2.6 IN-PROGRESS
 
-- Added "--migrated" option on initializer generator  generate a tableto save events.
+- Added "--migrated" option on initializer generator to generate a model to save events.
 
 ## Version 3.2.5
 
