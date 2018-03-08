@@ -130,7 +130,7 @@ Set default options inside the command:
 
 ```ruby
 class CreateOrderCommand < Evnt::Command
-    default_options excption: true, nullify_empty_params: true
+    default_options exceptions: true, nullify_empty_params: true
 end
 ```
 
@@ -142,13 +142,13 @@ command = CreateOrderCommand.new(
     product_id: 534,
     quantity: 10,
     _options: {
-        excption: true,
+        exceptions: true,
         nullify_empty_params: true
     }
 )
 ```
 
-### Exception option
+### Exceptions option
 
 Exception option permits the usage of err method inside the command to raise an exception. An example of usage should be:
 
@@ -164,7 +164,7 @@ begin
         user_id: 128,
         quantity: 10,
         _options: {
-            excption: true
+            exceptions: true
         }
     )
 rescue => e
