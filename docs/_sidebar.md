@@ -1,4 +1,4 @@
-<!-- docs/settings/_sidebar.md -->
+<!-- docs/_sidebar.md -->
 
 * [Home](/)
 * [Command](pages/Command.md)

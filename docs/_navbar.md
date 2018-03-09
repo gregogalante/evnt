@@ -1,4 +1,4 @@
-<!-- docs/settings/_navbar.md -->
+<!-- docs/_navbar.md -->
 
 
 * [Powered by Ideo Creative Network](http://ideonetwork.it/)
