@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Handler - Evnt Gem</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+  var index_rel_prefix = "../";
+</script>
+
+<script src="../js/jquery.js"></script>
+<script src="../js/darkfish.js"></script>
+
+<link href="../css/fonts.css" rel="stylesheet">
+<link href="../css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="project-metadata">
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../CHANGELOG_md.html">CHANGELOG</a>
+  
+    <li><a href="../MIT-LICENSE.html">MIT-LICENSE</a>
+  
+    <li><a href="../README_md.html">README</a>
+  
+    <li><a href="../_doc/Command_md.html">Command</a>
+  
+    <li><a href="../_doc/Event_md.html">Event</a>
+  
+    <li><a href="../_doc/Handler_md.html">Handler</a>
+  
+    <li><a href="../_doc/RailsIntegration_md.html">RailsIntegration</a>
+  
+    <li><a href="../_doc/Validator_md.html">Validator</a>
+  
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page _doc/Handler.md">
+
+<h1 id="label-Handler"><a href="Handler_md.html">Handler</a><span><a href="#label-Handler">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<p>Handlers are used to listen one or more events and run tasks after their
+execution.</p>
+
+<p>Every handler event management has two steps to execute:</p>
+<ul><li>
+<p>The <strong>queries update</strong> which updates temporary data structures
+used to read datas.</p>
+</li><li>
+<p>The <strong>manage event</strong> code which run other tasks like mailers,
+parallel executions ecc.</p>
+</li></ul>
+
+<p>An example of handler shuould be:</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">ProductHandler</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Handler</span>
+
+  <span class="ruby-identifier">on</span> :<span class="ruby-identifier">order_created</span> <span class="ruby-keyword">do</span>
+
+    <span class="ruby-identifier">to_update_queries</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-comment"># update product quantity</span>
+      <span class="ruby-identifier">product</span> = <span class="ruby-constant">Product</span>.<span class="ruby-identifier">find_by</span>(<span class="ruby-identifier">uuid</span><span class="ruby-operator">:</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">payload</span>[:<span class="ruby-identifier">product_uuid</span>])
+      <span class="ruby-identifier">product</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-identifier">product</span>.<span class="ruby-identifier">quantity</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">payload</span>[:<span class="ruby-identifier">quantity</span>])
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">to_manage_event</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-comment"># this block is called only for not reloaded events</span>
+    <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>The execution of <strong>to_update_queries</strong> block runs after every
+events initialization. The execution of <strong>to_manage_event</strong>
+block runs only for not reloaded events initialization.</p>
+
+<p>Sometimes you need to run some code to manage only reloaded events. To run
+code only for reloaded events you can use the
+<strong>to_manage_reloaded_event</strong> block:</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">ProductHandler</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Evnt</span><span class="ruby-operator">::</span><span class="ruby-constant">Handler</span>
+
+  <span class="ruby-identifier">on</span> :<span class="ruby-identifier">order_created</span> <span class="ruby-keyword">do</span>
+
+    <span class="ruby-identifier">to_manage_reloaded_event</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-comment"># this block is called only for reloaded events</span>
+    <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span>
+</pre>
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://rdoc.github.io/rdoc">RDoc</a> 5.1.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

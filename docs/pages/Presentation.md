@@ -11,8 +11,6 @@ Evnt is a Ruby gem used to design software following the CQRS and Event driven d
 - **Events**: something that it's already happen and should be logged somewhere.
 - **Handlers**:  event listeners that perform specific tasks.
 
-The full documentation of these classes can be found here: https://ideonetwork.github.io/evnt
-
 ## Installation
 
 To use the gem you need to add it on your Gemfile
@@ -27,12 +25,3 @@ Legacy version
 gem 'evnt'
 ```
 
-## Development
-
-To update the rdoc documentation run:
-
-```console
-
-rdoc --op rdoc
-
-```
