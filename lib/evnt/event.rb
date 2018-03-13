@@ -86,6 +86,10 @@ module Evnt
       @options = initial_options.merge(default_options)
                                 .merge(params_options)
 
+      # set name and attributes
+      @name = _safe_name
+      @attributes = _safe_attributes
+
       # set payload
       payload = params.reject { |k, _v| k[0] == '_' }
       @payload = @state[:reloaded] ? payload : _generate_payload(payload)
@@ -94,10 +98,6 @@ module Evnt
       @extras = {}
       extras = params.select { |k, _v| k[0] == '_' }
       extras.each { |k, v| @extras[k[1..-1].to_sym] = v }
-
-      # set other datas
-      @name = _safe_name
-      @attributes = _safe_attributes
     end
 
     # This function generates the complete event payload.

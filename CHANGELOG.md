@@ -1,9 +1,10 @@
 # Evnt changelog
 
-## Vesion 3.2.6 IN-PROGRESS
+## Vesion 3.2.6
 
 - Added "--migrated" option on initializer generator to generate a model to save events.
 - Added pretty documentation.
+- Fixed event name not saved on payload.
 
 ## Version 3.2.5
 
