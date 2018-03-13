@@ -1,5 +1,5 @@
 PATH
-  remote: .
+  remote: ../..
   specs:
     evnt (3.3.0)
 

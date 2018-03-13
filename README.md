@@ -29,10 +29,24 @@ gem 'evnt'
 
 ## Development
 
+### RDoc documentation
+
 To update the rdoc documentation run:
 
 ```console
-
 rdoc --op rdoc
+```
 
+### Docsify documentation
+
+Install docsify as global node dependency
+
+```shell
+npm install -g docsify
+```
+
+See documentation on local machine
+
+```shell
+docsify serve ./docs
 ```
