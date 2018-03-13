@@ -15,7 +15,7 @@ module Evnt
       path = informations.first.split('::')
       @event_class = path.last.camelize
       @event_modules = path - [path.last]
-      @event_name = path.map(&:underscore).join('_') # TODO: Remove "event" at the end of name if it's present.
+      @event_name = event_name_clean(path.map(&:underscore).join('_'))
       @event_attributes = (informations - [informations.first]).map { |a| ":#{a}" }.join(', ')
 
       template(
@@ -29,6 +29,12 @@ module Evnt
       @event_modules.map { |m| path = "#{path}/#{m.underscore}" }
       path = "#{path}/#{@event_class.underscore}.rb"
       path
+    end
+
+    def event_name_clean(event_name)
+      return event_name unless event_name.end_with?('_event')
+
+      event_name.gsub('_event', '')
     end
 
   end

@@ -50,7 +50,7 @@ module Evnt
       _init_event_data(params)
       _validate_payload
       _run_event_steps
-      _notify_handlers
+      _notify_handlers if @state[:saved]
     end
 
     # Public functions:
@@ -65,6 +65,27 @@ module Evnt
       @state[:reloaded]
     end
 
+    ##
+    # This function tells if the event is saved or not.
+    # As default an event is considered saved. It should be updated to
+    # not saved when the to_write_event has some problems.
+    ##
+    def saved?
+      @state[:saved]
+    end
+
+    ##
+    # This function can be used to set the event as not saved.
+    # A not saved event should not notify handlers.
+    # If the exceptions option is active, it should raise a new error.
+    ##
+    def set_not_saved
+      @state[:saved] = false
+
+      # raise error if event needs exceptions
+      raise 'Event can not be saved' if @options[:exceptions]
+    end
+
     # Private functions:
     ############################################################################
 
@@ -74,11 +95,13 @@ module Evnt
     def _init_event_data(params)
       # set state
       @state = {
-        reloaded: !params[:evnt].nil?
+        reloaded: !params[:evnt].nil?,
+        saved: true
       }
 
       # set options
       initial_options = {
+        exceptions: false,
         silent: false
       }
       default_options = _safe_default_options || {}

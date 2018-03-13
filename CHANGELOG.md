@@ -1,5 +1,10 @@
 # Evnt changelog
 
+## Vesion 3.3.0
+
+- Added possibility to set an event as seved or not.
+- Updated event generator to remove _event string from events names.
+
 ## Vesion 3.2.6
 
 - Added "--migrated" option on initializer generator to generate a model to save events.

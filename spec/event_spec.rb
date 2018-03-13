@@ -22,6 +22,11 @@ RSpec.describe Evnt::Event do
     expect(event).not_to eq nil
   end
 
+  it 'should have a saved? function' do
+    expect(event.saved?).not_to eq nil
+    expect(event.saved?).to be_a TrueClass
+  end
+
   it 'should have a reloaded? function' do
     expect(event.reloaded?).not_to eq nil
     expect(event.reloaded?).to be_a FalseClass
