@@ -66,7 +66,7 @@ Output:
 module Authentication
   class LoginEvent < ApplicationEvent
 
-    name_is :authentication_login_event
+    name_is :authentication_login
 
     attributes_are :user_uuid, :ip_address
 
@@ -80,7 +80,7 @@ Usage:
 
 ```shell
 
-rails generate evnt:handler AuthenticationHandler authentication_login_event authentication_signup_event
+rails generate evnt:handler AuthenticationHandler authentication_login authentication_signup
 
 ```
 
@@ -90,9 +90,9 @@ Output:
 # ./app/handlers/authentication_handler.rb
 class AuthenticationHandler < ApplicationHandler
 
-  on :authentication_login_event do; end
+  on :authentication_login do; end
 
-  on :authentication_signup_event do; end
+  on :authentication_signup do; end
 
 end
 ```
