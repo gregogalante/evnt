@@ -25,3 +25,6 @@ Legacy version
 gem 'evnt'
 ```
 
+## Credits
+
+Powered by [Ideo Creative Network](http://ideonetwork.it/)
