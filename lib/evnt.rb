@@ -6,6 +6,9 @@ require 'evnt/event'
 require 'evnt/handler'
 require 'evnt/validator'
 
+require 'evnt/query'
+require 'evnt/query_activerecord'
+
 ##
 # Evnt is a gem developed to integrate a event driven development
 # and CQRS pattern inside a ruby project.

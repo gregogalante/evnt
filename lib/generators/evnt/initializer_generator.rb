@@ -23,6 +23,7 @@ module Evnt
       application "config.autoload_paths += %W[\#{Rails.root}/app/commands]"
       application "config.autoload_paths += %W[\#{Rails.root}/app/events]"
       application "config.autoload_paths += %W[\#{Rails.root}/app/handlers]"
+      application "config.autoload_paths += %W[\#{Rails.root}/app/queries]"
     end
 
     def manage_migrated_option

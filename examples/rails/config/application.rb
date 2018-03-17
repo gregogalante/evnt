@@ -11,6 +11,7 @@ module RailsExample
     config.autoload_paths += %W[#{Rails.root}/app/handlers]
     config.autoload_paths += %W[#{Rails.root}/app/events]
     config.autoload_paths += %W[#{Rails.root}/app/commands]
+    config.autoload_paths += %W[#{Rails.root}/app/queries]
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 

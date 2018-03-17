@@ -58,8 +58,9 @@
   <ul class="link-list" role="directory">
     <li><a href="#label-Evnt">Evnt</a>
     <li><a href="#label-Installation">Installation</a>
-    <li><a href="#label-Structure">Structure</a>
     <li><a href="#label-Development">Development</a>
+    <li><a href="#label-RDoc+documentation">RDoc documentation</a>
+    <li><a href="#label-Docsify+documentation">Docsify documentation</a>
   </ul>
 </div>
 
@@ -76,16 +77,6 @@
   
     <li><a href="./README_md.html">README</a>
   
-    <li><a href="./_doc/Command_md.html">Command</a>
-  
-    <li><a href="./_doc/Event_md.html">Event</a>
-  
-    <li><a href="./_doc/Handler_md.html">Handler</a>
-  
-    <li><a href="./_doc/RailsIntegration_md.html">RailsIntegration</a>
-  
-    <li><a href="./_doc/Validator_md.html">Validator</a>
-  
   </ul>
 </div>
 
@@ -101,8 +92,24 @@ src="https://badge.fury.io/rb/evnt.svg"></a> <a
 href="http://inch-ci.org/github/ideonetwork/evnt"><img
 src="http://inch-ci.org/github/ideonetwork/evnt.svg?branch=master"></a></p>
 
-<p>CQRS and <a href="_doc/Event_md.html">Event</a> Driven Development
-architecture for Ruby projects.</p>
+<p>CQRS and Event Driven Development architecture for Ruby projects.</p>
+
+<p><a href="Evnt.html">Evnt</a> is a Ruby gem used to design software
+following the CQRS and Event driven development pattern. The idea behind <a
+href="Evnt.html">Evnt</a> is to develop the business logic of the system
+using three different classes:</p>
+<ul><li>
+<p><strong>Commands</strong>: actions executed by actors that can be completed
+or stopped by the system.</p>
+</li><li>
+<p><strong>Events</strong>: something that it&#39;s already happen and should
+be logged somewhere.</p>
+</li><li>
+<p><strong>Handlers</strong>: event listeners that perform specific tasks.</p>
+</li></ul>
+
+<p>The full documentation of these classes can be found here: <a
+href="https://ideonetwork.github.io/evnt">ideonetwork.github.io/evnt</a></p>
 
 <h2 id="label-Installation">Installation<span><a href="#label-Installation">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
@@ -113,25 +120,24 @@ architecture for Ruby projects.</p>
 
 <p>Legacy version <code>ruby gem &#39;evnt&#39; </code></p>
 
-<h2 id="label-Structure">Structure<span><a href="#label-Structure">&para;</a> <a href="#top">&uarr;</a></span></h2>
-
-<p><a href="Evnt.html">Evnt</a> is developed to be used over all kinds of
-projects and frameworks (like Ruby on Rails or Sinatra), so it contains
-only three types of simple classes that can be extended:</p>
-<ul><li>
-<p><a href="_doc/Command_md.html">Command</a></p>
-</li><li>
-<p><a href="_doc/Event_md.html">Event</a></p>
-</li><li>
-<p><a href="_doc/Handler_md.html">Handler</a></p>
-</li></ul>
-
 <h2 id="label-Development">Development<span><a href="#label-Development">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>To update the documentation run:</p>
+<h3 id="label-RDoc+documentation">RDoc documentation<span><a href="#label-RDoc+documentation">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
-<pre>
-rdoc --op rdoc</pre>
+<p>To update the rdoc documentation run:</p>
+
+<pre>rdoc --op rdoc</pre>
+
+<h3 id="label-Docsify+documentation">Docsify documentation<span><a href="#label-Docsify+documentation">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>Install docsify as global node dependency</p>
+
+<pre>npm install -g docsify</pre>
+
+<p>See documentation on local machine</p>
+
+<pre class="ruby"><span class="ruby-identifier">docsify</span> <span class="ruby-identifier">serve</span> .<span class="ruby-operator">/</span><span class="ruby-identifier">docs</span>
+</pre>
 </main>
 
 

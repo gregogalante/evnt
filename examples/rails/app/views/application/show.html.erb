@@ -1,0 +1,28 @@
+<h1><%= @product['name'] %></h1>
+
+<hr>
+
+<table style='text-align: left;'>
+  <tr>
+    <th>Producer:</th>
+    <td><%= @product['producer_name'] %></td>
+  </tr>
+  <tr>
+    <th>Quantity free:</th>
+    <td><%= @product['quantity_free'] %></td>
+  </tr>
+  <tr>
+    <th>Quantity sold:</th>
+    <td><%= @product['quantity_sold'] %></td>
+  </tr>
+</table>
+
+<hr>
+
+<%= form_tag create_order_path(@product['uuid']) do %>
+
+  <input type='number' name='quantity' min='1' placeholder='Quantity to buy'>
+
+  <input type='submit' value='Confirm'>
+
+<% end %>

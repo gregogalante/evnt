@@ -75,6 +75,10 @@
     
     <li ><a href="#method-i-reloaded-3F">#reloaded?</a>
     
+    <li ><a href="#method-i-saved-3F">#saved?</a>
+    
+    <li ><a href="#method-i-set_not_saved">#set_not_saved</a>
+    
   </ul>
 </div>
 
@@ -213,7 +217,7 @@ method of</p>
   <span class="ruby-identifier">_init_event_data</span>(<span class="ruby-identifier">params</span>)
   <span class="ruby-identifier">_validate_payload</span>
   <span class="ruby-identifier">_run_event_steps</span>
-  <span class="ruby-identifier">_notify_handlers</span>
+  <span class="ruby-identifier">_notify_handlers</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@state</span>[<span class="ruby-value">:saved</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -257,6 +261,79 @@ inside the event params.</p>
             <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">reloaded?</span>
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:reloaded</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-saved-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">saved?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This function tells if the event is saved or not. As default an event is
+considered saved. It should be updated to not saved when the to_write_event
+has some problems.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="saved-3F-source">
+            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">saved?</span>
+  <span class="ruby-ivar">@state</span>[<span class="ruby-value">:saved</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-set_not_saved" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">set_not_saved</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This function can be used to set the event as not saved. A not saved event
+should not notify handlers. If the exceptions option is active, it should
+raise a new error.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="set_not_saved-source">
+            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 81</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">set_not_saved</span>
+  <span class="ruby-ivar">@state</span>[<span class="ruby-value">:saved</span>] = <span class="ruby-keyword">false</span>
+
+  <span class="ruby-comment"># raise error if event needs exceptions</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Event can not be saved&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@options</span>[<span class="ruby-value">:exceptions</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
           

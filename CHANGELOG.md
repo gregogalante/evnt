@@ -1,5 +1,9 @@
 # Evnt changelog
 
+## Vesion 3.4.0
+
+- Added initial query support.
+
 ## Vesion 3.3.0
 
 - Added possibility to set an event as seved or not.

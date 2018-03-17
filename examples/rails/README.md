@@ -1,6 +1,6 @@
 # Rails application example
 
-Example of Evnt gem usage for a rails application.
+Example of Evnt gem complete usage for a rails application.
 
 ## Usage
 
@@ -8,8 +8,10 @@ Example of Evnt gem usage for a rails application.
 
 bundle install
 
+rails db:migrate
+
+rails db:seed
+
 rails s
 
 ```
-
-Send a post request to: http://localhost:3000/create_order

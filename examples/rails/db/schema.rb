@@ -10,13 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180308071603) do
+ActiveRecord::Schema.define(version: 20180317192919) do
 
   create_table "evnt_events", force: :cascade do |t|
     t.string "name"
     t.text "payload"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "orders", primary_key: "uuid", id: :string, force: :cascade do |t|
+    t.string "product_uuid"
+    t.integer "quantity"
+    t.float "price_per_piece"
+    t.index ["uuid"], name: "sqlite_autoindex_orders_1", unique: true
+  end
+
+  create_table "producers", primary_key: "uuid", id: :string, force: :cascade do |t|
+    t.string "name"
+    t.index ["uuid"], name: "sqlite_autoindex_producers_1", unique: true
+  end
+
+  create_table "products", primary_key: "uuid", id: :string, force: :cascade do |t|
+    t.string "producer_uuid"
+    t.string "name"
+    t.integer "quantity_free"
+    t.integer "quantity_sold"
+    t.float "price_per_piece"
+    t.index ["uuid"], name: "sqlite_autoindex_products_1", unique: true
   end
 
 end

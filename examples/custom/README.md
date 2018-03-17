@@ -1,6 +1,6 @@
 # Custom application example
 
-Example of Evnt gem usage for a custom application.
+Example of Evnt gem simplest usage for a custom application.
 
 ## Usage
 
