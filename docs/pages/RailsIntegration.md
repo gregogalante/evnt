@@ -19,8 +19,9 @@ This command should:
 - Create an **application_command.rb** on app/commands directory.
 - Create an **application_event.rb** on app/events directory.
 - Create an **application_handler.rb** on app/handlers directory.
+- Create an **application_query.rb** on app/queries directory.
 - Create tests for the three new classes added on the project.
-- Added app/commands, app/events and app/handlers on config.autoload_paths setting of the application.
+- Added app/commands, app/events, app/handlers and app/queries on config.autoload_paths setting of the application.
 
 ### Command generators
 
@@ -93,6 +94,29 @@ class AuthenticationHandler < ApplicationHandler
   on :authentication_login do; end
 
   on :authentication_signup do; end
+
+end
+```
+
+### Query generators
+
+Usage:
+
+```shell
+
+rails generate evnt:query UsersQuery all with_sessions 
+
+```
+
+Output:
+
+```ruby
+# ./app/queries/users_query.rb
+class UsersQuery < ApplicationQuery
+
+  def self.all; end
+
+  def self.with_sessions; end
 
 end
 ```
