@@ -20,12 +20,40 @@ module Evnt
     # * +except+ - The list of attributes that should be removed from the json.
     # * +only+ - The list of parameters that shoud be accepted for the json.
     ##
-    def self.as_json(query, parameters, except: [], only: [])
+    def self.as_json(query, parameters = {}, except: [], only: [])
       result = send(query, parameters).as_json
       return result unless except.length.positive? || only.length.positive?
 
       clean_unpermitted_attributes_from_json(result, except) if except.length.positive?
       clean_unpermitted_attributes_from_json(result, result.keys - only) if only.length.positive?
+    end
+
+    ##
+    # This function should run a query and return the result as a string object.
+    #
+    # ==== Attributes
+    #
+    # * +query+ - The name of the query that should be executed.
+    # * +parameters+ - An object containing the parameters for the query.
+    # * +except+ - The list of attributes that should be removed from the json.
+    # * +only+ - The list of parameters that shoud be accepted for the json.
+    ##
+    def self.as_string(query, parameters = {}, except: [], only: [])
+      as_json(query, parameters, except: except, only: only).to_s
+    end
+
+    ##
+    # This function should run a query and return the result as a bytes array.
+    #
+    # ==== Attributes
+    #
+    # * +query+ - The name of the query that should be executed.
+    # * +parameters+ - An object containing the parameters for the query.
+    # * +except+ - The list of attributes that should be removed from the json.
+    # * +only+ - The list of parameters that shoud be accepted for the json.
+    ##
+    def self.as_bytes(query, parameters = {}, except: [], only: [])
+      as_string(query, parameters, except: except, only: only).bytes.to_a
     end
 
   end
