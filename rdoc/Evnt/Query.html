@@ -71,6 +71,12 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-c-as_bytes">::as_bytes</a>
+    
+    <li ><a href="#method-c-as_json">::as_json</a>
+    
+    <li ><a href="#method-c-as_string">::as_string</a>
+    
     <li ><a href="#method-c-new">::new</a>
     
   </ul>
@@ -109,6 +115,105 @@ to develop custom queries.</p>
        <header>
          <h3>Public Class Methods</h3>
        </header>
+
+    
+      <div id="method-c-as_bytes" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">as_bytes</span><span
+            class="method-args">(_query, _parameters = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="as_bytes-source">
+            <pre><span class="ruby-comment"># File lib/evnt/query.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">as_bytes</span>(<span class="ruby-identifier">_query</span>, <span class="ruby-identifier">_parameters</span> = {})
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;As bytes method should be implemented on Query subclasses&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-as_json" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">as_json</span><span
+            class="method-args">(_query, _parameters = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="as_json-source">
+            <pre><span class="ruby-comment"># File lib/evnt/query.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">_query</span>, <span class="ruby-identifier">_parameters</span> = {})
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;As json method should be implemented on Query subclasses&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-as_string" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">as_string</span><span
+            class="method-args">(_query, _parameters = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="as_string-source">
+            <pre><span class="ruby-comment"># File lib/evnt/query.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">as_string</span>(<span class="ruby-identifier">_query</span>, <span class="ruby-identifier">_parameters</span> = {})
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&#39;As string method should be implemented on Query subclasses&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-c-new" class="method-detail ">

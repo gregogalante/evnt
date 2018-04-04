@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 # ApplicationQuery.
-class ApplicationQuery < Evnt::QueryActiveRecord
+class ApplicationQuery < Evnt::QueryActiverecord
 
 end

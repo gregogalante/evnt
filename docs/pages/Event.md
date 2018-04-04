@@ -6,7 +6,6 @@ Every event has three informations:
 
 - The **name** is an unique identifier of the event.
 - The **attributes** are the list of attributes required from the event to be saved.
-- The **handlers** are a list of handler objects which will be notified when the event is completed.
 
 Every event has also a single function used to write the event information on the data structure.
 
@@ -20,11 +19,6 @@ class OrderCreatedEvent < Evnt::Event
     name_is :order_created
 
     attributes_are :order_uuid, :product_uuid, :quantity
-
-    handlers_are [
-        ProductHandler.new,
-        UserNotifierHandler.new
-    ]
 
     to_write_event do
         # save event on database
@@ -182,20 +176,24 @@ An example of usage should be:
 
 ```ruby
 class ProductHandler < Evnt::Handler
+
     on :order_created
         to_manage_event do
             puts 'something is happen'
         end
     end
+
 end
 
 class OrderCreatedEvent < Evnt::Event
+
     name_is :order_created
+
     attributes_are :order_uuid
-    handlers_are [
-        ProductHandler.new
-    ]
+
 end
+
+ProductHandler.listen(OrderCreatedEvent)
 
 OrderCreatedEvent.new(
     order_uuid: SecureRandom.uuid,

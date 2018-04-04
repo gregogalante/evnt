@@ -71,7 +71,11 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-c-as_bytes">::as_bytes</a>
+    
     <li ><a href="#method-c-as_json">::as_json</a>
+    
+    <li ><a href="#method-c-as_string">::as_string</a>
     
   </ul>
 </div>
@@ -111,11 +115,52 @@ queries based on activerecord.</p>
        </header>
 
     
+      <div id="method-c-as_bytes" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">as_bytes</span><span
+            class="method-args">(query, parameters = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This function should run a query and return the result as a bytes array.</p>
+
+<h4 id="method-c-as_bytes-label-Attributes">Attributes<span><a href="#method-c-as_bytes-label-Attributes">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<ul><li>
+<p><code>query</code> - The name of the query that should be executed.</p>
+</li><li>
+<p><code>parameters</code> - An object containing the parameters for the
+query.</p>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="as_bytes-source">
+            <pre><span class="ruby-comment"># File lib/evnt/query_activerecord.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">as_bytes</span>(<span class="ruby-identifier">query</span>, <span class="ruby-identifier">parameters</span> = {})
+  <span class="ruby-identifier">as_string</span>(<span class="ruby-identifier">query</span>, <span class="ruby-identifier">parameters</span>).<span class="ruby-identifier">bytes</span>.<span class="ruby-identifier">to_a</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-c-as_json" class="method-detail ">
         
         <div class="method-heading">
           <span class="method-name">as_json</span><span
-            class="method-args">(query, parameters, except: [], only: [])</span>
+            class="method-args">(query, parameters = {})</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -133,25 +178,63 @@ object.</p>
 </li><li>
 <p><code>parameters</code> - An object containing the parameters for the
 query.</p>
-</li><li>
-<p><code>except</code> - The list of attributes that should be removed from
-the json.</p>
-</li><li>
-<p><code>only</code> - The list of parameters that shoud be accepted for the
-json.</p>
 </li></ul>
           
           
 
           
           <div class="method-source-code" id="as_json-source">
-            <pre><span class="ruby-comment"># File lib/evnt/query_activerecord.rb, line 22</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">query</span>, <span class="ruby-identifier">parameters</span>, <span class="ruby-identifier">except</span><span class="ruby-operator">:</span> [], <span class="ruby-identifier">only</span><span class="ruby-operator">:</span> [])
+            <pre><span class="ruby-comment"># File lib/evnt/query_activerecord.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">query</span>, <span class="ruby-identifier">parameters</span> = {})
+  <span class="ruby-identifier">except</span> = <span class="ruby-identifier">parameters</span>[<span class="ruby-value">:_except</span>] <span class="ruby-operator">||</span> []
+  <span class="ruby-identifier">only</span> = <span class="ruby-identifier">parameters</span>[<span class="ruby-value">:_only</span>] <span class="ruby-operator">||</span> []
+
   <span class="ruby-identifier">result</span> = <span class="ruby-identifier">send</span>(<span class="ruby-identifier">query</span>, <span class="ruby-identifier">parameters</span>).<span class="ruby-identifier">as_json</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">result</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">except</span>.<span class="ruby-identifier">length</span>.<span class="ruby-identifier">positive?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">only</span>.<span class="ruby-identifier">length</span>.<span class="ruby-identifier">positive?</span>
 
   <span class="ruby-identifier">clean_unpermitted_attributes_from_json</span>(<span class="ruby-identifier">result</span>, <span class="ruby-identifier">except</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">except</span>.<span class="ruby-identifier">length</span>.<span class="ruby-identifier">positive?</span>
   <span class="ruby-identifier">clean_unpermitted_attributes_from_json</span>(<span class="ruby-identifier">result</span>, <span class="ruby-identifier">result</span>.<span class="ruby-identifier">keys</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">only</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">only</span>.<span class="ruby-identifier">length</span>.<span class="ruby-identifier">positive?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-as_string" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">as_string</span><span
+            class="method-args">(query, parameters = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This function should run a query and return the result as a string object.</p>
+
+<h4 id="method-c-as_string-label-Attributes">Attributes<span><a href="#method-c-as_string-label-Attributes">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<ul><li>
+<p><code>query</code> - The name of the query that should be executed.</p>
+</li><li>
+<p><code>parameters</code> - An object containing the parameters for the
+query.</p>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="as_string-source">
+            <pre><span class="ruby-comment"># File lib/evnt/query_activerecord.rb, line 39</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">as_string</span>(<span class="ruby-identifier">query</span>, <span class="ruby-identifier">parameters</span> = {})
+  <span class="ruby-identifier">as_json</span>(<span class="ruby-identifier">query</span>, <span class="ruby-identifier">parameters</span>).<span class="ruby-identifier">to_s</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

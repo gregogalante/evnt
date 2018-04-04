@@ -7,8 +7,4 @@ class OrderCreatedEvent < ApplicationEvent
 
   attributes_are :order_uuid, :product_uuid, :quantity
 
-  handlers_are [
-    OrdersManagerHandler.new
-  ]
-
 end

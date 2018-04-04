@@ -10,7 +10,7 @@ class ApplicationEvent < Evnt::Event
     EvntEvent.create(
       name: name,
       payload: payload
-    )
+    ) || set_not_saved
   end
 
 end

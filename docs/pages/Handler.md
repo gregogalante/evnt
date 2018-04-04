@@ -47,3 +47,13 @@ class ProductHandler < Evnt::Handler
 
 end
 ```
+
+## Handler listeners
+
+Handler can listen an event in application startup using the listen function:
+
+```ruby
+# initializer file
+
+ProductHandler.listen(OrderCreatedEvent)
+```

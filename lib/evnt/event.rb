@@ -213,6 +213,22 @@ module Evnt
         define_method('_attributes', -> { return event_attributes })
       end
 
+      # This function sets the write event function for the event.
+      def to_write_event(&block)
+        define_method('_write_event', &block)
+      end
+
+      # This function is used to add a new handler to the event from the external.
+      def add_handler(handler)
+        @handlers ||= []
+        @handlers.push(handler)
+        event_handlers = @handlers
+
+        define_method('_handlers', -> { return event_handlers })
+      end
+
+      # DEPRECATED
+
       # This function sets the list of handlers for the event.
       def handlers_are(handlers)
         @handlers ||= []
@@ -220,11 +236,8 @@ module Evnt
         event_handlers = @handlers
 
         define_method('_handlers', -> { return event_handlers })
-      end
 
-      # This function sets the write event function for the event.
-      def to_write_event(&block)
-        define_method('_write_event', &block)
+        warn '[DEPRECATION] `handlers_are` is deprecated.  Please use handler `listen` instead.' 
       end
 
     end

@@ -73,6 +73,11 @@ module Evnt
     # This class contain the list of settings for the handler.
     class << self
 
+      # This function permits handler to listen specific event.
+      def listen(event)
+        event.add_handler(new)
+      end
+
       # This function sets the blocks executed for a specific event.
       def on(event_name, &block)
         @_current_event_name = event_name

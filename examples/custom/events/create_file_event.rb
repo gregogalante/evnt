@@ -10,10 +10,6 @@ class CreateFileEvent < Evnt::Event
 
   attributes_are :file_name, :file_extension
 
-  handlers_are [
-    FileSystemHandler.new
-  ]
-
   to_write_event do
     # ...
   end
