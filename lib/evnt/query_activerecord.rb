@@ -17,10 +17,11 @@ module Evnt
     #
     # * +query+ - The name of the query that should be executed.
     # * +parameters+ - An object containing the parameters for the query.
-    # * +except+ - The list of attributes that should be removed from the json.
-    # * +only+ - The list of parameters that shoud be accepted for the json.
     ##
-    def self.as_json(query, parameters = {}, except: [], only: [])
+    def self.as_json(query, parameters = {})
+      except = parameters[:_except] || []
+      only = parameters[:_only] || []
+
       result = send(query, parameters).as_json
       return result unless except.length.positive? || only.length.positive?
 
@@ -35,11 +36,9 @@ module Evnt
     #
     # * +query+ - The name of the query that should be executed.
     # * +parameters+ - An object containing the parameters for the query.
-    # * +except+ - The list of attributes that should be removed from the json.
-    # * +only+ - The list of parameters that shoud be accepted for the json.
     ##
-    def self.as_string(query, parameters = {}, except: [], only: [])
-      as_json(query, parameters, except: except, only: only).to_s
+    def self.as_string(query, parameters = {})
+      as_json(query, parameters).to_s
     end
 
     ##
@@ -49,11 +48,9 @@ module Evnt
     #
     # * +query+ - The name of the query that should be executed.
     # * +parameters+ - An object containing the parameters for the query.
-    # * +except+ - The list of attributes that should be removed from the json.
-    # * +only+ - The list of parameters that shoud be accepted for the json.
     ##
-    def self.as_bytes(query, parameters = {}, except: [], only: [])
-      as_string(query, parameters, except: except, only: only).bytes.to_a
+    def self.as_bytes(query, parameters = {})
+      as_string(query, parameters).bytes.to_a
     end
 
   end

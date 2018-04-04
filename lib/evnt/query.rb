@@ -16,15 +16,15 @@ module Evnt
       raise SystemCallError, 'Query can not be initialized'
     end
 
-    def self.as_json(_query, _parameters, except: [], only: [])
+    def self.as_json(_query, _parameters = {})
       raise NotImplementedError, 'As json method should be implemented on Query subclasses'
     end
 
-    def self.as_string(_query, _parameters, except: [], only: [])
+    def self.as_string(_query, _parameters = {})
       raise NotImplementedError, 'As string method should be implemented on Query subclasses'
     end
 
-    def self.as_bytes(_query, _parameters, except: [], only: [])
+    def self.as_bytes(_query, _parameters = {})
       raise NotImplementedError, 'As bytes method should be implemented on Query subclasses'
     end
 
