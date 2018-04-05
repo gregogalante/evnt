@@ -213,6 +213,15 @@ module Evnt
         define_method('_attributes', -> { return event_attributes })
       end
 
+      # This function sets the list of handlers for the event.
+      def handlers_are(handlers)
+        @handlers ||= []
+        @handlers.concat(handlers)
+        event_handlers = @handlers
+
+        define_method('_handlers', -> { return event_handlers })
+      end
+
       # This function sets the write event function for the event.
       def to_write_event(&block)
         define_method('_write_event', &block)
@@ -228,17 +237,6 @@ module Evnt
       end
 
       # DEPRECATED
-
-      # This function sets the list of handlers for the event.
-      def handlers_are(handlers)
-        @handlers ||= []
-        @handlers.concat(handlers)
-        event_handlers = @handlers
-
-        define_method('_handlers', -> { return event_handlers })
-
-        warn '[DEPRECATION] `handlers_are` is deprecated.  Please use handler `listen` instead.' 
-      end
 
     end
 
