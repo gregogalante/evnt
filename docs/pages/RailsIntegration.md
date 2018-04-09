@@ -98,29 +98,6 @@ class AuthenticationHandler < ApplicationHandler
 end
 ```
 
-### Query generators
-
-Usage:
-
-```shell
-
-rails generate evnt:query UsersQuery all with_sessions 
-
-```
-
-Output:
-
-```ruby
-# ./app/queries/users_query.rb
-class UsersQuery < ApplicationQuery
-
-  def self.all; end
-
-  def self.with_sessions; end
-
-end
-```
-
 ## Manual integration
 
 To use the gem with Rails you need to create three folders inside the ./app project's path:

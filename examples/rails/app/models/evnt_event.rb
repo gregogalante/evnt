@@ -1,2 +1,0 @@
-class EvntEvent < ApplicationRecord
-end

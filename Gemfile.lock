@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    evnt (3.5.0)
+    evnt (3.6.0)
 
 GEM
   remote: https://rubygems.org/

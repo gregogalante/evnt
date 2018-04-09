@@ -1,5 +1,10 @@
 # Evnt changelog
 
+## Vesion 3.6.0
+
+- Removed deprecation for method 'handlers_are'.
+- Removed query support.
+
 ## Vesion 3.5.0
 
 - Added listen method to add events on handler.
