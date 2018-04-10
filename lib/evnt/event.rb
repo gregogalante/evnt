@@ -236,8 +236,6 @@ module Evnt
         define_method('_handlers', -> { return event_handlers })
       end
 
-      # DEPRECATED
-
     end
 
   end
