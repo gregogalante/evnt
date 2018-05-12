@@ -27,4 +27,4 @@ gem 'evnt'
 
 ## Credits
 
-Powered by [Ideo Creative Network](http://ideonetwork.it/)
+Powered by [ídeo](http://ideonetwork.it/)
