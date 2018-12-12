@@ -1,5 +1,9 @@
 # Evnt changelog
 
+## Vesion 3.6.1
+
+- Added support to ActiveSupport::HashWithIndifferentAccess on hash type validator.
+
 ## Vesion 3.6.0
 
 - Removed deprecation for method 'handlers_are'.

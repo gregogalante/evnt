@@ -105,7 +105,7 @@ module Evnt
     end
 
     def _validates_type_hash
-      @_result = @value.instance_of?(Hash)
+      @_result = @value.instance_of?(Hash) || @value.instance_of?(ActiveSupport::HashWithIndifferentAccess)
     end
 
     def _validates_type_array
