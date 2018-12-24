@@ -1,5 +1,9 @@
 # Evnt changelog
 
+## Vesion 3.6.2
+
+- Added support to custom error code on command params validation.
+
 ## Vesion 3.6.1
 
 - Added support to ActiveSupport::HashWithIndifferentAccess on hash type validator.
