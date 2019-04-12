@@ -3,7 +3,8 @@
 # ApplicationEvent.
 class ApplicationEvent < Evnt::Event
 
-  default_options silent: false
+  default_options silent: false,
+                  exceptions: false
 
   # Change this block with what you want to do to save event!
   to_write_event do

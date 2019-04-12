@@ -2,3 +2,4 @@
 log/*.log
 *.gem
 .DS_Store
+railstest
