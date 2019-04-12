@@ -1,5 +1,7 @@
 .bundle/
 log/*.log
 *.gem
+.rspec_status
 .DS_Store
-railstest
+
+rails
