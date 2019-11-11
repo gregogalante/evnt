@@ -18,7 +18,9 @@ class OrderCreatedEvent < Evnt::Event
 
     name_is :order_created
 
-    attributes_are :order_uuid, :product_uuid, :quantity
+    payload_attributes_are :order_uuid, :product_uuid, :quantity
+
+    extras_attributes_are :order
 
     to_write_event do
         # save event on database
@@ -189,7 +191,7 @@ class OrderCreatedEvent < Evnt::Event
 
     name_is :order_created
 
-    attributes_are :order_uuid
+    payload_attributes_are :order_uuid
 
 end
 

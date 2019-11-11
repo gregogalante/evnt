@@ -213,11 +213,10 @@ module Evnt
 
       # This function sets the single validation request for a command parameter.
       def validates(param, options)
-        @validations ||= []
-        @validations.push(param: param, options: options)
-        command_validations = @validations
+        @@validations ||= []
+        @@validations.push(param: param, options: options)
 
-        define_method('_validations', -> { return command_validations })
+        define_method('_validations', -> { @@validations })
       end
 
       # This function sets the normalize params function for the command.

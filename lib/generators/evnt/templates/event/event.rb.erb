@@ -7,7 +7,7 @@
 
 <%= '  ' * (@event_modules.length + 1) %>name_is :<%= @event_name %>
 <% unless @event_attributes.blank? %>
-<%= '  ' * (@event_modules.length + 1) %>attributes_are <%= @event_attributes %>
+<%= '  ' * (@event_modules.length + 1) %>payload_attributes_are <%= @event_attributes %>
 <% end %>
 <%= '  ' * @event_modules.length %>end
 <% @event_modules.each_with_index do |_module_name, index| %>

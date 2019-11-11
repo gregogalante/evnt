@@ -1,5 +1,10 @@
 # Evnt changelog
 
+## Vesion 3.6.3
+
+- Added support to extras validation on events.
+- Renamed attributes to payload_attributes on events.
+
 ## Vesion 3.6.2
 
 - Added support to custom error code on command params validation.

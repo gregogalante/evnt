@@ -122,7 +122,7 @@ system.</p>
 
         <div class="method-description">
         
-        <p>Attribute containings the list of attributes of the event.</p>
+        <p>DEPRECATED: Attribute containings the list of attributes of the event.</p>
         
         </div>
       </div>
@@ -136,6 +136,19 @@ system.</p>
         <div class="method-description">
         
         <p>Attribute containings the extra parameters of the event.</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-extras_attributes" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">extras_attributes</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>Attribute containings the list of extras attributes of the event.</p>
         
         </div>
       </div>
@@ -162,6 +175,19 @@ system.</p>
         <div class="method-description">
         
         <p>Attribute containings the payload of the event.</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-payload_attributes" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">payload_attributes</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>Attribute containings the list of payload attributes of the event.</p>
         
         </div>
       </div>
@@ -212,10 +238,11 @@ method of</p>
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 48</span>
+            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 58</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">params</span> = {})
   <span class="ruby-identifier">_init_event_data</span>(<span class="ruby-identifier">params</span>)
   <span class="ruby-identifier">_validate_payload</span>
+  <span class="ruby-identifier">_validate_extras</span>
   <span class="ruby-identifier">_run_event_steps</span>
   <span class="ruby-identifier">_notify_handlers</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@state</span>[<span class="ruby-value">:saved</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -258,7 +285,7 @@ inside the event params.</p>
 
           
           <div class="method-source-code" id="reloaded-3F-source">
-            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 63</span>
+            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 74</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">reloaded?</span>
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:reloaded</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -293,7 +320,7 @@ has some problems.</p>
 
           
           <div class="method-source-code" id="saved-3F-source">
-            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 72</span>
+            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 83</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">saved?</span>
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:saved</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -328,7 +355,7 @@ raise a new error.</p>
 
           
           <div class="method-source-code" id="set_not_saved-source">
-            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 81</span>
+            <pre><span class="ruby-comment"># File lib/evnt/event.rb, line 92</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">set_not_saved</span>
   <span class="ruby-ivar">@state</span>[<span class="ruby-value">:saved</span>] = <span class="ruby-keyword">false</span>
 

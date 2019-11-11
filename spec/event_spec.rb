@@ -4,13 +4,13 @@ require 'spec_helper'
 
 class SuperEvent < Evnt::Event
 
-  attributes_are :attr1
+  payload_attributes_are :attr1
 
 end
 
 class MyEvent < SuperEvent
 
-  attributes_are :attr1, :attr2
+  payload_attributes_are :attr1, :attr2
 
 end
 
@@ -50,5 +50,36 @@ RSpec.describe Evnt::Event do
   it 'should not return extra parameters as payload' do
     expect(event.payload[:_extra1]).to eq nil
     expect(event.payload[:extra1]).to eq nil
+  end
+
+  it 'should return the attributes' do
+    expect(event.payload_attributes).not_to eq nil
+    expect(event.payload_attributes.length).to eq 2
+  end
+end
+
+##############################################################
+# TEST PRE 3.6.3 (check deprecated functions attributes works)
+##############################################################
+
+class SuperEventOld < Evnt::Event
+
+  attributes_are :attr1
+
+end
+
+class MyEventOld < SuperEventOld
+
+  attributes_are :attr1, :attr2
+
+end
+
+RSpec.describe Evnt::Event do
+  parameters = { attr1: 'foo', attr2: 'bar', _extra1: 'yuppy' }
+  event = MyEventOld.new(parameters)
+
+  it 'should return the attributes' do
+    expect(event.attributes).not_to eq nil
+    expect(event.attributes.length).to eq event.payload_attributes.length
   end
 end
