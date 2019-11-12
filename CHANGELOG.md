@@ -1,5 +1,9 @@
 # Evnt changelog
 
+## Vesion 3.6.4
+
+- Bug Fix.
+
 ## Vesion 3.6.3
 
 - Added support to extras validation on events.

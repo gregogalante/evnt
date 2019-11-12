@@ -217,10 +217,11 @@ module Evnt
 
       # This function sets the default options that should be used by the event.
       def default_options(options)
-        @@options ||= {}
-        @@options.merge!(options)
+        @options ||= {}
+        @options.merge!(options)
+        event_options = @options
 
-        define_method('_default_options', -> { @@options })
+        define_method('_default_options', -> { return event_options })
       end
 
       # This function sets the name for the event.
@@ -230,34 +231,38 @@ module Evnt
 
       # This function sets the list of payload attributes for the event.
       def payload_attributes_are(*attributes)
-        @@payload_attributes ||= []
-        @@payload_attributes.concat(attributes).uniq!
+        @payload_attributes ||= []
+        @payload_attributes.concat(attributes).uniq!
+        event_payload_attributes = @payload_attributes
 
-        define_method('_payload_attributes', -> { @@payload_attributes })
+        define_method('_payload_attributes', -> { return event_payload_attributes })
       end
 
       # This function sets the list of extras attributes for the event.
       def extras_attributes_are(*attributes)
-        @@extras_attributes ||= []
-        @@extras_attributes.concat(attributes).uniq!
+        @extras_attributes ||= []
+        @extras_attributes.concat(attributes).uniq!
+        event_extras_attributes = @extras_attributes
 
-        define_method('_extras_attributes', -> { @@extras_attributes })
+        define_method('_extras_attributes', -> { return event_extras_attributes })
       end
 
       # DEPRECATED: This function sets the list of attributes for the event.
       def attributes_are(*attributes)
-        @@payload_attributes ||= []
-        @@payload_attributes.concat(attributes).uniq!
+        @payload_attributes ||= []
+        @payload_attributes.concat(attributes).uniq!
+        event_payload_attributes = @payload_attributes
 
-        define_method('_payload_attributes', -> { @@payload_attributes })
+        define_method('_payload_attributes', -> { return event_payload_attributes })
       end
 
       # This function sets the list of handlers for the event.
       def handlers_are(handlers)
-        @@handlers ||= []
-        @@handlers.concat(handlers)
+        @handlers ||= []
+        @handlers.concat(handlers)
+        event_handlers = @handlers
 
-        define_method('_handlers', -> { @@handlers })
+        define_method('_handlers', -> { return event_handlers })
       end
 
       # This function sets the write event function for the event.
@@ -267,10 +272,11 @@ module Evnt
 
       # This function is used to add a new handler to the event from the external.
       def add_handler(handler)
-        @@handlers ||= []
-        @@handlers.push(handler)
+        @handlers ||= []
+        @handlers.push(handler)
+        event_handlers = @handlers
 
-        define_method('_handlers', -> { @@handlers })
+        define_method('_handlers', -> { return event_handlers })
       end
 
     end
