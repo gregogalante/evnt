@@ -132,7 +132,7 @@ module Evnt
 
       # set extras
       @extras = {}
-      extras = params.select { |k, _v| k[0] == '_' && k != '_options' }
+      extras = params.select { |k, _v| k[0] == '_' && k != :_options }
       extras.each { |k, v| @extras[k[1..-1].to_sym] = v }
     end
 

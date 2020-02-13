@@ -1,8 +1,12 @@
 # Evnt changelog
 
+## Vesion 3.6.6
+
+- Real fix extras parameters validations for _options.
+
 ## Vesion 3.6.5
 
-- Fix extras parameters avalidations for _options.
+- Fix extras parameters validations for _options.
 
 ## Vesion 3.6.4
 

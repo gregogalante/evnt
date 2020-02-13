@@ -2,6 +2,10 @@
 
 require 'spec_helper'
 
+##############################################################
+# TEST GENERAL
+##############################################################
+
 class SuperEvent < Evnt::Event
 
   payload_attributes_are :attr1
@@ -56,6 +60,42 @@ RSpec.describe Evnt::Event do
     expect(event.payload_attributes).not_to eq nil
     expect(event.payload_attributes.length).to eq 2
   end
+end
+
+##############################################################
+# TEST OPTIONS AS PARAMETERS
+##############################################################
+
+class SuperEventOAP < Evnt::Event
+
+  payload_attributes_are :attr1
+
+end
+
+class MyEventOAP < SuperEventOAP
+
+  payload_attributes_are :attr1, :attr2
+
+end
+
+RSpec.describe Evnt::Event do
+  parameters = { attr1: 'foo', attr2: 'bar', _options: { silent: true } }
+  event = MyEventOAP.new(parameters)
+
+  it 'should be initialized' do
+    expect(event).not_to eq nil
+  end
+
+  it 'should not have options as payload attribute' do
+    expect(event.payload).not_to eq nil
+    expect(event.payload[:options]).to eq nil
+  end
+
+  it 'should not have options as extras attribute' do
+    expect(event.extras).not_to eq nil
+    expect(event.extras[:options]).to eq nil
+  end
+
 end
 
 ##############################################################
