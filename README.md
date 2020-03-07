@@ -11,7 +11,7 @@ Evnt is a Ruby gem used to design software following the CQRS and Event driven d
 - **Events**: something that it's already happen and should be logged somewhere.
 - **Handlers**: event listeners that perform specific tasks.
 
-The full documentation of these classes can be found here: https://ideonetwork.github.io/evnt
+The full documentation of these classes can be found here: <a href="https://github.com/ideonetwork/evnt/wiki">https://github.com/ideonetwork/evnt/wiki</a>
 
 ## Installation
 
@@ -35,18 +35,4 @@ To update the rdoc documentation run:
 
 ```console
 rdoc --op rdoc
-```
-
-### Docsify documentation
-
-Install docsify as global node dependency
-
-```shell
-npm install -g docsify-cli
-```
-
-See documentation on local machine
-
-```shell
-docsify serve ./docs
 ```
