@@ -1,5 +1,9 @@
 # Evnt changelog
 
+## Vesion 3.7.0
+
+- Added validation option :do on commands ro run custom functions on validation.
+
 ## Vesion 3.6.6
 
 - Real fix extras parameters validations for _options.

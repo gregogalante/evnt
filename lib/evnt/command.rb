@@ -144,12 +144,16 @@ module Evnt
         value_to_validate = _value_to_validate(val)
         validator = Evnt::Validator.new(value_to_validate, val[:options])
 
-        if validator.passed?
+        passed = true
+        passed = false if !validator.passed?
+        passed = false if val[:options][:do] && !send(val[:options][:do])
+
+        if passed
           @params[val[:param]] = validator.value
         else
           error = val[:options][:err] || "#{val[:param].capitalize} value not accepted"
           err_code = val[:options][:err_code] || val[:param].to_sym
-          err(error, code: err_code)
+          err(error, code: err_code) if !val[:options][:do]
           break
         end
       end
