@@ -1,7 +1,5 @@
 # Evnt
 
-[![Inline docs](http://inch-ci.org/github/gregogalante/evnt.svg?branch=master)](http://inch-ci.org/github/ideonetwork/evnt)
-
 CQRS and Event Driven Development architecture for Ruby projects.
 
 Evnt is a Ruby gem used to design software following the CQRS and Event driven development pattern. The idea behind Evnt is to develop the business logic of the system using three different classes:
